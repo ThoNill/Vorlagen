@@ -27,11 +27,13 @@ Die VorlagenMaschine besteht weiter aus einer VorlagenFabrik und einer ModelFabr
 Es kann mehrere Vorlagen geben. Die Vorlagen und Zuordnungen zu Dateien werden
 in einer VorlagenDefinition verwaltet.
 
-Diese Vorlagendefinition umfasst jeweils eine TemplateBeschreibung, anhand derer ein 
-Template erzeugt werden kann. Meist ein Dateiname, 
+Diese Vorlagendefinition umfasst jeweils eine VorlagenBeschreibung, anhand derer eine
+Vorlage erzeugt werden kann. Meist ein Dateiname. 
+
+Weiter umfasst diese Struktur 
 ein ModelVerzeichnis, als Zwischenverzeichnis  für die VorlagenModelle
 ein VorlageVerzeichnis, als Zwischenverzeichnis  für die Vorlagen
-ein Zielverzeichnis, als Zwischenverzeichnis  für die Ausgabedateien.
-eine VorlagenModellFabrik.
+ein Zielverzeichnis, als Zwischenverzeichnis  für die Ausgabedateien
+und eine VorlagenModellFabrik.
 
 
