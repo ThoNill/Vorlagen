@@ -20,9 +20,9 @@ public class TesteDieVorlagen {
 
         TestMaschine maschine = new TestMaschine("test", "modelle", "vorlagen",
                 "target", new TestModellFabrik());
-        maschine.add(new TestVorlagenDefinition("testVorlage", ".", ".",
+        new TestVorlagenDefinition("testVorlage", ".", ".",
                 "java", new TestVorlagenFabrik(),
-                new TestVorlagenModelFabrik(), maschine, StandardCharsets.UTF_8));
+                new TestVorlagenModelFabrik(), maschine, StandardCharsets.UTF_8);
         try {
             File f = new File("target/java/package/test");
             if (f.exists()) {
@@ -37,6 +37,11 @@ public class TesteDieVorlagen {
             e.printStackTrace();
             Assert.fail();
         }
+    }
+
+    @Test
+    public void xmlTest() {
+        
     }
 
 }
