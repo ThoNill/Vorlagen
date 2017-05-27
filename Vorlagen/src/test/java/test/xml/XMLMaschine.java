@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 
 import nu.xom.Document;
 
-import org.nill.ST.STVorlagenFabrik;
+import org.nill.ST.vorlagen.STVorlagenFabrik;
 import org.nill.modelle.xml.XMLVerzeichnisVorlagenModellFabrik;
 import org.nill.verzeichnisse.*;
 import org.nill.vorlagen.ModellFabrik;

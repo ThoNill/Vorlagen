@@ -2,7 +2,7 @@ package test.xml;
 
 import nu.xom.Document;
 
-import org.nill.ST.STVorlage;
+import org.nill.ST.vorlagen.STVorlage;
 
 public class XMLSTVorlage extends STVorlage<Document>{
 

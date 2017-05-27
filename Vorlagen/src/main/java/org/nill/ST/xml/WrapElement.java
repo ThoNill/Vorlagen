@@ -1,4 +1,4 @@
-package org.nill.modelle.xml;
+package org.nill.ST.xml;
 
 import nu.xom.Element;
 

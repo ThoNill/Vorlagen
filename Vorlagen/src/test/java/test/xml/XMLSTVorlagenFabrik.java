@@ -2,8 +2,8 @@ package test.xml;
 
 import nu.xom.Document;
 
-import org.nill.ST.STVorlage;
-import org.nill.ST.STVorlagenFabrik;
+import org.nill.ST.vorlagen.STVorlage;
+import org.nill.ST.vorlagen.STVorlagenFabrik;
 import org.nill.vorlagen.Vorlage;
 
 public class XMLSTVorlagenFabrik extends STVorlagenFabrik<Document>{

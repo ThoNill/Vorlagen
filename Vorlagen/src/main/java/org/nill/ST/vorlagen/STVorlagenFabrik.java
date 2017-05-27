@@ -1,4 +1,4 @@
-package org.nill.ST;
+package org.nill.ST.vorlagen;
 
 import java.io.File;
 
@@ -6,7 +6,7 @@ import org.nill.vorlagen.Vorlage;
 import org.nill.vorlagen.VorlagenFabrik;
 
 public abstract class STVorlagenFabrik<VORLAGEN_MODELL> implements VorlagenFabrik<VORLAGEN_MODELL,String> {
-    String verzeichnis;
+    private String verzeichnis;
 
     public STVorlagenFabrik(String verzeichnis) {
         super();
@@ -19,6 +19,10 @@ public abstract class STVorlagenFabrik<VORLAGEN_MODELL> implements VorlagenFabri
     };
 
     public abstract Vorlage<VORLAGEN_MODELL> erzeugeVorlageAusDatei(String dateiName);
+
+    public String getVerzeichnis() {
+        return verzeichnis;
+    }
 
 
     

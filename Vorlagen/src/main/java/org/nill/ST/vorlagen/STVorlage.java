@@ -1,14 +1,11 @@
-package org.nill.ST;
+package org.nill.ST.vorlagen;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-
-
-
 import java.io.Writer;
 import java.nio.file.Files;
-
 import org.nill.vorlagen.Vorlage;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
