@@ -1,9 +1,12 @@
 package org.nill.ST.xml;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import nu.xom.Element;
+import nu.xom.Elements;
 
 import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ST;
@@ -25,6 +28,10 @@ public class XOMAdapter extends ObjectModelAdaptor {
             throws STNoSuchPropertyException {
         Element elem = (Element) o;
 
+        if (propertyName.startsWith("listOf")) {
+            return getElements(elem,propertyName.substring(6));
+        }
+        
         switch (propertyName) {
         case "Class":
             return o.getClass();
@@ -53,6 +60,25 @@ public class XOMAdapter extends ObjectModelAdaptor {
             propertyName = propertyName.toLowerCase();
         }
         return elem.getAttributeValue(propertyName);
+    }
+
+    private Object getElements(Element elem, String name) {
+        List<Element> liste = new ArrayList<>();
+        getElements(liste,elem,name);
+        return liste;
+    }     
+        
+   private void getElements(List<Element> liste,Element elem,String name) {
+           
+        Elements elements = elem.getChildElements();
+        for(int i=0;i< elements.size();i++) {
+            Element child = elements.get(i);
+            if (name.equals(child.getLocalName())) {
+                liste.add(child);
+            } else {
+                getElements(liste,child,name);
+            }
+        }
     }
 
     private WrapElement getWrap(Element elem) {

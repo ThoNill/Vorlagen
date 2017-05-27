@@ -1,10 +1,11 @@
-package test.xml;
+package org.nill.ST.xml;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 import nu.xom.Document;
 
+import org.nill.ST.xml.XMLVorlagenDefinition;
 import org.nill.modelle.xml.XMLVerzeichnisVorlagenModellFabrik;
 import org.nill.verzeichnisse.VerzeichnisModell;
 import org.nill.verzeichnisse.VerzeichnisModellFabrik;
@@ -18,12 +19,7 @@ public class XMLMaschine extends VorlagenMaschine<VerzeichnisModell,String,Docum
             ) {
         super(modellBeschreibung, basisModellVerzeichnis, basisVorlagenVerzeichnis,
                 basisZielVerzeichnis, new VerzeichnisModellFabrik());
-        
-        
-        new XMLVorlagenDefinition("testVorlage", ".", ".",
-                "java", new XMLSTVorlagenFabrik(basisModellVerzeichnis + File.separator + "xmlTest"),
-                new XMLVerzeichnisVorlagenModellFabrik(basisModellVerzeichnis),this, StandardCharsets.UTF_8);
-    
+   
     }
 
   

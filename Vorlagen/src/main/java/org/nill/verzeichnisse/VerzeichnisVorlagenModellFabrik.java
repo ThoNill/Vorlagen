@@ -1,5 +1,6 @@
 package org.nill.verzeichnisse;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -44,7 +45,7 @@ public class VerzeichnisVorlagenModellFabrik<VORLAGEN_MODELL, MODELL extends Mit
                     BasicFileAttributes attrs) throws IOException {
                 String name = file.getFileName().toString()
                         .replaceAll(".java", "");
-                VORLAGEN_MODELL modell = modellFabrik.erzeugeModell(name);
+                VORLAGEN_MODELL modell = modellFabrik.erzeugeModell(verzeichnis + File.separator +  name);
                 liste.add(modell);
                 return FileVisitResult.CONTINUE;
             }

@@ -15,11 +15,15 @@ public class STVorlage<VORLAGEN_MODELL> implements Vorlage<VORLAGEN_MODELL>{
 		group = new STGroupFile(dateiName +".stg",'$','$');
 	}
 	
-	public String apply(String templateName,Object elem) {
+	public String apply(String templateName,VORLAGEN_MODELL elem) {
 		ST t = group.getInstanceOf(templateName);
-		t.add("x", elem);
+		setzeSTModel(t,elem);
 		return t.render();
 	}
+
+    protected void setzeSTModel(ST t,VORLAGEN_MODELL elem) {
+        t.add("urmodell", elem);
+    }
 
     @Override
     public void erzeugeAusgabe(Writer writer, VORLAGEN_MODELL modell)
