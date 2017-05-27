@@ -7,9 +7,6 @@ import nu.xom.Document;
 import org.nill.modelle.xml.XMLVerzeichnisVorlagenModellFabrik;
 import org.nill.verzeichnisse.VerzeichnisModell;
 import org.nill.vorlagen.VorlagenDefinition;
-import org.nill.vorlagen.VorlagenFabrik;
-import org.nill.vorlagen.VorlagenMaschine;
-import org.nill.vorlagen.VorlagenModellFabrik;
 
 public class XMLVorlagenDefinition extends
         VorlagenDefinition<VerzeichnisModell, String, Document, String> {

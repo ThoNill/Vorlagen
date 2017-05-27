@@ -5,15 +5,10 @@ import java.nio.charset.StandardCharsets;
 
 import nu.xom.Document;
 
-import org.nill.ST.vorlagen.STVorlagenFabrik;
 import org.nill.modelle.xml.XMLVerzeichnisVorlagenModellFabrik;
-import org.nill.verzeichnisse.*;
-import org.nill.vorlagen.ModellFabrik;
+import org.nill.verzeichnisse.VerzeichnisModell;
+import org.nill.verzeichnisse.VerzeichnisModellFabrik;
 import org.nill.vorlagen.VorlagenMaschine;
-
-import test.TestVorlagenDefinition;
-import test.TestVorlagenFabrik;
-import test.TestVorlagenModelFabrik;
 
 public class XMLMaschine extends VorlagenMaschine<VerzeichnisModell,String,Document, String>{
 

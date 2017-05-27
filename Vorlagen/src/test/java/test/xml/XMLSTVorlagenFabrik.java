@@ -2,7 +2,6 @@ package test.xml;
 
 import nu.xom.Document;
 
-import org.nill.ST.vorlagen.STVorlage;
 import org.nill.ST.vorlagen.STVorlagenFabrik;
 import org.nill.vorlagen.Vorlage;
 

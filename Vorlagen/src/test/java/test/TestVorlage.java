@@ -12,11 +12,13 @@ public class TestVorlage implements Vorlage<TestModell>{
         // TODO Auto-generated constructor stub
     }
 
+    @Override
     public void erzeugeAusgabe(Writer writer, TestModell modell) throws IOException {
         writer.write(modell.getDateiname());
         
     }
 
+    @Override
     public String getPfadMitDateiName(TestModell modell) {
        return "package" + File.separatorChar + modell.getDateiname();
     }

@@ -19,6 +19,7 @@ public class XOMAdapter extends ObjectModelAdaptor {
         this.packageName = packageName;
     }
 
+    @Override
     public Object getProperty(Interpreter interpreter, ST self, Object o,
             Object property, String propertyName)
             throws STNoSuchPropertyException {

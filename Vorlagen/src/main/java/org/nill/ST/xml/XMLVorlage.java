@@ -4,7 +4,6 @@ import nu.xom.Document;
 import nu.xom.Element;
 
 import org.nill.ST.vorlagen.STVorlage;
-import org.stringtemplate.v4.STGroup;
 
 public class XMLVorlage  extends STVorlage<Document> {
 

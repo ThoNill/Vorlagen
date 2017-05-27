@@ -18,7 +18,8 @@ public class XMLElementFabrik extends NodeFactory {
 
 	}
 
-	public Element startMakingElement(String name, String namespace) {
+	@Override
+    public Element startMakingElement(String name, String namespace) {
 		String filename = getDir() + name + ".xml";
 		if (IncludeElement.hasTemplate(filename)) {
 			return new IncludeElement(name, namespace, filename);

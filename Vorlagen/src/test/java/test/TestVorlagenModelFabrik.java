@@ -10,6 +10,7 @@ public class TestVorlagenModelFabrik implements VorlagenModellFabrik<TestModell,
     public TestVorlagenModelFabrik() {
     }
 
+    @Override
     public List<TestModell> erzeugeVorlagenModelle(TestModell modell) {
         ArrayList<TestModell> liste = new ArrayList();
         liste.add(modell);

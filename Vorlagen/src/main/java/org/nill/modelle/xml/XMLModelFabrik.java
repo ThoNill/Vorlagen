@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Vector;
 
-import org.nill.vorlagen.ModellFabrik;
-
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
@@ -16,6 +14,8 @@ import nu.xom.Elements;
 import nu.xom.Node;
 import nu.xom.Nodes;
 import nu.xom.ParentNode;
+
+import org.nill.vorlagen.ModellFabrik;
 
 public class XMLModelFabrik implements ModellFabrik<Document, String> {
 
