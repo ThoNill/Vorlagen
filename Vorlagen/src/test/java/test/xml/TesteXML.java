@@ -21,56 +21,89 @@ public class TesteXML {
 
     @Test
     public void erzeugeMaschine() {
-        XMLTestMaschine maschine = new XMLTestMaschine("test", ".", ".", ".");   
+        try {
+            XMLTestMaschine maschine = new XMLTestMaschine("test", ".", ".",".");
+        } catch (Exception ex) {
+            fail();
+        }
     }
 
-    
     @Test
     public void ladeXMLDefinition() {
-        XMLTestMaschine maschine = new XMLTestMaschine("test", ".", ".", ".");
-        XMLModelFabrik modellFabrik = new XMLModelFabrik();
-        Document document = modellFabrik.erzeugeModell(maschine.getBasisVorlagenVerzeichnis() + File.separator + "modelle" + File.separator +"beispiel.xml");
-        assertNotNull(document);
+        try {
+
+            XMLTestMaschine maschine = new XMLTestMaschine("test", ".", ".",
+                    ".");
+            XMLModelFabrik modellFabrik = new XMLModelFabrik();
+            Document document = modellFabrik.erzeugeModell(maschine
+                    .getBasisVorlagenVerzeichnis()
+                    + File.separator
+                    + "modelle"
+                    + File.separator + "beispiel.xml");
+            assertNotNull(document);
+        } catch (Exception ex) {
+            fail();
+        }
+
     }
-  
 
     @Test
     public void ladeVorlage() {
-        XMLTestMaschine maschine = new XMLTestMaschine("test", ".", ".", ".");
-        XMLVorlagenFabrik vorlagenFabrik = new XMLVorlagenFabrik(maschine.getBasisVorlagenVerzeichnis() + File.separator + "vorlagen" ,null,null);
-        Vorlage vorlage = vorlagenFabrik.erzeugeVorlage("beispiel");
-        assertNotNull(vorlage);
-        
+        try {
+
+            XMLTestMaschine maschine = new XMLTestMaschine("test", ".", ".",
+                    ".");
+            XMLVorlagenFabrik vorlagenFabrik = new XMLVorlagenFabrik(
+                    maschine.getBasisVorlagenVerzeichnis() + File.separator
+                            + "vorlagen", null, null);
+            Vorlage vorlage = vorlagenFabrik.erzeugeVorlage("beispiel");
+            assertNotNull(vorlage);
+        } catch (Exception ex) {
+            fail();
+        }
+
     }
 
-    
     @Test
     public void ladeModelUndVorlage() {
-        XMLTestMaschine maschine = new XMLTestMaschine("test", ".", ".", ".");
-        XMLModelFabrik modellFabrik = new XMLModelFabrik();
-        Document document = modellFabrik.erzeugeModell(maschine.getBasisVorlagenVerzeichnis() + File.separator + "modelle" + File.separator +"beispiel.xml");
-        assertNotNull(document);
-        
-        XMLVorlagenFabrik vorlagenFabrik = new XMLVorlagenFabrik(maschine.getBasisVorlagenVerzeichnis() + File.separator + "vorlagen",null,null);
-        XMLVorlage vorlage = (XMLVorlage)vorlagenFabrik.erzeugeVorlage("beispiel");
-        assertNotNull(vorlage);
-        
-        String inhalt = vorlage.apply("dateiInhalt",document);
-        assertTrue(inhalt.contains("public class beispiel"));
+        try {
+
+            XMLTestMaschine maschine = new XMLTestMaschine("test", ".", ".",
+                    ".");
+            XMLModelFabrik modellFabrik = new XMLModelFabrik();
+            Document document = modellFabrik.erzeugeModell(maschine
+                    .getBasisVorlagenVerzeichnis()
+                    + File.separator
+                    + "modelle"
+                    + File.separator + "beispiel.xml");
+            assertNotNull(document);
+
+            XMLVorlagenFabrik vorlagenFabrik = new XMLVorlagenFabrik(
+                    maschine.getBasisVorlagenVerzeichnis() + File.separator
+                            + "vorlagen", null, null);
+            XMLVorlage vorlage = (XMLVorlage) vorlagenFabrik
+                    .erzeugeVorlage("beispiel");
+            assertNotNull(vorlage);
+
+            String inhalt = vorlage.apply("dateiInhalt", document);
+            assertTrue(inhalt.contains("public class beispiel"));
+        } catch (Exception ex) {
+            fail();
+        }
+
     }
-    
-    
+
     @Test
     public void ladeModelUndVorlageMitMaschine() {
-        XMLTestMaschine maschine = new XMLTestMaschine("modelle", "modelle", ".", "ausgabe");
+        XMLTestMaschine maschine = new XMLTestMaschine("modelle", "modelle",
+                ".", "ausgabe");
         try {
             maschine.erzeugeAusgabe();
             assertTrue(new File("ausgabe/java/package/beispiel.java").exists());
         } catch (Exception e) {
-             e.printStackTrace();
-             fail();
+            e.printStackTrace();
+            fail();
         }
     }
-    
 
 }

@@ -31,7 +31,7 @@ public class TesteDieVorlagen {
                 Assert.fail("Datei " + f.getAbsolutePath() + " wurde nicht angelegt ");
             }
             
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Assert.fail();
         }

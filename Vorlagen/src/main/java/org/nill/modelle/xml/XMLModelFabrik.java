@@ -1,5 +1,6 @@
 package org.nill.modelle.xml;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -23,14 +24,27 @@ public class XMLModelFabrik implements ModellFabrik<Document, String> {
     public Document erzeugeModell(String dateiName) {
         InputStream file;
         try {
-            file = new FileInputStream(dateiName);
+            file = holeStream(dateiName);
             return ladeDasDokument(file);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static  Element ladeDasRootElement(InputStream in) {
+    protected InputStream holeStream(String dateiName)
+            throws FileNotFoundException {
+        InputStream fileStream;
+        File file = new File(dateiName);
+        if (file.exists()) {
+            fileStream = new FileInputStream(dateiName);
+        } else {
+            fileStream = Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream(dateiName);
+        }
+        return fileStream;
+    }
+
+    public static Element ladeDasRootElement(InputStream in) {
         try {
             return ladeDasDokument(in).getRootElement();
         } catch (Exception ex) {
@@ -55,8 +69,8 @@ public class XMLModelFabrik implements ModellFabrik<Document, String> {
         return null;
     }
 
-    public static void ersetzeElementDurchTemplate(Element source, Element template,
-            String sternValue) {
+    public static void ersetzeElementDurchTemplate(Element source,
+            Element template, String sternValue) {
         ersetzePlacesDurchIntos(source, template);
         int count = source.getAttributeCount();
         for (int i = 0; i < count; i++) {
@@ -82,8 +96,8 @@ public class XMLModelFabrik implements ModellFabrik<Document, String> {
         return childs;
     }
 
-    private static Vector<Element> extractVectorOfElementsWithName(Element source,
-            String name) {
+    private static Vector<Element> extractVectorOfElementsWithName(
+            Element source, String name) {
         Vector<Element> childs = new Vector<Element>();
         Elements elements = source.getChildElements();
         for (int i = 0; i < elements.size(); i++) {
@@ -121,8 +135,8 @@ public class XMLModelFabrik implements ModellFabrik<Document, String> {
         }
     }
 
-    private static void ersetzeAttributeEinesElements(Element elem, String oldValue,
-            String newValue, String sternValue) {
+    private static void ersetzeAttributeEinesElements(Element elem,
+            String oldValue, String newValue, String sternValue) {
         int count = elem.getAttributeCount();
         for (int i = 0; i < count; i++) {
             Attribute a = elem.getAttribute(i);

@@ -30,7 +30,7 @@ public class VorlagenMaschine<MODELL, MODELL_BESCHREIBUNG, VORLAGEN_MODELL, VORL
         return definitionen.add(e);
     }
 
-    public void erzeugeAusgabe() throws IOException {
+    public void erzeugeAusgabe() throws Exception {
             MODELL modell = modellFabrik.erzeugeModell(modellBeschreibung);
             for (VorlagenDefinition<MODELL,MODELL_BESCHREIBUNG,  VORLAGEN_MODELL, VORLAGEN_BESCHREIBUNG> definition : definitionen) {
                 definition.erzeugeAusgabe(modell);

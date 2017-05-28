@@ -52,7 +52,7 @@ public class VorlagenDefinition<MODELL, MODELL_BESCHREIBUNG,VORLAGEN_MODELL,VORL
         return maschine.getBasisZielVerzeichnis()+ File.separatorChar  + zielVerzeichnis;
     }
 
-    public void erzeugeAusgabe(MODELL modell) throws IOException {
+    public void erzeugeAusgabe(MODELL modell) throws Exception {
         Vorlage<VORLAGEN_MODELL> vorlage = vorlagenFabrik.erzeugeVorlage(vorlagenBeschreibung);
         List<VORLAGEN_MODELL> vorlagenModelle = modellFabrik.erzeugeVorlagenModelle(modell);
         for(VORLAGEN_MODELL vorlagenModell : vorlagenModelle) {
