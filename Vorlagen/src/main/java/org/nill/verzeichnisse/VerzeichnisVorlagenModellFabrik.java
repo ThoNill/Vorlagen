@@ -45,7 +45,6 @@ public class VerzeichnisVorlagenModellFabrik<VORLAGEN_MODELL, MODELL extends Mit
 
     private void alleDateien(List<VORLAGEN_MODELL> liste, String verzeichnis)
             throws IOException, URISyntaxException {
-        System.out.println("Untersuche " + verzeichnis);
         Path start = bestimmeStartVerzeichnis(verzeichnis);
         verzeichnisDurcharbeiten(liste, start);
     }
@@ -57,7 +56,6 @@ public class VerzeichnisVorlagenModellFabrik<VORLAGEN_MODELL, MODELL extends Mit
         if (!startFile.exists()) {
             URI uri = Thread.currentThread().getContextClassLoader()
                     .getResource(verzeichnis).toURI();
-            System.out.println(uri.toString());
             if (uri.getScheme().equals("jar")) 
             {
                 FileSystem fileSystem = FileSystems.newFileSystem(uri,
@@ -74,13 +72,11 @@ public class VerzeichnisVorlagenModellFabrik<VORLAGEN_MODELL, MODELL extends Mit
 
     protected void verzeichnisDurcharbeiten(List<VORLAGEN_MODELL> liste, Path start) throws IOException {
         File startFile = start.toFile();
-        System.out.println("Suche in: " + startFile.getAbsolutePath());
         if (startFile.exists() && startFile.isDirectory()) {
             Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path file,
                         BasicFileAttributes attrs) throws IOException {
-                    System.out.println("Gefunden: " + file);
                     VORLAGEN_MODELL modell = modellFabrik
                             .erzeugeModell(file.toString());
                     liste.add(modell);
