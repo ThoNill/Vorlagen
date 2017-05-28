@@ -40,6 +40,7 @@ public class TesteXML {
                     + File.separator
                     + "modelle"
                     + File.separator + "beispiel.xml");
+            
             assertNotNull(document);
         } catch (Exception ex) {
             fail();

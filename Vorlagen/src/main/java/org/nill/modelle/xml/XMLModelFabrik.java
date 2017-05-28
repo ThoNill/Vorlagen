@@ -35,6 +35,7 @@ public class XMLModelFabrik implements ModellFabrik<Document, String> {
             throws FileNotFoundException {
         InputStream fileStream;
         File file = new File(dateiName);
+        System.out.println("Datei "+ file.getAbsolutePath());
         if (file.exists()) {
             fileStream = new FileInputStream(dateiName);
         } else {
