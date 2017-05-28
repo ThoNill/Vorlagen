@@ -38,6 +38,7 @@
 	</dependencies>
 	<build>
 		<defaultGoal>install</defaultGoal>
+	
 
 		<plugins>
 			<plugin>
@@ -58,7 +59,7 @@
 					<dependency>
 						<groupId>org.apache.maven.surefire</groupId>
 						<artifactId>surefire-junit47</artifactId>
-						<version>2.18.1</version>
+						<version>2.20</version>
 					</dependency>
 				</dependencies>
 			</plugin>
