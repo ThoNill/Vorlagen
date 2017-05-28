@@ -25,10 +25,10 @@ public class $x.Page$ extends DataDIALOG<Global> {
 
   public $x.Page$() {
   		super("$x.Page$");
-  		init();
+  		init(x);
   }
 
-  protected void init() {
+  protected void init(x) {
 		$x.listOfSTRING:callget()$
 		$x.listOfGLOBAL:callget()$
 		$x.listOfSQL:callget()$
@@ -47,12 +47,16 @@ public class $x.Page$ extends DataDIALOG<Global> {
 
 
 callget ( x ) ::= <<
-  $x.Name$();
+
+// callget $x.ElementTypeName$
+  $x.CName$();
 >>
 
 
 element( x ) ::= <<
-$(x.TemplateName)(x)$
+// element $x.ElementTypeName$
+
+$(x.ElementTypeName)(x)$
 >>
 
 NAMESPACE( x ) ::= <<

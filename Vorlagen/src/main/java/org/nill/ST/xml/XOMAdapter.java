@@ -16,10 +16,12 @@ import org.stringtemplate.v4.misc.STNoSuchPropertyException;
 public class XOMAdapter extends ObjectModelAdaptor {
     static Logger logger = Logger.getLogger(XOMAdapter.class.getSimpleName());
     protected String packageName;
+    protected String defaultClass;
 
-    public XOMAdapter(String packageName) {
+    public XOMAdapter(String packageName,String defaultClass) {
         super();
         this.packageName = packageName;
+        this.defaultClass = defaultClass;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class XOMAdapter extends ObjectModelAdaptor {
             return ((Element) o).getChildElements();
         case "Parent":
             return ((Element) o).getParent();
-        case "Name":
+        case "ElementTypeName":
             return ((Element) o).getLocalName();
         default: {
             try {
@@ -82,19 +84,22 @@ public class XOMAdapter extends ObjectModelAdaptor {
     }
 
     private WrapElement getWrap(Element elem) {
-        WrapElement wrap = (WrapElement) createInstance(elem.getLocalName());
+        WrapElement wrap = (WrapElement) createInstance(elem.getLocalName(),defaultClass == null);
         if (wrap == null) {
-            return null;
+            wrap = (WrapElement) createInstance(defaultClass,true);
+            if (wrap == null) {
+                return null;
+            }
         }
         wrap.setElem(elem);
         return wrap;
     }
 
-    protected Object createInstance(String name) {
+    protected Object createInstance(String name,boolean prüfen) {
         if (packageName != null) {
             String className = packageName + "." + name;
             try {
-                if (logger.isLoggable(Level.INFO)) {
+                if (prüfen && logger.isLoggable(Level.INFO)) {
                     logger.info("Create object of class [" + className + "]");
                 }
                 Class cl = XOMAdapter.class.getClassLoader().loadClass(
@@ -103,13 +108,19 @@ public class XOMAdapter extends ObjectModelAdaptor {
                 return obj;
 
             } catch (ClassNotFoundException e) {
-                logger.severe("class [" + className + "] not found");
+                if (prüfen) {
+                    logger.severe("class [" + className + "] not found");
+                }
             } catch (InstantiationException e) {
+                if (prüfen) {
                 logger.severe("class [" + className
                         + "] can not be instantated");
+                }
             } catch (IllegalAccessException e) {
+                if (prüfen) {
                 logger.severe("class [" + className
                         + "] Illegal Access at instantiation");
+                }
             }
         }
         return null;

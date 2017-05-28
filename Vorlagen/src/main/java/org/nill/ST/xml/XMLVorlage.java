@@ -8,9 +8,9 @@ import org.stringtemplate.v4.ST;
 
 public class XMLVorlage  extends STVorlage<Document> {
 
-	public XMLVorlage(String dateiName,String packageName) {
+	public XMLVorlage(String dateiName,String packageName,String defaultClass) {
 		super(dateiName);
-		group.registerModelAdaptor(Element.class, new XOMAdapter(packageName));
+		group.registerModelAdaptor(Element.class, new XOMAdapter(packageName,defaultClass));
 	}
 	
     protected void setzeSTModel(ST t,Document document) {

@@ -37,7 +37,7 @@ public class TesteXML {
     @Test
     public void ladeVorlage() {
         XMLTestMaschine maschine = new XMLTestMaschine("test", ".", ".", ".");
-        XMLVorlagenFabrik vorlagenFabrik = new XMLVorlagenFabrik(maschine.getBasisVorlagenVerzeichnis() + File.separator + "vorlagen" ,null);
+        XMLVorlagenFabrik vorlagenFabrik = new XMLVorlagenFabrik(maschine.getBasisVorlagenVerzeichnis() + File.separator + "vorlagen" ,null,null);
         Vorlage vorlage = vorlagenFabrik.erzeugeVorlage("beispiel");
         assertNotNull(vorlage);
         
@@ -51,7 +51,7 @@ public class TesteXML {
         Document document = modellFabrik.erzeugeModell(maschine.getBasisVorlagenVerzeichnis() + File.separator + "modelle" + File.separator +"beispiel.xml");
         assertNotNull(document);
         
-        XMLVorlagenFabrik vorlagenFabrik = new XMLVorlagenFabrik(maschine.getBasisVorlagenVerzeichnis() + File.separator + "vorlagen",null);
+        XMLVorlagenFabrik vorlagenFabrik = new XMLVorlagenFabrik(maschine.getBasisVorlagenVerzeichnis() + File.separator + "vorlagen",null,null);
         XMLVorlage vorlage = (XMLVorlage)vorlagenFabrik.erzeugeVorlage("beispiel");
         assertNotNull(vorlage);
         

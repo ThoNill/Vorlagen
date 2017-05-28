@@ -19,11 +19,13 @@ public class XMLVorlagenDefinition extends
             String modellVerzeichnis,
             String vorlagenVerzeichnis,
             String zielVerzeichnis,
+            String packageName,
+            String defaultClass,
             XMLTestMaschine maschine,
             Charset charSet) {
         super(vorlagenBeschreibung, modellVerzeichnis, vorlagenVerzeichnis,
                 zielVerzeichnis, 
-                new XMLVorlagenFabrik(maschine.getBasisVorlagenVerzeichnis() + File.separatorChar  + vorlagenVerzeichnis,null),
+                new XMLVorlagenFabrik(maschine.getBasisVorlagenVerzeichnis() + File.separatorChar  + vorlagenVerzeichnis,packageName,defaultClass),
                 new XMLVerzeichnisVorlagenModellFabrik(maschine.getBasisModellVerzeichnis() + File.separator + modellVerzeichnis),
                 maschine, charSet);
     }

@@ -30,8 +30,7 @@ public class XMLTestMaschine extends XMLMaschine{
                 basisZielVerzeichnis);
         
         
-        new XMLVorlagenDefinition("beispiel", "modelle", "vorlagen",
-                "java",this,StandardCharsets.UTF_8);
+        new XMLVorlagenDefinition("beispiel", "modelle", "vorlagen","java","test.xml.wrap","BeispielWrap",this,StandardCharsets.UTF_8);
     
     }
 
