@@ -6,6 +6,7 @@ import java.io.Writer;
 import org.nill.vorlagen.Vorlage;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
+import org.stringtemplate.v4.StringRenderer;
 
 public class STVorlage<VORLAGEN_MODELL> implements Vorlage<VORLAGEN_MODELL>{
 	protected STGroupFile group = null;
@@ -13,6 +14,7 @@ public class STVorlage<VORLAGEN_MODELL> implements Vorlage<VORLAGEN_MODELL>{
 
 	public STVorlage(String dateiName) {
 		group = new STGroupFile(dateiName +".stg",'$','$');
+		group.registerRenderer(String.class, new StringRenderer());
 	}
 	
 	public String apply(String templateName,VORLAGEN_MODELL elem) {

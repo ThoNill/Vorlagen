@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
 
@@ -38,10 +39,14 @@ public class XOMAdapter extends ObjectModelAdaptor {
         case "Class":
             return o.getClass();
         case "Childs":
-            return ((Element) o).getChildElements();
+            return getElements(elem);
+        case "Attributes":
+            return getAttributes(elem);
         case "Parent":
             return ((Element) o).getParent();
         case "ElementTypeName":
+            return ((Element) o).getLocalName();
+        case "LocalName":
             return ((Element) o).getLocalName();
         default: {
             try {
@@ -64,12 +69,32 @@ public class XOMAdapter extends ObjectModelAdaptor {
         return elem.getAttributeValue(propertyName);
     }
 
+    private Object getAttributes(Element elem) {
+        List<Attribute> liste = new ArrayList<>();
+        for(int i=0;i< elem.getAttributeCount();i++) {
+            Attribute child = elem.getAttribute(i);
+            liste.add(child);
+        }
+        return liste;
+    }
+
     private Object getElements(Element elem, String name) {
         List<Element> liste = new ArrayList<>();
         getElements(liste,elem,name);
         return liste;
     }     
-        
+ 
+    private Object getElements(Element elem) {
+        List<Element> liste = new ArrayList<>();
+        Elements elements = elem.getChildElements();
+        for(int i=0;i< elements.size();i++) {
+            Element child = elements.get(i);
+                liste.add(child);
+        }
+        return liste;
+    }     
+ 
+    
    private void getElements(List<Element> liste,Element elem,String name) {
            
         Elements elements = elem.getChildElements();

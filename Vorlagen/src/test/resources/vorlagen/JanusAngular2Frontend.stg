@@ -1,0 +1,27 @@
+group DIALOG ;
+
+mypfad() ::= "frontend"
+
+
+dateiName(urmodell,model) ::= "$mypfad()$/$model.Page$.html"
+
+dateiInhalt(urmodell,model) ::= <<
+
+$element(model)$
+
+>>
+
+element(x) ::= <<
+ 
+  <app-$x.LocalName; format="lower"$   $attributes(x)$  >
+	$x.Childs:element()$
+  </app-$x.LocalName; format="lower"$>
+ 
+ >>
+
+
+attributes(x) ::= <<
+ $x.Attributes:attribute()$
+ >>
+
+attribute(x) ::= << $x.LocalName$ = "$x.Value$" >>

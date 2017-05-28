@@ -8,6 +8,7 @@ import java.io.IOException;
 import nu.xom.Document;
 
 import org.junit.Test;
+import org.nill.ST.xml.XMLMaschine;
 import org.nill.ST.xml.XMLVorlage;
 import org.nill.ST.xml.XMLVorlagenFabrik;
 import org.nill.modelle.xml.XMLModelFabrik;
@@ -96,7 +97,7 @@ public class TesteXML {
 
     @Test
     public void ladeModelUndVorlageMitMaschine() {
-        XMLTestMaschine maschine = new XMLTestMaschine("modelle", "modelle",
+        XMLMaschine maschine = new XMLTestMaschine("modelle", "modelle",
                 ".", "ausgabe");
         try {
             maschine.erzeugeAusgabe();
@@ -107,4 +108,19 @@ public class TesteXML {
         }
     }
 
+    
+    @Test
+    public void erzeugeJanusAngular2() {
+        XMLMaschine maschine = new JanusAngular2Maschine("modelle", "modelle",
+                ".", "ausgabe");
+        try {
+            maschine.erzeugeAusgabe();
+            assertTrue(new File("ausgabe/java/package/beispiel.java").exists());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    
 }
