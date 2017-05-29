@@ -1,4 +1,4 @@
-package test.xml;
+package janusAngularj2Frontend;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -30,7 +30,7 @@ public class JanusAngular2Maschine extends XMLMaschine{
                 basisZielVerzeichnis);
         
         
-        new XMLVorlagenDefinition("JanusAngular2Frontend", "modelle", "vorlagen","java",null,null,this,StandardCharsets.UTF_8);
+        new FrontendXMLDefinition("JanusAngular2Frontend", "modelle", "vorlagen","java",null,null,this,StandardCharsets.UTF_8);
     
     }
 

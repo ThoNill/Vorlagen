@@ -1,17 +1,20 @@
-package org.nill.ST.xml;
+package janusAngularj2Frontend;
 
 import java.io.File;
 import java.nio.charset.Charset;
+
 import nu.xom.Document;
+
+import org.nill.ST.xml.XMLMaschine;
+import org.nill.ST.xml.XMLVorlagenFabrik;
 import org.nill.modelle.xml.XMLVerzeichnisVorlagenModellFabrik;
 import org.nill.verzeichnisse.VerzeichnisModell;
 import org.nill.vorlagen.VorlagenDefinition;
 
-
-public class XMLVorlagenDefinition extends
+public class FrontendXMLDefinition extends
         VorlagenDefinition<VerzeichnisModell, String, Document, String> {
 
-    public XMLVorlagenDefinition(
+    public FrontendXMLDefinition(
             String vorlagenBeschreibung,
             String modellVerzeichnis,
             String vorlagenVerzeichnis,
@@ -23,7 +26,7 @@ public class XMLVorlagenDefinition extends
         super(vorlagenBeschreibung, modellVerzeichnis, vorlagenVerzeichnis,
                 zielVerzeichnis, 
                 new XMLVorlagenFabrik(maschine.getBasisVorlagenVerzeichnis() + File.separatorChar  + vorlagenVerzeichnis,packageName,defaultClass),
-                new XMLVerzeichnisVorlagenModellFabrik(),
+                new XMLVerzeichnisVorlagenModellFabrik(new CreateFrontendElements()),
                 maschine, charSet);
     }
 

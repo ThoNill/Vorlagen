@@ -1,6 +1,7 @@
 package test.xml;
 
 import static org.junit.Assert.*;
+import janusAngularj2Frontend.JanusAngular2Maschine;
 
 import java.io.File;
 import java.io.IOException;
@@ -115,7 +116,7 @@ public class TesteXML {
                 ".", "ausgabe");
         try {
             maschine.erzeugeAusgabe();
-            assertTrue(new File("ausgabe/java/package/beispiel.java").exists());
+            assertTrue(new File("ausgabe/java/frontend/beispiel.html").exists());
         } catch (Exception e) {
             e.printStackTrace();
             fail();
