@@ -1,0 +1,30 @@
+group JanusAngular2Page ;
+
+mypfad() ::= "frontend"
+
+
+dateiName(urmodell,model) ::= "$mypfad()$/$model.Page$.page.component.ts"
+
+dateiInhalt(urmodell,model) ::= <<
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'page-$model.Page$',
+  templateUrl : "$model.Page$Page.html",
+})
+
+export class $model.Page; format="cap"$PageComponent  { 
+ name = '$model.Page$Page'; 
+ 
+ 
+ performCommand(command : String) {
+     alert(command);
+ }
+ 
+ 
+}
+
+
+>>
+

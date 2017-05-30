@@ -116,7 +116,7 @@ public class TesteXML {
                 ".", "ausgabe");
         try {
             maschine.erzeugeAusgabe();
-            assertTrue(new File("ausgabe/java/frontend/beispiel.html").exists());
+            assertTrue(new File("ausgabe/ts/frontend/beispielPage.html").exists());
         } catch (Exception e) {
             e.printStackTrace();
             fail();

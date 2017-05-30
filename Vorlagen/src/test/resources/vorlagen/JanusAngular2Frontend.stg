@@ -1,9 +1,9 @@
-group DIALOG ;
+group JanusAngular2Frontend ;
 
 mypfad() ::= "frontend"
 
 
-dateiName(urmodell,model) ::= "$mypfad()$/$model.Page$.html"
+dateiName(urmodell,model) ::= "$mypfad()$/$model.Page$Page.html"
 
 dateiInhalt(urmodell,model) ::= <<
 

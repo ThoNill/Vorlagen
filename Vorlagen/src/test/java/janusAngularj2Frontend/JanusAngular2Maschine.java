@@ -30,8 +30,9 @@ public class JanusAngular2Maschine extends XMLMaschine{
                 basisZielVerzeichnis);
         
         
-        new FrontendXMLDefinition("JanusAngular2Frontend", "modelle", "vorlagen","java",null,null,this,StandardCharsets.UTF_8);
-    
+        new FrontendXMLDefinition("JanusAngular2Frontend", "modelle", "vorlagen","ts",null,null,this,StandardCharsets.UTF_8);
+        new FrontendPageComponentDefinition("JanusAngular2Page", "modelle", "vorlagen","ts",null,null,this,StandardCharsets.UTF_8);
+        
     }
 
 
