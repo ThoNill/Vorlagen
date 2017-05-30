@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
+import nu.xom.Node;
 
 import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ST;
@@ -19,7 +20,7 @@ public class XOMAdapter extends ObjectModelAdaptor {
     protected String packageName;
     protected String defaultClass;
 
-    public XOMAdapter(String packageName,String defaultClass) {
+    public XOMAdapter(String packageName, String defaultClass) {
         super();
         this.packageName = packageName;
         this.defaultClass = defaultClass;
@@ -29,17 +30,26 @@ public class XOMAdapter extends ObjectModelAdaptor {
     public Object getProperty(Interpreter interpreter, ST self, Object o,
             Object property, String propertyName)
             throws STNoSuchPropertyException {
-        Element elem = (Element) o;
+        Element elem = null;
+        if (o instanceof Element) {
+            elem = (Element) o;
+        }
 
         if (propertyName.startsWith("listOf")) {
-            return getElements(elem,propertyName.substring(6));
+            return getElements(elem, propertyName.substring(6));
         }
-        
-        switch (propertyName) {
+         switch (propertyName) {
         case "Class":
             return o.getClass();
+        case "isElement":
+            return (o instanceof Element);
+        case "isEmptyAttribute":
+            if (o instanceof Attribute) {
+                return ("emptyAttribute".equals(((Attribute) o).getLocalName()));
+            }
+            return false;
         case "Childs":
-            return getElements(elem);
+            return getChilds(elem);
         case "Attributes":
             return getAttributes(elem);
         case "Parent":
@@ -47,10 +57,20 @@ public class XOMAdapter extends ObjectModelAdaptor {
         case "ElementTypeName":
             return ((Element) o).getLocalName();
         case "LocalName":
-            return ((Element) o).getLocalName();
+            if (o instanceof Element) {
+                return ((Element) o).getLocalName();
+            }
+            if (o instanceof Attribute) {
+                return ((Attribute) o).getLocalName();
+            }
+        case "Value":
+            if (o instanceof Attribute) {
+                return ((Attribute) o).getValue();
+            }
+           
         default: {
             try {
-                if (propertyName != null) {
+                if (propertyName != null && elem != null) {
                     WrapElement wrap = getWrap(elem);
                     if (wrap != null) {
                         return super.getProperty(interpreter, self, wrap,
@@ -63,15 +83,18 @@ public class XOMAdapter extends ObjectModelAdaptor {
             }
         }
         }
-        if (elem.getAttribute(propertyName) == null) {
+        if (elem != null && elem.getAttribute(propertyName) == null) {
             propertyName = propertyName.toLowerCase();
         }
-        return elem.getAttributeValue(propertyName);
+        if (elem != null) {
+            return elem.getAttributeValue(propertyName);
+        }
+        return "";
     }
 
     private Object getAttributes(Element elem) {
         List<Attribute> liste = new ArrayList<>();
-        for(int i=0;i< elem.getAttributeCount();i++) {
+        for (int i = 0; i < elem.getAttributeCount(); i++) {
             Attribute child = elem.getAttribute(i);
             liste.add(child);
         }
@@ -80,38 +103,37 @@ public class XOMAdapter extends ObjectModelAdaptor {
 
     private Object getElements(Element elem, String name) {
         List<Element> liste = new ArrayList<>();
-        getElements(liste,elem,name);
+        getElements(liste, elem, name);
         return liste;
-    }     
- 
-    private Object getElements(Element elem) {
-        List<Element> liste = new ArrayList<>();
-        Elements elements = elem.getChildElements();
-        for(int i=0;i< elements.size();i++) {
-            Element child = elements.get(i);
-                liste.add(child);
+    }
+
+    private Object getChilds(Element elem) {
+        List<Node> liste = new ArrayList<>();
+        for (int i = 0; i < elem.getChildCount(); i++) {
+            Node child = elem.getChild(i);
+            liste.add(child);
         }
         return liste;
-    }     
- 
-    
-   private void getElements(List<Element> liste,Element elem,String name) {
-           
+    }
+
+    private void getElements(List<Element> liste, Element elem, String name) {
+
         Elements elements = elem.getChildElements();
-        for(int i=0;i< elements.size();i++) {
+        for (int i = 0; i < elements.size(); i++) {
             Element child = elements.get(i);
             if (name.equals(child.getLocalName())) {
                 liste.add(child);
             } else {
-                getElements(liste,child,name);
+                getElements(liste, child, name);
             }
         }
     }
 
     private WrapElement getWrap(Element elem) {
-        WrapElement wrap = (WrapElement) createInstance(elem.getLocalName(),defaultClass == null);
+        WrapElement wrap = (WrapElement) createInstance(elem.getLocalName(),
+                defaultClass == null);
         if (wrap == null) {
-            wrap = (WrapElement) createInstance(defaultClass,true);
+            wrap = (WrapElement) createInstance(defaultClass, true);
             if (wrap == null) {
                 return null;
             }
@@ -120,7 +142,7 @@ public class XOMAdapter extends ObjectModelAdaptor {
         return wrap;
     }
 
-    protected Object createInstance(String name,boolean prüfen) {
+    protected Object createInstance(String name, boolean prüfen) {
         if (packageName != null) {
             String className = packageName + "." + name;
             try {
@@ -138,13 +160,13 @@ public class XOMAdapter extends ObjectModelAdaptor {
                 }
             } catch (InstantiationException e) {
                 if (prüfen) {
-                logger.severe("class [" + className
-                        + "] can not be instantated");
+                    logger.severe("class [" + className
+                            + "] can not be instantated");
                 }
             } catch (IllegalAccessException e) {
                 if (prüfen) {
-                logger.severe("class [" + className
-                        + "] Illegal Access at instantiation");
+                    logger.severe("class [" + className
+                            + "] Illegal Access at instantiation");
                 }
             }
         }

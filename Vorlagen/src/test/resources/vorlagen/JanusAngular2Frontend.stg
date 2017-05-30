@@ -13,12 +13,17 @@ $element(model)$
 
 element(x) ::= <<
  
-  <$x.LocalName$  $attributes(x)$ >
-	$x.Childs:element()$
-  </$x.LocalName$>
+  <$x.LocalName$  $attributes(x)$ >$x.Childs:elementOrText()$</$x.LocalName$>
  
  >>
 
+elementOrText(x) ::= << $if(x.isElement)$ 
+$element(x)$ 
+
+$else$$text(x)$$endif$  >>
+
+text(x) ::= << $x.value$ >>
+
 attributes(x) ::= << $x.Attributes:attribute()$ >>
 
-attribute(x) ::= << $x.LocalName$ = "$x.Value$" >>
+attribute(x) ::= << $if(x.isEmptyAttribute)$$x.Value$$else$$x.LocalName$="$x.Value$"$endif$ >>

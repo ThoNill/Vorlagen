@@ -70,7 +70,7 @@
 		<GLUE>
 			<VBOX>
 				<HBOX>
-					<LABEL size="10" text="Bis Datum" />
+					<LABEL size="10" text="Bis Datum" name="bisDatum" />
 					<DATEFIELD name="bisDatum" />
 					<BUTTON call="WerteBuchen" size="12" text="Buchen" />
 					<GLUE />
