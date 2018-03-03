@@ -2,9 +2,9 @@ group repositorysBackend ;
 
 mypfad() ::= "janusAngular2Backend"
 
-myclassName(x) ::=<<$x.Page; format="cap"$Page>>
+myclassName(x) ::=<<repos$x.Page; format="cap"$Page>>
 
-dateiName(urmodell,model) ::= "$mypfad()$/repos$myclassName(model)$.java"
+dateiName(urmodell,model) ::= "$mypfad()$/$myclassName(model)$.java"
 
 dateiInhalt(urmodell,model) ::= <<$element(model)$>>
 
@@ -18,17 +18,14 @@ DIALOG(x) ::= <<
 
 package $mypfad()$;
 
-package repositories;
 import java.util.List;
-
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-
-import ausgang.AusgangsDatei;
-import ausgang.Ueberweisung;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 
-public interface UeberweisungRepository extends CrudRepository<Ueberweisung, Long> {
+public class $myclassName(x)$  {
+
+  @Autowired
+  JdbcTemplate jdbcTemplate;
 
  $childs(x)$
 
@@ -39,12 +36,15 @@ public interface UeberweisungRepository extends CrudRepository<Ueberweisung, Lon
 SQLSET( x ) ::= << $childs(x)$ >>
 
 
-SQL(x) ::= << $internSQL(x)$ ; >>
+SQL(x) ::= << $internSQL(x)$ >>
 
 internSQL(x) ::= <<
 
-  @Query(" $x.stmt$ ")
-  List<Ueberweisung> $x.name$();
+  public List<?> $x.name$ () {
+  return jdbcTemplate.query(
+                "$x.stmt$", new Object[] { "Josh" },
+                (rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name"));
+  }              
  
 >>
 
