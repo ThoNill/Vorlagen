@@ -143,15 +143,15 @@ public class XOMAdapter extends ObjectModelAdaptor {
     }
 
     protected Object createInstance(String name, boolean prüfen) {
-        if (packageName != null) {
+        if (name != null && packageName != null) {
             String className = packageName + "." + name;
             try {
-                if (prüfen && logger.isLoggable(Level.INFO)) {
-                    logger.info("Create object of class [" + className + "]");
-                }
                 Class cl = XOMAdapter.class.getClassLoader().loadClass(
                         className);
                 Object obj = cl.newInstance();
+                if (prüfen && logger.isLoggable(Level.INFO)) {
+                    logger.info("Create object of class [" + className + "]");
+                }
                 return obj;
 
             } catch (ClassNotFoundException e) {

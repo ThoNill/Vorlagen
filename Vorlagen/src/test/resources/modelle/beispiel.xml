@@ -28,7 +28,7 @@
 		</SQLSET>
 
 		<BEANSET>
-			<BEAN class="worker.WerteBuchungsWorker" name="einbuchenWerte">
+			<BEAN class="beans.WerteBuchungsWorker" name="einbuchenWerte">
 
 				<CALL command="buchen" name="buchen" post="updateList,clear">
 					<SET var="werteId" to="getWerte.Werteid" />

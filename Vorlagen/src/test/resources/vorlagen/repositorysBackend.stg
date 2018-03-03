@@ -1,0 +1,66 @@
+group repositorysBackend ;
+
+mypfad() ::= "janusAngular2Backend"
+
+myclassName(x) ::=<<$x.Page; format="cap"$Page>>
+
+dateiName(urmodell,model) ::= "$mypfad()$/repos$myclassName(model)$.java"
+
+dateiInhalt(urmodell,model) ::= <<$element(model)$>>
+
+element(x) ::= <<$if(x.isElement)$$(x.LocalName)(x)$$endif$ >>
+
+childs(x) ::= << $x.Childs:element()$ >>
+
+
+
+DIALOG(x) ::= << 
+
+package $mypfad()$;
+
+package repositories;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import ausgang.AusgangsDatei;
+import ausgang.Ueberweisung;
+
+
+public interface UeberweisungRepository extends CrudRepository<Ueberweisung, Long> {
+
+ $childs(x)$
+
+}
+
+>>
+
+SQLSET( x ) ::= << $childs(x)$ >>
+
+
+SQL(x) ::= << $internSQL(x)$ ; >>
+
+internSQL(x) ::= <<
+
+  @Query(" $x.stmt$ ")
+  List<Ueberweisung> $x.name$();
+ 
+>>
+
+
+STRINGSET( x ) ::= <<  >>
+BEANSET( x ) ::= <<  >>
+BATCHSET( x ) ::= <<  >>
+ACTIONSET( x ) ::= <<  >>
+GLOBALSET( x ) ::= <<  >>
+NAMESPACE( x ) ::= << $childs(x)$ >>
+
+
+MAPTABLE(x) ::= <<  >>
+GLOBAL(x) ::= <<  >>
+STRING(x) ::= <<  >>
+BATCH(x) ::= <<  >>
+BEAN(x) ::= <<  >>
+COLUMN(x) ::= <<  >>
+GUI(x) ::= <<  >>

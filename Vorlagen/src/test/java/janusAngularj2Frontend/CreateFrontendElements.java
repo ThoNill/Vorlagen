@@ -1,5 +1,7 @@
 package janusAngularj2Frontend;
 
+import janusAngular2Backend.wraps.SQL;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,34 +15,12 @@ import nu.xom.Element;
 import nu.xom.Node;
 import nu.xom.Text;
 
-public class CreateFrontendElements implements
-        VorlagenModellFabrik<Document, Document>,
-        ModellFabrik<Document, String> {
+public class CreateFrontendElements extends ChangeXMLModel {
     String[] datenQuellen = { "STRING", "MAPTABLE", "SQL", "MUTABLE", "BEAN",
             "CALL", "SELECTION", "COLUMN" };
-    String[] ignoriereElemente = { "STRINGSET", "MAPTABLESET", "SQLSET",
-            "BEANSET", "ACTIONSET", "GLOBALSET", "BATCHSET", "NAMESPACE" };
     String[] sqlÜbergehen = { "stmt", "contStmt", "prepare", "countOn" };
 
     public CreateFrontendElements() {
-    }
-
-    @Override
-    public Document erzeugeModell(String dateiName) {
-        XMLModelFabrik xmlFabrik = new XMLModelFabrik();
-        return changeDocument(xmlFabrik.erzeugeModell(dateiName));
-    }
-
-    @Override
-    public List<Document> erzeugeVorlagenModelle(Document model)
-            throws Exception {
-        List<Document> list = new ArrayList<Document>();
-        list.add(changeDocument(model));
-        return list;
-    }
-
-    protected Document changeDocument(Document source) {
-        return new Document(changeElement(source.getRootElement()));
     }
 
     protected Element changeElement(Element source) {
@@ -48,10 +28,27 @@ public class CreateFrontendElements implements
         String elementName = "app-" + source.getLocalName().toLowerCase();
         if (istEinElementVomTyp(source, "COLUMN") && !istEinElementVomTyp((Element)source.getParent(),"SHOWTABLE")) {
             elementName = "app-mu" + source.getLocalName().toLowerCase();
+        } else  if (istEinElementVomTyp(source, "SQL")) {
+            elementName = "app-mutable";
         }
-        Element newElement = new Element(elementName);
 
-        if (istEinElementVomTyp(source, "LABEL")) {
+        Element newElement = new Element(elementName);
+        if (istEinElementVomTyp(source, "SQL")) {
+            newElement.addAttribute(new Attribute("name",
+                    source.getAttributeValue("name")));
+            newElement.addAttribute(new Attribute("abfrageText",
+                    "api/mfisher/" + source.getAttributeValue("name")));
+            
+            
+            SQL wrap = new SQL();
+            wrap.setElem(source);
+            for(String parameter : wrap.getAbfrageParameter()) {
+                Element setElement = new Element("app-set");
+                setElement.addAttribute(new Attribute(parameter,
+                        parameter));
+                newElement.appendChild(setElement);
+            }
+        } else if (istEinElementVomTyp(source, "LABEL")) {
             Element templateElement = new Element("template");
             String aText = source.getAttributeValue("text");
             String aName = source.getAttributeValue("name");
@@ -75,33 +72,7 @@ public class CreateFrontendElements implements
         return newElement;
     }
 
-    protected void dieKinderHinzufügen(Element newElement, Element source) {
-        for (int i = 0; i < source.getChildCount(); i++) {
-            Node node = source.getChild(i);
-            if (node instanceof Element) {
-                Element childElement = (Element) node;
-                if (istDerNameImArrayEnthalten(childElement.getLocalName(),
-                        ignoriereElemente)) {
-                    dieKinderHinzufügen(newElement, childElement);
-                } else {
-                    newElement.appendChild(changeElement(childElement));
-                }
-            } else {
-                newElement.appendChild(node.copy());
-            }
-        }
-    }
 
-    protected void dieAttributeHinzufügen(Element newElement, Element source) {
-        for (int i = 0; i < source.getAttributeCount(); i++) {
-            Attribute attr = source.getAttribute(i);
-            Attribute neuesAttribut = changeAttribute(source, attr);
-            if (neuesAttribut != null) {
-                newElement.addAttribute(neuesAttribut);
-            }
-
-        }
-    }
 
     protected Attribute changeAttribute(Element source, Attribute attr) {
         if (istEinElementVomTyp(source, "SQL")
@@ -117,14 +88,6 @@ public class CreateFrontendElements implements
         }
     }
 
-    protected boolean istDerNameImArrayEnthalten(String gesucht, String[] namen) {
-        for (String name : namen) {
-            if (name.equals(gesucht)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     protected String ändereVariablen(String text) {
         String texte[] = text.split("\\?");
@@ -143,7 +106,5 @@ public class CreateFrontendElements implements
         return builder.toString();
     }
 
-    protected boolean istEinElementVomTyp(Element source, String name) {
-        return name.equals(source.getLocalName().toUpperCase());
-    }
 }
+

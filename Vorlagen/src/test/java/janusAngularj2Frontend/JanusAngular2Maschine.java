@@ -28,11 +28,14 @@ public class JanusAngular2Maschine extends XMLMaschine{
             ) {
         super(modellBeschreibung, basisModellVerzeichnis, basisVorlagenVerzeichnis,
                 basisZielVerzeichnis);
-        
-        
+      
+        new BackendXMLDefinition("repositorysBackend", "modelle", "vorlagen","java",null,null,this,StandardCharsets.UTF_8);
+        /*
+        new BackendXMLDefinition("JanusAngular2RestController", "modelle", "vorlagen","java","janusAngular2Backend.wraps",null,this,StandardCharsets.UTF_8);
+        new BackendXMLDefinition("JanusAngular2Backend", "modelle", "vorlagen","java",null,null,this,StandardCharsets.UTF_8);
         new FrontendXMLDefinition("JanusAngular2Frontend", "modelle", "vorlagen","ts",null,null,this,StandardCharsets.UTF_8);
         new FrontendPageComponentDefinition("JanusAngular2Page", "modelle", "vorlagen","ts",null,null,this,StandardCharsets.UTF_8);
-        
+        */
     }
 
 
