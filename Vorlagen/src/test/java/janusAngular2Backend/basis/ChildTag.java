@@ -8,7 +8,8 @@ public abstract class ChildTag extends BasisTag {
    }
 
     
-    public String getName() {
+    @Override
+	public String getName() {
         return parent.getName() + "." + getName();
     }
  

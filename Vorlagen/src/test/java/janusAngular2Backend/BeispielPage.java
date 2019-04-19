@@ -1,16 +1,16 @@
 package janusAngular2Backend;
 
-import janusAngular2Backend.basis.PageBasis;
+import janusAngular2Backend.basis.BatchTag;
+import janusAngular2Backend.basis.BeanTag;
 import janusAngular2Backend.basis.CallTag;
-import janusAngular2Backend.basis.ColumnTag;
+import janusAngular2Backend.basis.PageBasis;
 import janusAngular2Backend.basis.SetTag;
 import janusAngular2Backend.basis.SqlTag;
-import janusAngular2Backend.basis.BeanTag;
-import janusAngular2Backend.basis.BatchTag;
 
 public class BeispielPage extends PageBasis {
 
-    public void init() {
+    @Override
+	public void init() {
 
         add(new SqlTag(
                 this,

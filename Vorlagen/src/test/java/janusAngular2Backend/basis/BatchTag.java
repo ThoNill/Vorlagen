@@ -1,6 +1,5 @@
 package janusAngular2Backend.basis;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +21,8 @@ public class BatchTag extends ChildTag {
     public Adder getStart() {
         final BatchTag batch = this;
         return new Adder() {
-            public BatchTag add(BeanTag bean) {
+            @Override
+			public BatchTag add(BeanTag bean) {
                 batch.setStart(bean);
                 return batch;
             }
@@ -32,7 +32,8 @@ public class BatchTag extends ChildTag {
     public Adder getRun() {
         final BatchTag batch = this;
         return new Adder() {
-            public BatchTag add(BeanTag bean) {
+            @Override
+			public BatchTag add(BeanTag bean) {
                 batch.setRun(bean);
                 return batch;
             }
@@ -42,7 +43,8 @@ public class BatchTag extends ChildTag {
     public Adder getStop() {
         final BatchTag batch = this;
         return new Adder() {
-            public BatchTag add(BeanTag bean) {
+            @Override
+			public BatchTag add(BeanTag bean) {
                 batch.setStop(bean);
                 return batch;
             }

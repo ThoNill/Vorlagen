@@ -1,19 +1,9 @@
 package janusAngularj2Frontend;
 
-import janusAngular2Backend.wraps.SQL;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.nill.modelle.xml.XMLModelFabrik;
-import org.nill.vorlagen.ModellFabrik;
-import org.nill.vorlagen.VorlagenModellFabrik;
-
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Node;
-import nu.xom.Text;
 
 public class BaumDurchsuchen  {
     

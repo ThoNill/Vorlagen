@@ -1,7 +1,8 @@
 group DIALOG ;
 
-mypfad() ::= "package"
+overwrite(urmodell,model) ::= "true"
 
+mypfad() ::= "package"
 
 dateiName(urmodell,model) ::= "$mypfad()$/$model.Page$.java"
 

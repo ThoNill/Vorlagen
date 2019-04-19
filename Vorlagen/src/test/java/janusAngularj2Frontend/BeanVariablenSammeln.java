@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 
@@ -26,7 +25,8 @@ public class BeanVariablenSammeln extends VariablenNutzungSammeln{
                  
     }
     
-    public void dasDocumentDurchsuchen(Document source) {
+    @Override
+	public void dasDocumentDurchsuchen(Document source) {
         super.dasDocumentDurchsuchen(source);
         for(String name : getVariablenNamen()) {
             if (name.contains(".")) {

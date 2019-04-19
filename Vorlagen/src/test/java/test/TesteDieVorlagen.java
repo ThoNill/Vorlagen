@@ -1,8 +1,6 @@
 package test;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,13 +14,10 @@ public class TesteDieVorlagen {
     @Test
     public void test() {
 
-        TestMaschine maschine = new TestMaschine("test", "modelle", "vorlagen",
-                "target", new TestModellFabrik());
-        new TestVorlagenDefinition("testVorlage", ".", ".",
-                "java", new TestVorlagenFabrik(),
-                new TestVorlagenModelFabrik(), maschine, StandardCharsets.UTF_8);
+        TestMaschine maschine = new TestMaschine("test",  new TestModellFabrik());
+        maschine.add(new TestVorlagenFabrik(),"vorlagenBeschreibung");
         try {
-            File f = new File("target/java/package/test");
+            File f = new File("./target/java/package/test");
             if (f.exists()) {
                 f.delete();
             }

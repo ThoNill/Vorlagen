@@ -10,7 +10,8 @@ public class ParameterImpl implements Parameter {
         this.map = map;
     }
     
-    public Object get(String name) {
+    @Override
+	public Object get(String name) {
         return map.get(name);
     }
     

@@ -1,20 +1,15 @@
 package janusAngularj2Frontend;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.function.Function;
 
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Node;
 
-import org.nill.modelle.xml.XMLModelFabrik;
-import org.nill.vorlagen.ModellFabrik;
-import org.nill.vorlagen.VorlagenModellFabrik;
-
 public abstract class ChangeXMLModel implements
-VorlagenModellFabrik<Document, Document>,
-ModellFabrik<Document, String>{
+Function<Document, Document>{
 
     String[] ignoriereElemente = { "STRINGSET", "MAPTABLESET", "SQLSET",
                 "BEANSET", "ACTIONSET", "GLOBALSET", "BATCHSET", "NAMESPACE" };
@@ -23,17 +18,10 @@ ModellFabrik<Document, String>{
         super();
     }
 
-    @Override
-    public Document erzeugeModell(String dateiName) {
-        XMLModelFabrik xmlFabrik = new XMLModelFabrik();
-        return changeDocument(xmlFabrik.erzeugeModell(dateiName));
-    }
 
     @Override
-    public List<Document> erzeugeVorlagenModelle(Document model) throws Exception {
-        List<Document> list = new ArrayList<Document>();
-        list.add(changeDocument(model));
-        return list;
+    public Document apply(Document model)  {
+       return changeDocument(model);
     }
 
     protected Document changeDocument(Document source) {

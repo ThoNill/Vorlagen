@@ -1,19 +1,16 @@
 package janusAngularj2Frontend;
 
-import org.nill.vorlagen.ModellFabrik;
-import org.nill.vorlagen.VorlagenModellFabrik;
 import nu.xom.Attribute;
-import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Nodes;
-import nu.xom.Text;
 
 public class CreateBackendElements extends ChangeXMLModel {
     
     public CreateBackendElements() {
     }
 
-    protected Element changeElement(Element source) {
+    @Override
+	protected Element changeElement(Element source) {
 
         Element newElement = new Element(source.getLocalName());
 
@@ -66,7 +63,8 @@ public class CreateBackendElements extends ChangeXMLModel {
         return newElement;
     }
 
-    protected Attribute changeAttribute(Element source, Attribute attr) {
+    @Override
+	protected Attribute changeAttribute(Element source, Attribute attr) {
        return new Attribute(attr);
     }
 }

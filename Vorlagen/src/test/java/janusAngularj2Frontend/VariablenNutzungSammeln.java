@@ -2,6 +2,7 @@ package janusAngularj2Frontend;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import nu.xom.Attribute;
 import nu.xom.Element;
 

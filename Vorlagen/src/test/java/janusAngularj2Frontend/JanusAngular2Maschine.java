@@ -1,35 +1,33 @@
 package janusAngularj2Frontend;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
-import junit.framework.Assert;
+import org.nill.ST.xml.XML_STVerzeichnisMaschine;
+import org.nill.vorlagen.GeneratorList;
 import nu.xom.Document;
 
-import org.nill.ST.xml.XMLMaschine;
-import org.nill.ST.xml.XMLVorlagenDefinition;
-import org.nill.ST.xml.XMLVorlagenFabrik;
-import org.nill.modelle.xml.XMLModelFabrik;
-import org.nill.modelle.xml.XMLVerzeichnisVorlagenModellFabrik;
-import org.nill.verzeichnisse.VerzeichnisModell;
-import org.nill.verzeichnisse.VerzeichnisModellFabrik;
-import org.nill.vorlagen.VorlagenMaschine;
 
-import static org.junit.Assert.*;
+public class JanusAngular2Maschine extends GeneratorList{
 
-import org.junit.Test;
-
-
-public class JanusAngular2Maschine extends XMLMaschine{
-
-    public JanusAngular2Maschine(String modellBeschreibung,
-            String basisModellVerzeichnis, String basisVorlagenVerzeichnis,
-            String basisZielVerzeichnis
-            ) {
-        super(modellBeschreibung, basisModellVerzeichnis, basisVorlagenVerzeichnis,
-                basisZielVerzeichnis);
+    public JanusAngular2Maschine(
+    		File modellVerzeichnis, 
+    		File vorlageVerzeichnis) throws Exception {
+        super();
+        add( new XML_STVerzeichnisMaschine(   
+                modellVerzeichnis, vorlageVerzeichnis,
+    			new File("./target/angular2/backend"),"","", true,
+    			new CreateBackendElements()));
+        add( new XML_STVerzeichnisMaschine(   
+                modellVerzeichnis, vorlageVerzeichnis,
+                new File("./target/angular2/frontend"),"","", true,
+    			new CreateFrontendElements()));
+        add( new XML_STVerzeichnisMaschine(   
+                modellVerzeichnis, vorlageVerzeichnis,
+                new File("./target/angular2/page"),"","", true, 
+                Function.identity()));
       
-        new BackendXMLDefinition("repositorysBackend", "modelle", "vorlagen","java",null,null,this,StandardCharsets.UTF_8);
+        //new BackendXMLDefinition("repositorysBackend", "modelle", "vorlagen","java",null,null,this,StandardCharsets.UTF_8);
         /*
         new BackendXMLDefinition("JanusAngular2RestController", "modelle", "vorlagen","java","janusAngular2Backend.wraps",null,this,StandardCharsets.UTF_8);
         new BackendXMLDefinition("JanusAngular2Backend", "modelle", "vorlagen","java",null,null,this,StandardCharsets.UTF_8);

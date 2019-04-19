@@ -1,9 +1,8 @@
 package janusAngular2Backend.basis;
 
 public abstract class BasisTag {
-
     private PageBasis basis;
-    private String name;
+	private String name;
 
     public BasisTag(PageBasis basis, String name) {
         super();
@@ -15,6 +14,9 @@ public abstract class BasisTag {
         return name;
     }   
     
+    public PageBasis getBasis() {
+    	return basis;
+    }
     
     public abstract Ergebnis execute(Parameter parameter );
 

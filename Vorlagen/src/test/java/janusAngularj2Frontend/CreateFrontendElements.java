@@ -1,18 +1,8 @@
 package janusAngularj2Frontend;
 
 import janusAngular2Backend.wraps.SQL;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.nill.modelle.xml.XMLModelFabrik;
-import org.nill.vorlagen.ModellFabrik;
-import org.nill.vorlagen.VorlagenModellFabrik;
-
 import nu.xom.Attribute;
-import nu.xom.Document;
 import nu.xom.Element;
-import nu.xom.Node;
 import nu.xom.Text;
 
 public class CreateFrontendElements extends ChangeXMLModel {
@@ -23,7 +13,8 @@ public class CreateFrontendElements extends ChangeXMLModel {
     public CreateFrontendElements() {
     }
 
-    protected Element changeElement(Element source) {
+    @Override
+	protected Element changeElement(Element source) {
 
         String elementName = "app-" + source.getLocalName().toLowerCase();
         if (istEinElementVomTyp(source, "COLUMN") && !istEinElementVomTyp((Element)source.getParent(),"SHOWTABLE")) {
@@ -74,7 +65,8 @@ public class CreateFrontendElements extends ChangeXMLModel {
 
 
 
-    protected Attribute changeAttribute(Element source, Attribute attr) {
+    @Override
+	protected Attribute changeAttribute(Element source, Attribute attr) {
         if (istEinElementVomTyp(source, "SQL")
                 && istDerNameImArrayEnthalten(attr.getLocalName(), sql‹bergehen)) {
             return null;

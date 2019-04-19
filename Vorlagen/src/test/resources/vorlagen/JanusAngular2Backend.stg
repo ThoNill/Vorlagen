@@ -1,5 +1,7 @@
 group JanusAngular2Backend ;
 
+overwrite(urmodell,model) ::= "true"
+
 mypfad() ::= "janusAngular2Backend"
 
 myclassName(x) ::=<<$x.Page; format="cap"$Page>>
