@@ -1,4 +1,4 @@
-package org.nill.vorlagen;
+package org.nill.reactive;
 
 @FunctionalInterface
 public interface Generator {

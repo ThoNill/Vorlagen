@@ -9,13 +9,12 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import org.reactivestreams.Subscriber;
+
+import javax.lang.model.element.Element;
+
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
 import org.stringtemplate.v4.StringRenderer;
-import reactor.core.publisher.BaseSubscriber;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.TypeElement;
 
 
 public class STConsumerBasis<M>  {

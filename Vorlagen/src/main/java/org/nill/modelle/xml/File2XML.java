@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.function.Function;
 
-import org.nill.vorlagen.ModellFabrik;
-
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;

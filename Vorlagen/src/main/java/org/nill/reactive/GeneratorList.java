@@ -1,4 +1,4 @@
-package org.nill.vorlagen;
+package org.nill.reactive;
 
 import java.util.ArrayList;
 import java.util.List;

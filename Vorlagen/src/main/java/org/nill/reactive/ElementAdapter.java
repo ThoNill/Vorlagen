@@ -1,14 +1,12 @@
 package org.nill.reactive;
 
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+
 import org.stringtemplate.v4.Interpreter;
-import org.stringtemplate.v4.ModelAdaptor;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.misc.ObjectModelAdaptor;
 import org.stringtemplate.v4.misc.STNoSuchPropertyException;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.Elements;
 
 public class ElementAdapter extends ObjectModelAdaptor {
 

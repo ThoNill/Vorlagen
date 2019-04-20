@@ -4,15 +4,12 @@ package test.xml;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import java.io.File;
-
+import java.nio.charset.StandardCharsets;
 import org.junit.Test;
-import org.nill.ST.xml.XML_STVorlage;
-import org.nill.ST.xml.XML_STVorlagenFabrik;
 import org.nill.modelle.xml.XMLModelFabrik;
-import org.nill.vorlagen.Vorlage;
-
+import org.nill.reactive.ModellAndFile;
+import org.nill.reactive.XML_STConsumer;
 import nu.xom.Document;
 
 public class TesteXML {
@@ -37,8 +34,8 @@ public class TesteXML {
 
 			XMLTestMaschine maschine = new XMLTestMaschine();
 			XMLModelFabrik modellFabrik = new XMLModelFabrik();
-			Document document = modellFabrik.erzeugeModell(
-					maschine.getModellVerzeichnis().toString() + File.separator + "beispiel.xml");
+			Document document = modellFabrik.apply(
+					"src/test/resources/modelle/beispiel.xml");
 
 			assertNotNull(document);
 		} catch (Exception ex) {
@@ -48,21 +45,7 @@ public class TesteXML {
 
 	}
 
-	@Test
-	public void ladeVorlage() {
-		try {
-
-			XMLTestMaschine maschine = new XMLTestMaschine();
-			XML_STVorlagenFabrik vorlagenFabrik = new XML_STVorlagenFabrik(
-					maschine.getVorlageVerzeichnis(),basisVerzeicnis,"test.xml.wrap","BeispielWrap",true);
-			Vorlage vorlage = vorlagenFabrik.erzeugeVorlage(new File(maschine.getVorlageVerzeichnis(),"beispiel.stg"));
-			assertNotNull(vorlage);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail();
-		}
-
-	}
+	
 
 	@Test
 	public void ladeModelUndVorlage() {
@@ -70,15 +53,15 @@ public class TesteXML {
 
 			XMLTestMaschine maschine = new XMLTestMaschine();
 			XMLModelFabrik modellFabrik = new XMLModelFabrik();
-			Document document = modellFabrik.erzeugeModell(new File(maschine.getModellVerzeichnis(),"beispiel.xml").toString());
+			Document document = modellFabrik.apply(new File("src/test/resources/modelle/beispiel.xml").toString());
 			assertNotNull(document);
 
-			XML_STVorlagenFabrik vorlagenFabrik = new XML_STVorlagenFabrik(maschine.getVorlageVerzeichnis(),basisVerzeicnis,"test.xml.wrap","BeispielWrap",true);
-			XML_STVorlage vorlage = (XML_STVorlage) vorlagenFabrik.erzeugeVorlage(new File(maschine.getVorlageVerzeichnis(),"beispiel.stg"));
-			assertNotNull(vorlage);
+			XML_STConsumer consumer = new XML_STConsumer(StandardCharsets.UTF_8,"test.xml.wrap","BeispielWrap");
+			
+			ModellAndFile<Document> mf1 = new ModellAndFile<Document>(document, new File("src/test/resources/vorlagen/beispiel.stg"));
+			ModellAndFile<ModellAndFile<Document>> mf2 = new ModellAndFile<>(mf1,new File("./target/java"));
+			consumer.accept(mf2);
 
-			String inhalt = vorlage.apply("dateiInhalt", document);
-			assertTrue(inhalt.contains("public class beispiel"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail();
@@ -98,12 +81,6 @@ public class TesteXML {
 		}
 	}
 
-	/*
-	 * @Test public void erzeugeJanusAngular2() { XMLMaschine maschine = new
-	 * JanusAngular2Maschine("modelle", "modelle", ".", "ausgabe"); try {
-	 * maschine.erzeugeAusgabe(); assertTrue(new
-	 * File("ausgabe/ts/frontend/beispielPage.html").exists()); } catch (Exception
-	 * e) { e.printStackTrace(); fail(); } }
-	 */
+
 
 }

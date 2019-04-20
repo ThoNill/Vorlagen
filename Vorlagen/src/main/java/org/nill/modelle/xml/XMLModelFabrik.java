@@ -6,8 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Vector;
-
-import org.nill.vorlagen.ModellFabrik;
+import java.util.function.Function;
 
 import nu.xom.Attribute;
 import nu.xom.Builder;
@@ -18,10 +17,10 @@ import nu.xom.Node;
 import nu.xom.Nodes;
 import nu.xom.ParentNode;
 
-public class XMLModelFabrik implements ModellFabrik<Document, String> {
-
+public class XMLModelFabrik implements Function<String,Document> {
+	
     @Override
-    public Document erzeugeModell(String dateiName) {
+    public Document apply(String dateiName) {
         InputStream file;
         try {
             file = holeStream(dateiName);
@@ -191,5 +190,7 @@ public class XMLModelFabrik implements ModellFabrik<Document, String> {
             index++;
         }
     }
+
+
 
 }

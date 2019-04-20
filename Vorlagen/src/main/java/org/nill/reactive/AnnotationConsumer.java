@@ -1,24 +1,16 @@
 package org.nill.reactive;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.function.Consumer;
 
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.TypeElement;
 import javax.tools.JavaFileObject;
 
-import org.nill.ST.vorlagen.STVorlage;
-import org.nill.vorlagen.VorlagenFabrik;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 import org.stringtemplate.v4.STGroupFile;
 
 public class AnnotationConsumer<M extends TypeElement> 

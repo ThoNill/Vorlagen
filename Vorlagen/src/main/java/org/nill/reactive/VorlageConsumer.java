@@ -1,4 +1,4 @@
-package org.nill.vorlagen;
+package org.nill.reactive;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,18 +10,15 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.List;
-import java.util.Optional;
+import java.util.function.Consumer;
 
-public abstract class Vorlage<MODELL, VORLAGEN_MODELL, VORLAGEN_BESCHREIBUNG> {
+public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<ModellAndFile<VORLAGEN_MODELL>> {
+
 	private Charset charset = StandardCharsets.UTF_8;
-	private VorlagenFabrik<MODELL, VORLAGEN_MODELL, VORLAGEN_BESCHREIBUNG> vorlagenFabrik;
 	private boolean überschreiben;
 
-	public Vorlage(VorlagenFabrik<MODELL, VORLAGEN_MODELL, VORLAGEN_BESCHREIBUNG> vorlagenFabrik, Charset charSet,
-			boolean überschreiben) {
+	public VorlageConsumer(Charset charSet, boolean überschreiben) {
 		super();
-		this.vorlagenFabrik = vorlagenFabrik;
 		this.charset = charSet;
 		this.überschreiben = überschreiben;
 
@@ -29,17 +26,25 @@ public abstract class Vorlage<MODELL, VORLAGEN_MODELL, VORLAGEN_BESCHREIBUNG> {
 
 	public abstract void erzeugeAusgabe(Writer writer, VORLAGEN_MODELL modell) throws IOException;
 
-	public abstract File getAusgabe(VORLAGEN_MODELL modell);
+	public abstract File getAusgabe(VORLAGEN_MODELL modell, File ausgabeVerzeichnis);
 
-	public void erzeugeAusgabe(MODELL modell) throws Exception {
-		List<VORLAGEN_MODELL> vorlagenModelle = vorlagenFabrik.erzeugeVorlagenModell(modell);
-		for (VORLAGEN_MODELL vm : vorlagenModelle) {
-			erzeugeAusgabeAusVorlageModel(vm);
+	@Override
+	public void accept(ModellAndFile<VORLAGEN_MODELL> vm) {
+		try {
+			erzeugeAusgabeAusVorlageModel(vm.modell, vm.file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
-	private void erzeugeAusgabeAusVorlageModel(VORLAGEN_MODELL vm) throws IOException, FileNotFoundException {
-		String dateiName = getAusgabe(vm).toString();
+	private void erzeugeAusgabeAusVorlageModel(VORLAGEN_MODELL vm, File ausgabeVerzeichnis)
+			throws IOException, FileNotFoundException {
+		String dateiName = getAusgabe(vm, ausgabeVerzeichnis).toString();
 		if (überschreiben || !(new File(dateiName)).exists()) {
 			erzeugeEventuellFehlendeVerzeichnisse(dateiName);
 			Writer writer = erzeugeWriter(dateiName);

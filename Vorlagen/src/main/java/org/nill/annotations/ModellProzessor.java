@@ -6,23 +6,18 @@ import java.util.Set;
 import java.util.function.Function;
 
 import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 
-import org.nill.modelle.xml.File2XML;
-import org.nill.reactive.DateienEinesVerzeichnisses;
 import org.nill.reactive.FileDazu;
 import org.nill.reactive.ListPublisher;
 import org.nill.reactive.ModelAndFileErweitern;
 import org.nill.reactive.ModellAndFile;
 import org.nill.reactive.STConsumer;
-import org.nill.reactive.XML_STConsumer;
 
-import nu.xom.Document;
 import reactor.core.publisher.Flux;
 
 @SupportedAnnotationTypes("org.nill.annotations.Modell")

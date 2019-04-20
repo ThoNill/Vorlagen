@@ -4,10 +4,6 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.function.Consumer;
 
-import org.nill.vorlagen.VorlagenFabrik;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 public class STConsumer<M> extends STConsumerBasis<M> 
 implements Consumer<ModellAndFile<ModellAndFile<M>>> {
 	

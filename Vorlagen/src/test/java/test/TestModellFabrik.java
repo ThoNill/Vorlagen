@@ -1,15 +1,23 @@
 package test;
 
-import org.nill.vorlagen.ModellFabrik;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
-public class TestModellFabrik implements ModellFabrik<TestModell,String>{
+import org.nill.reactive.ListTransform;
+
+public class TestModellFabrik implements ListTransform<String,TestModell>{
 
     public TestModellFabrik() {
     }
     
     @Override
-    public TestModell erzeugeModell(String beschreibung) {
-        return new TestModell(beschreibung);
+    public List<TestModell> transform(String beschreibung) {
+        TestModell m = new TestModell(beschreibung);
+        List<TestModell> liste = new ArrayList<>();
+        liste.add(m);
+        return liste;
     };
 
 
