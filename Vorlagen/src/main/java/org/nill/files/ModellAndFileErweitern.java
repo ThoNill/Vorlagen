@@ -1,10 +1,12 @@
-package org.nill.reactive;
+package org.nill.files;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelAndFileErweitern<M>  implements ListTransform<ModellAndFile<M>, ModellAndFile<M>>{
+import org.nill.lists.ListTransform;
+
+public class ModellAndFileErweitern<M>  implements ListTransform<ModellAndFile<M>, ModellAndFile<M>>{
 
 	@Override
 	public List<ModellAndFile<M>> transform(ModellAndFile<M> x) {

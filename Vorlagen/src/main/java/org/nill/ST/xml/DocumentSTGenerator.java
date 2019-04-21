@@ -1,15 +1,21 @@
-package org.nill.reactive;
+package org.nill.ST.xml;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
 
-import org.nill.modelle.xml.File2XML;
+import org.nill.files.DateienEinesVerzeichnisses;
+import org.nill.files.FileDazu;
+import org.nill.files.ModellAndFile;
+import org.nill.files.ModellAndFileErweitern;
+import org.nill.generator.Generator;
+import org.nill.lists.ListPublisher;
+import org.nill.modelle.xml.File2Document;
 
 import nu.xom.Document;
 import reactor.core.publisher.Flux;
 
-public class XML_STAusgabe implements Generator{
+public class DocumentSTGenerator implements Generator{
 	private File modellVerzeichnis;
 	private File vorlagenVerzeichnis;
 	private File ausgabeVerzeichnis;
@@ -18,12 +24,12 @@ public class XML_STAusgabe implements Generator{
 	private Function<Document,Document> toVorlageModell;
 	
 
-	public XML_STAusgabe(File modellVerzeichnis, File vorlagenVerzeichnis, File ausgabeVerzeichnis, String packageName,
+	public DocumentSTGenerator(File modellVerzeichnis, File vorlagenVerzeichnis, File ausgabeVerzeichnis, String packageName,
 			String defaultCLass) {
 		this(modellVerzeichnis,vorlagenVerzeichnis,ausgabeVerzeichnis,packageName,defaultCLass,Function.identity());
 	}
 	
-	public XML_STAusgabe(File modellVerzeichnis, File vorlagenVerzeichnis, File ausgabeVerzeichnis, String packageName,
+	public DocumentSTGenerator(File modellVerzeichnis, File vorlagenVerzeichnis, File ausgabeVerzeichnis, String packageName,
 			String defaultCLass,Function<Document,Document> toVorlageModel) {
 		super();
 		this.modellVerzeichnis = modellVerzeichnis;
@@ -39,14 +45,14 @@ public class XML_STAusgabe implements Generator{
 	public void erzeugeAusgabe() throws Exception {
 		Flux.just(modellVerzeichnis)
 		.flatMap(new ListPublisher<File,File>(new DateienEinesVerzeichnisses()))
-		.map(new File2XML())
+		.map(new File2Document())
 		.map(toVorlageModell)
 		.map(new FileDazu<Document>(vorlagenVerzeichnis))
 		.flatMap(
 				new ListPublisher<ModellAndFile<Document>,ModellAndFile<Document>>(
-						new ModelAndFileErweitern<Document>()))
+						new ModellAndFileErweitern<Document>()))
 		.map(new FileDazu<ModellAndFile<Document>>(ausgabeVerzeichnis))
-		.subscribe(new XML_STConsumer(StandardCharsets.UTF_8, packageName, defaultCLass));
+		.subscribe(new DocumentSTConsumer(StandardCharsets.UTF_8, packageName, defaultCLass));
 	}
 	
 }

@@ -17,7 +17,7 @@ import nu.xom.Node;
 import nu.xom.Nodes;
 import nu.xom.ParentNode;
 
-public class File2XML implements Function<File, Document> {
+public class File2Document implements Function<File, Document> {
 
 	@Override
 	public Document apply(File file) {

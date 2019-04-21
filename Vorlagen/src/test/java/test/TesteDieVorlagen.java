@@ -6,10 +6,10 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.nill.reactive.Generator;
-import org.nill.reactive.ListTransform;
-import org.nill.reactive.VorlageAusgabe;
-import org.nill.reactive.VorlageConsumer;
+import org.nill.generator.Generator;
+import org.nill.lists.ListTransform;
+import org.nill.vorlagen.VorlageGenerator;
+import org.nill.vorlagen.VorlageConsumer;
 
 
 public class TesteDieVorlagen {
@@ -21,7 +21,7 @@ public class TesteDieVorlagen {
     public void test() {
 
     	try {
-    	VorlageAusgabe<TestModell,String,TestModell> ausgabe = new  VorlageAusgabe("test", new TestModellFabrik(),
+    	VorlageGenerator<TestModell,String,TestModell> ausgabe = new  VorlageGenerator("test", new TestModellFabrik(),
     			new TestVorlagenModellFabrik(),
     			new TestVorlage() , 
     			new File("./target/java/package"));

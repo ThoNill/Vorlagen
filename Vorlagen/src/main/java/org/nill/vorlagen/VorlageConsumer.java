@@ -1,4 +1,4 @@
-package org.nill.reactive;
+package org.nill.vorlagen;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,6 +11,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.function.Consumer;
+
+import org.nill.files.ModellAndFile;
 
 public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<ModellAndFile<VORLAGEN_MODELL>> {
 

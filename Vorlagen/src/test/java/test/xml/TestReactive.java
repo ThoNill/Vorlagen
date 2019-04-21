@@ -5,14 +5,14 @@ import static org.junit.Assert.fail;
 import java.io.File;
 
 import org.junit.Test;
-import org.nill.reactive.XML_STAusgabe;
+import org.nill.ST.xml.DocumentSTGenerator;
 
 public class TestReactive {
 
 	@Test
 	public void test() {
 
-		XML_STAusgabe a = new XML_STAusgabe(
+		DocumentSTGenerator a = new DocumentSTGenerator(
 
 				new File(".", "src/test/resources/modelle"), new File(".", "src/test/resources/vorlagen"),
 				new File("./target/reactive"), "test.xml.wrap", "BeispielWrap");

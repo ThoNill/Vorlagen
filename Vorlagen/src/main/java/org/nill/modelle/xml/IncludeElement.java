@@ -29,8 +29,8 @@ public class IncludeElement extends Element {
 		InputStream in = Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream(filename);
 		if (in != null) {
-			Element template = XMLModelFabrik.ladeDasRootElement(in);
-			XMLModelFabrik.ersetzeElementDurchTemplate(this, template, sternValue);
+			Element template = File2Document.ladeDasRootElement(in);
+			File2Document.ersetzeElementDurchTemplate(this, template, sternValue);
 			
 		}
 	}

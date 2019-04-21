@@ -1,8 +1,8 @@
-package org.nill.reactive;
+package org.nill.ST.xml;
 
 import java.nio.charset.Charset;
 
-import org.nill.ST.xml.XOMAdapter;
+import org.nill.reactive.STConsumer;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
 
@@ -10,12 +10,12 @@ import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 
-public class XML_STConsumer extends STConsumer<Document> {
+public class DocumentSTConsumer extends STConsumer<Document> {
 
 	private String packageName;
 	private String defaultClass;
 
-	public XML_STConsumer(Charset charset, String packageName, String defaultCLass) {
+	public DocumentSTConsumer(Charset charset, String packageName, String defaultCLass) {
 		super(charset);
 		this.packageName = packageName;
 		this.defaultClass = defaultCLass;

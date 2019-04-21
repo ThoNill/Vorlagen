@@ -1,4 +1,4 @@
-package org.nill.reactive;
+package org.nill.lists;
 
 import java.util.List;
 

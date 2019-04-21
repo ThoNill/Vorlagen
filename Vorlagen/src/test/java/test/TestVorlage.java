@@ -6,7 +6,7 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import org.nill.reactive.VorlageConsumer;
+import org.nill.vorlagen.VorlageConsumer;
 
 public class TestVorlage extends VorlageConsumer<TestModell> {
 

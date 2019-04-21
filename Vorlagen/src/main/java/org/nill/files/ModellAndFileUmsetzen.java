@@ -1,12 +1,14 @@
-package org.nill.reactive;
+package org.nill.files;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModellAnFileUmsetzen<Q,Z>  implements ListTransform<ModellAndFile<Q>, ModellAndFile<Z>>{
+import org.nill.lists.ListTransform;
+
+public class ModellAndFileUmsetzen<Q,Z>  implements ListTransform<ModellAndFile<Q>, ModellAndFile<Z>>{
 	private ListTransform<Q,Z> modellTransform;
 	
-	public ModellAnFileUmsetzen(ListTransform<Q, Z> modellTransform) {
+	public ModellAndFileUmsetzen(ListTransform<Q, Z> modellTransform) {
 		super();
 		this.modellTransform = modellTransform;
 	}

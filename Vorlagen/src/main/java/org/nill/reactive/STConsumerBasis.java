@@ -10,8 +10,6 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
-import javax.lang.model.element.Element;
-
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
 import org.stringtemplate.v4.StringRenderer;
@@ -40,7 +38,6 @@ public class STConsumerBasis<M>  {
 	}
 
 	protected void register(STGroupFile group) {
-		group.registerModelAdaptor(Element.class,new ElementAdapter());
 		group.registerRenderer(String.class, new StringRenderer());
 	}
 

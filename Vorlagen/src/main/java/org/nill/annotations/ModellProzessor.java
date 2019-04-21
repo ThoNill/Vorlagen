@@ -12,10 +12,10 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 
-import org.nill.reactive.FileDazu;
-import org.nill.reactive.ListPublisher;
-import org.nill.reactive.ModelAndFileErweitern;
-import org.nill.reactive.ModellAndFile;
+import org.nill.files.FileDazu;
+import org.nill.files.ModellAndFile;
+import org.nill.files.ModellAndFileErweitern;
+import org.nill.lists.ListPublisher;
 import org.nill.reactive.STConsumer;
 
 import reactor.core.publisher.Flux;
@@ -69,7 +69,7 @@ public class ModellProzessor extends AbstractProcessor {
   		.map(new FileDazu<Element>(vorlagenVerzeichnis))
   		.flatMap(
   				new ListPublisher<ModellAndFile<Element>,ModellAndFile<Element>>(
-  						new ModelAndFileErweitern<Element>()))
+  						new ModellAndFileErweitern<Element>()))
   		.map(new FileDazu<ModellAndFile<Element>>(ausgabeVerzeichnis))
   		.subscribe(new STConsumer<Element>(StandardCharsets.UTF_8));
   	}

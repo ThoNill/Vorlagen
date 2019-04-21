@@ -1,17 +1,22 @@
-package org.nill.reactive;
+package org.nill.vorlagen;
 
 import java.io.File;
 
+import org.nill.files.FileDazu;
+import org.nill.generator.Generator;
+import org.nill.lists.ListPublisher;
+import org.nill.lists.ListTransform;
+
 import reactor.core.publisher.Flux;
 
-public class VorlageAusgabe<MODELL, MODELL_BESCHREIBUNG, VORLAGEN_MODELL> implements Generator {
+public class VorlageGenerator<MODELL, MODELL_BESCHREIBUNG, VORLAGEN_MODELL> implements Generator {
 	private MODELL_BESCHREIBUNG beschreibung;
 	private ListTransform<MODELL_BESCHREIBUNG, MODELL> erzeugeModelle;
 	private ListTransform<MODELL, VORLAGEN_MODELL> erzeugeVorlagenModelle;
 	private VorlageConsumer<VORLAGEN_MODELL> vorlagenConsumer;
 	private File ausgabeVerzeichnis;
 	
-	public VorlageAusgabe(MODELL_BESCHREIBUNG beschreibung, ListTransform<MODELL_BESCHREIBUNG, MODELL> erzeugeModelle,
+	public VorlageGenerator(MODELL_BESCHREIBUNG beschreibung, ListTransform<MODELL_BESCHREIBUNG, MODELL> erzeugeModelle,
 			ListTransform<MODELL, VORLAGEN_MODELL> erzeugeVorlagenModelle,
 			VorlageConsumer<VORLAGEN_MODELL> vorlagenConsumer, File ausgabeVerzeichnis) {
 		super();
@@ -21,6 +26,7 @@ public class VorlageAusgabe<MODELL, MODELL_BESCHREIBUNG, VORLAGEN_MODELL> implem
 		this.vorlagenConsumer = vorlagenConsumer;
 		this.ausgabeVerzeichnis = ausgabeVerzeichnis;
 	}
+	@Override
 	public void erzeugeAusgabe() throws Exception {
 		Flux.just(beschreibung)
 		.flatMap(new ListPublisher<MODELL_BESCHREIBUNG, MODELL>(erzeugeModelle))

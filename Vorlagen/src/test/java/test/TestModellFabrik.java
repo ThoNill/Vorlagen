@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import org.nill.reactive.ListTransform;
+import org.nill.lists.ListTransform;
 
 public class TestModellFabrik implements ListTransform<String,TestModell>{
 

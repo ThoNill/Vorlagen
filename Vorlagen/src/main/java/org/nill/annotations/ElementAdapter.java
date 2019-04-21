@@ -1,4 +1,4 @@
-package org.nill.reactive;
+package org.nill.annotations;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;

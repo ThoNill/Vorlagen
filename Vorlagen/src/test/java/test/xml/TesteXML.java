@@ -7,9 +7,10 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import org.junit.Test;
-import org.nill.modelle.xml.XMLModelFabrik;
-import org.nill.reactive.ModellAndFile;
-import org.nill.reactive.XML_STConsumer;
+import org.nill.ST.xml.DocumentSTConsumer;
+import org.nill.files.ModellAndFile;
+import org.nill.modelle.xml.File2Document;
+
 import nu.xom.Document;
 
 public class TesteXML {
@@ -31,11 +32,9 @@ public class TesteXML {
 	@Test
 	public void ladeXMLDefinition() {
 		try {
-
-			XMLTestMaschine maschine = new XMLTestMaschine();
-			XMLModelFabrik modellFabrik = new XMLModelFabrik();
+		File2Document modellFabrik = new File2Document();
 			Document document = modellFabrik.apply(
-					"src/test/resources/modelle/beispiel.xml");
+					new File("src/test/resources/modelle/beispiel.xml"));
 
 			assertNotNull(document);
 		} catch (Exception ex) {
@@ -50,13 +49,11 @@ public class TesteXML {
 	@Test
 	public void ladeModelUndVorlage() {
 		try {
-
-			XMLTestMaschine maschine = new XMLTestMaschine();
-			XMLModelFabrik modellFabrik = new XMLModelFabrik();
-			Document document = modellFabrik.apply(new File("src/test/resources/modelle/beispiel.xml").toString());
+			File2Document modellFabrik = new File2Document();
+			Document document = modellFabrik.apply(new File("src/test/resources/modelle/beispiel.xml"));
 			assertNotNull(document);
 
-			XML_STConsumer consumer = new XML_STConsumer(StandardCharsets.UTF_8,"test.xml.wrap","BeispielWrap");
+			DocumentSTConsumer consumer = new DocumentSTConsumer(StandardCharsets.UTF_8,"test.xml.wrap","BeispielWrap");
 			
 			ModellAndFile<Document> mf1 = new ModellAndFile<Document>(document, new File("src/test/resources/vorlagen/beispiel.stg"));
 			ModellAndFile<ModellAndFile<Document>> mf2 = new ModellAndFile<>(mf1,new File("./target/java"));
