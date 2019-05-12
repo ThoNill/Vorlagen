@@ -1,14 +1,15 @@
 group JanusAngular2Backend ;
 
-overwrite(urmodell,model) ::= "true"
+overwrite(model,root) ::= "true"
+create(model,root) ::= "true"
 
 mypfad() ::= "janusAngular2Backend"
 
 myclassName(x) ::=<<$x.Page; format="cap"$Page>>
 
-dateiName(urmodell,model) ::= "$mypfad()$/$myclassName(model)$.java"
+dateiName(model,root) ::= "$mypfad()$/$myclassName(root)$.java"
 
-dateiInhalt(urmodell,model) ::= <<$element(model)$>>
+dateiInhalt(model,root) ::= <<$element(root)$>>
 
 element(x) ::= <<$if(x.isElement)$$(x.LocalName)(x)$$endif$ >>
 
@@ -90,4 +91,7 @@ MAPTABLE(x) ::= <<  >>
 GLOBAL(x) ::= <<  >>
 STRING(x) ::= <<  >>
 GUI(x) ::= <<  >>
- 
+
+
+internPROTOKOLL(x) ::= << >>
+PROTOKOLL(x) ::= <<  >>

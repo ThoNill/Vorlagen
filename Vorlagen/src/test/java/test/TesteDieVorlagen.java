@@ -1,15 +1,10 @@
 package test;
 
 import java.io.File;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.nill.generator.Generator;
-import org.nill.lists.ListTransform;
 import org.nill.vorlagen.VorlageGenerator;
-import org.nill.vorlagen.VorlageConsumer;
 
 
 public class TesteDieVorlagen {

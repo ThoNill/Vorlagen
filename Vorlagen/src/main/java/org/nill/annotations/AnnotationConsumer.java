@@ -54,13 +54,10 @@ extends STConsumerBasis<M> implements Consumer<ModellAndFile<M>> {
 		}
 	}
 
-	public void setProcessingEnv(ProcessingEnvironment processingEnv) {
-
-	}
 	
 	@Override
 	protected void register(STGroupFile group) {
-		group.registerModelAdaptor(Element.class,new ElementAdapter());
+		group.registerModelAdaptor(Element.class,new ElementAdapter(processingEnv.getElementUtils()));
 		super.register(group);
 	}
 

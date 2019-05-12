@@ -4,8 +4,10 @@ package test.xml;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+
 import org.junit.Test;
 import org.nill.ST.xml.DocumentSTConsumer;
 import org.nill.files.ModellAndFile;

@@ -1,23 +1,24 @@
 group JanusAngular2Page ;
 
-overwrite(urmodell,model) ::= "true"
+overwrite(model,root) ::= "true"
+create(model,root) ::= "true"
 
 mypfad() ::= "frontend"
 
 
-dateiName(urmodell,model) ::= "$mypfad()$/$model.Page$.page.component.ts"
+dateiName(model,root) ::= "$mypfad()$/$root.Page$.page.component.ts"
 
-dateiInhalt(urmodell,model) ::= <<
+dateiInhalt(model,root) ::= <<
 
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'page-$model.Page$',
-  templateUrl : "$model.Page$Page.html",
+  selector: 'page-$root.Page$',
+  templateUrl : "$root.Page$Page.html",
 })
 
-export class $model.Page; format="cap"$PageComponent  { 
- name = '$model.Page$Page'; 
+export class $root.Page; format="cap"$PageComponent  { 
+ name = '$root.Page$Page'; 
  
  
  performCommand(command : String) {

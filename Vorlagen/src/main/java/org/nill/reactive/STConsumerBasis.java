@@ -10,12 +10,15 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
+import javax.lang.model.element.Element;
+
+import org.nill.annotations.ElementAdapter;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
 import org.stringtemplate.v4.StringRenderer;
+import org.stringtemplate.v4.misc.ObjectModelAdaptor;
 
-
-public class STConsumerBasis<M>  {
+public class STConsumerBasis<M> {
 	protected Charset charset;
 
 	public STConsumerBasis(Charset charset) {
@@ -23,46 +26,64 @@ public class STConsumerBasis<M>  {
 		this.charset = charset;
 	}
 
-	
-
 	protected void erzeugeAusgabe(M vorlageModell, File vorlageDatei, File ausgabeVerzeichnis) throws Exception {
 		STGroupFile group = createGroupFile(vorlageDatei);
 		register(group);
-		erzeugeAusgabeAusVorlageModell(group,ausgabeVerzeichnis,vorlageModell);
+		erzeugeAusgabeAusVorlageModell(group, ausgabeVerzeichnis, vorlageModell);
 	}
 
-
-
 	private STGroupFile createGroupFile(File vorlageDatei) {
-		return new STGroupFile(vorlageDatei.toString(),'$','$');
+		String vorlageDateiName = vorlageDatei.toString();
+		if (!vorlageDatei.exists()) {
+			System.out.println(vorlageDatei.getAbsolutePath());
+			int pos = vorlageDateiName.indexOf("resources");
+			if (pos >= 0) {
+				vorlageDateiName = vorlageDateiName.substring(pos + 9);
+				System.out.println("vorlage " + vorlageDateiName);
+			}
+		}
+		return new STGroupFile(vorlageDateiName, '$', '$');
 	}
 
 	protected void register(STGroupFile group) {
+		group.registerModelAdaptor(Object.class, new MethodNameAdapter());
 		group.registerRenderer(String.class, new StringRenderer());
 	}
 
-	protected void erzeugeAusgabeAusVorlageModell(STGroupFile	group, File ausgabeVerzeichnis, M vm)
+	protected void erzeugeAusgabeAusVorlageModell(STGroupFile group, File ausgabeVerzeichnis, M vm)
 			throws IOException, FileNotFoundException {
-				String dateiName = getAusgabe(group,ausgabeVerzeichnis,vm).toString();
-				boolean überschreiben = isOverwrite(group, vm);
-				if (überschreiben || !(new File(dateiName)).exists()) {
-					erzeugeEventuellFehlendeVerzeichnisse(dateiName);
-					Writer writer = erzeugeWriter(dateiName);
-					erzeugeAusgabe(group,writer, vm);
-					writer.close();
-				}
+		String dateiName = getAusgabe(group, ausgabeVerzeichnis, vm).toString();
+		boolean überschreiben = isOverwrite(group, vm);
+		boolean erzeugen = isCreate(group, vm);
+		File d = new File(dateiName);
+		if (erzeugen) {
+			if (überschreiben || !d.exists()) {
+				erzeugeEventuellFehlendeVerzeichnisse(dateiName);
+				Writer writer = erzeugeWriter(dateiName);
+				erzeugeAusgabe(group, writer, vm);
+				writer.close();
 			}
-
-	private File getAusgabe(STGroupFile	group, File ausgabeVerzeichnis, M modell) {
-		return new File(ausgabeVerzeichnis,getDateiName(group,modell));
+		} else {
+			if (überschreiben && d.exists()) {
+				d.delete();
+			}
+		}
 	}
 
-	private String getDateiName(STGroupFile	group, M modell) {
-	    return apply(group,"dateiName",modell);
+	private File getAusgabe(STGroupFile group, File ausgabeVerzeichnis, M modell) {
+		return new File(ausgabeVerzeichnis, getDateiName(group, modell));
 	}
-	
-	private boolean isOverwrite(STGroupFile	group, M modell) {
-	    return "true".equals(apply(group,"overwrite",modell));
+
+	private String getDateiName(STGroupFile group, M modell) {
+		return apply(group, "dateiName", modell);
+	}
+
+	private boolean isOverwrite(STGroupFile group, M modell) {
+		return "true".equals(apply(group, "overwrite", modell));
+	}
+
+	private boolean isCreate(STGroupFile group, M modell) {
+		return "true".equals(apply(group, "create", modell));
 	}
 
 	private void erzeugeEventuellFehlendeVerzeichnisse(String dateiName) throws IOException {
@@ -74,19 +95,19 @@ public class STConsumerBasis<M>  {
 		return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dateName), charset));
 	}
 
-	protected void erzeugeAusgabe(STGroupFile	group, Writer writer, M modell) throws IOException {
-	    writer.write(apply(group,"dateiInhalt",modell));
-	    writer.flush();
+	protected void erzeugeAusgabe(STGroupFile group, Writer writer, M modell) throws IOException {
+		writer.write(apply(group, "dateiInhalt", modell));
+		writer.flush();
 	}
 
-	private String apply(STGroupFile	group, String templateName, M elem) {
+	private String apply(STGroupFile group, String templateName, M elem) {
 		ST t = group.getInstanceOf(templateName);
-		setzeSTModel(t,elem);
+		setzeSTModel(t, elem);
 		return t.render();
 	}
 
 	protected void setzeSTModel(ST t, M elem) {
-	    t.add("urmodell", elem);
-	 }
+		t.add("model", elem);
+	}
 
 }

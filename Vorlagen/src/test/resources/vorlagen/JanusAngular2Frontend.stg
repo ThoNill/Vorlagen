@@ -1,15 +1,16 @@
 group JanusAngular2Frontend ;
 
-overwrite(urmodell,model) ::= "true"
+overwrite(model,root) ::= "true"
+create(model,root) ::= "true"
 
 mypfad() ::= "frontend"
 
 
-dateiName(urmodell,model) ::= "$mypfad()$/$model.Page$Page.html"
+dateiName(model,root) ::= "$mypfad()$/$root.Page$Page.html"
 
-dateiInhalt(urmodell,model) ::= <<
+dateiInhalt(model,root) ::= <<
 
-$element(model)$
+$element(root)$
 
 >>
 

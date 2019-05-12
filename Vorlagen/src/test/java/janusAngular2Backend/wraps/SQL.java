@@ -8,11 +8,9 @@ import org.nill.ST.xml.WrapElement;
 public class SQL extends WrapElement {
 
     public SQL() {
-       System.out.println("Erzeugt");
     }
 
     public List<String> getAbfrageParameter() {
-        System.out.println("getAbfrageParameter");
         return getAbfrageParameter(getElem().getAttributeValue("stmt"));
     }
 

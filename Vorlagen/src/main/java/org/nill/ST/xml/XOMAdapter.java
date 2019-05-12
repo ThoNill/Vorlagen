@@ -132,7 +132,7 @@ public class XOMAdapter extends ObjectModelAdaptor {
 	private WrapElement getWrap(Element elem) {
 		WrapElement wrap = (WrapElement) createInstance(elem.getLocalName(), defaultClass == null);
 		if (wrap == null) {
-			wrap = (WrapElement) createInstance(defaultClass, true);
+			wrap = (WrapElement) createInstance(defaultClass,false);
 			if (wrap == null) {
 				return null;
 			}

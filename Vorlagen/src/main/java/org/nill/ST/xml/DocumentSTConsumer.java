@@ -28,10 +28,11 @@ public class DocumentSTConsumer extends STConsumer<Document> {
 		group.registerModelAdaptor(Attribute.class, new XOMAdapter(packageName, defaultClass));
 	}
 
-	@Override
-	protected void setzeSTModel(ST t, Document document) {
-		super.setzeSTModel(t, document);
+    @Override
+	protected void setzeSTModel(ST t,Document document) {
+		super.setzeSTModel(t,document);
 		Element root = document.getRootElement();
-		t.add("model", root);
+	    t.add("root", root);
 	}
+	
 }
