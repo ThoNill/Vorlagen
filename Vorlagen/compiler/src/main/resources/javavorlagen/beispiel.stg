@@ -1,0 +1,32 @@
+group DIALOG ;
+
+overwrite(model) ::= "true"
+create(model) ::= "true"
+
+mypfad() ::= "package"
+
+dateiName(model) ::= "$mypfad()$/$model.SimpleName$.java"
+
+dateiInhalt(model) ::= <<
+
+$DATA(model,model.SimpleName,mypfad())$
+
+>>
+
+DATA(x,classname,pfad) ::= <<
+package $pfad$.pages;
+
+
+import java.io.Serializable;
+import swingapp.data.*;
+import janus.tech.model.*;
+
+
+public class $classname$ extends DataDIALOG<Global> {
+
+}
+
+>>
+
+
+

@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="target/classes" path="src/main/java">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
-		<attributes>
-			<attribute name="test" value="true"/>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
-		<attributes>
-			<attribute name="test" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="src" path="vorlagen/src/main/java/org.nill.vorlagen"/>
+	<classpathentry kind="src" path="compiler/src/test/java/org.nill.compiler"/>
+	<classpathentry kind="src" path="compiler/src/main/java/org.nill.compiler"/>
+	<classpathentry kind="src" path="vorlagen/src/test/java/org.nill.vorlagen"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-10">
 		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="module" value="true"/>
+			<attribute name="add-exports" value="jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED:jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED:jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED:jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED:jdk.compiler/com.sun.source.util=ALL-UNNAMED:jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED"/>
+			<attribute name="limit-modules" value="java.rmi,jdk.management.jfr,jdk.jdi,jdk.charsets,jdk.pack,java.xml,jdk.xml.dom,java.datatransfer,jdk.rmic,jdk.jstatd,jdk.httpserver,jdk.jcmd,java.desktop,java.se,java.security.sasl,jdk.zipfs,java.base,jdk.crypto.ec,jdk.javadoc,jdk.management.agent,jdk.jshell,jdk.editpad,java.sql.rowset,jdk.sctp,jdk.jsobject,jdk.unsupported,java.smartcardio,jdk.jlink,jdk.scripting.nashorn,jdk.scripting.nashorn.shell,java.security.jgss,jdk.dynalink,jdk.unsupported.desktop,jdk.accessibility,jdk.security.jgss,java.sql,jdk.hotspot.agent,java.xml.crypto,java.logging,java.transaction.xa,jdk.jfr,jdk.internal.vm.ci,jdk.crypto.cryptoki,jdk.net,java.naming,jdk.internal.ed,java.prefs,java.net.http,jdk.compiler,jdk.naming.rmi,jdk.internal.opt,jdk.jconsole,jdk.attach,jdk.crypto.mscapi,jdk.internal.le,java.management,jdk.jdwp.agent,jdk.internal.jvmstat,java.instrument,jdk.internal.vm.compiler,jdk.internal.vm.compiler.management,jdk.management,jdk.security.auth,java.scripting,jdk.jdeps,jdk.aot,jdk.jartool,java.management.rmi,jdk.naming.dns,jdk.localedata"/>
+			<attribute name="maven.pomderived" value="false"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+	<classpathentry kind="lib" path="C:/Users/tnill/.m2/repository/io/projectreactor/reactor-core/3.2.0.RELEASE/reactor-core-3.2.0.RELEASE.jar" sourcepath="C:/Users/tnill/.m2/repository/io/projectreactor/reactor-core/3.2.0.RELEASE/reactor-core-3.2.0.RELEASE-sources.jar">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="io.projectreactor"/>
+			<attribute name="maven.artifactId" value="reactor-core"/>
+			<attribute name="maven.version" value="3.2.0.RELEASE"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/tnill/.m2/repository/commons-beanutils/commons-beanutils/1.9.3/commons-beanutils-1.9.3.jar" sourcepath="C:/Users/tnill/.m2/repository/commons-beanutils/commons-beanutils/1.9.3/commons-beanutils-1.9.3-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="commons-beanutils"/>
+			<attribute name="maven.artifactId" value="commons-beanutils"/>
+			<attribute name="maven.version" value="1.9.3"/>
+			<attribute name="maven.scope" value="compile"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>

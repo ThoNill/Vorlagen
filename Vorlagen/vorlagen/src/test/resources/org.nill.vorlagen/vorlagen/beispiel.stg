@@ -1,0 +1,172 @@
+group DIALOG ;
+
+overwrite(model,root) ::= "true"
+create(model,root) ::= "true"
+
+mypfad() ::= "package"
+
+dateiName(model,root) ::= "$mypfad()$/$root.Page$.java"
+
+dateiInhalt(model,root) ::= <<
+
+$DATA(root,root.Page,mypfad())$
+
+>>
+
+DATA(x,classname,pfad) ::= <<
+package $pfad$.pages;
+
+
+import java.io.Serializable;
+import swingapp.data.*;
+import janus.tech.model.*;
+
+
+public class $x.Page$ extends DataDIALOG<Global> {
+
+
+  public $x.Page$() {
+  		super("$x.Page$");
+  		init(x);
+  }
+
+  protected void init(x) {
+		$x.listOfSTRING:callget()$
+		$x.listOfGLOBAL:callget()$
+		$x.listOfSQL:callget()$
+		$x.listOfBEAN:callget()$
+ 		$x.listOfCALL:callget()$
+  }
+
+		$x.listOfSTRING:element()$
+		$x.listOfGLOBAL:element()$
+		$x.listOfSQL:element()$
+		$x.listOfBEAN:element()$
+
+
+}
+>>
+
+
+callget ( x ) ::= <<
+
+// callget $x.ElementTypeName$
+  $x.CName$();
+>>
+
+
+element( x ) ::= <<
+// element $x.ElementTypeName$
+
+$(x.ElementTypeName)(x)$
+>>
+
+NAMESPACE( x ) ::= <<
+>>
+
+GLOBALSET( x ) ::= <<
+$elements(x.listOfGLOBAL)$
+>>
+
+GLOBAL( x ) ::= <<
+
+public MutableDataValue $x.GName$() {
+	return global.$x.GName$();
+}
+
+$setgetValue(x)$
+
+>>
+
+STRINGSET( x ) ::= <<
+$elements(x.listOfSTRING)$
+>>
+
+
+STRING( x ) ::= <<
+
+private $x.ObjectClassName$  $x.CName$ () {
+	return new $x.ObjectClassName$("$x.Name$","$x.Default$");
+}
+
+$getDef(x)$
+$setgetValue(x)$
+
+private void init$x.FirstUpperName$() {
+      
+}
+>>
+
+getDef( x ) ::= <<
+
+private $x.ObjectClassName$ $x.OName$;
+
+public $x.ObjectClassName$ $x.GName$() {
+    if ($x.OName$ == null) {
+    	$x.OName$ =  $x.CName$ ();
+    	addAction($x.OName$);
+    }
+	return $x.OName$;
+}
+
+	ActionOnTheData $x.AName$;
+
+public ActionOnTheData $x.GName$Action() {
+    if ($x.AName$ == null) {
+    	$x.AName$ =  new ActionOnTheData((Action)$x.GName$(), context);
+    }
+	return $x.AName$;
+}
+
+>>
+
+setgetValue( x ) ::= <<
+
+public $x.ValueClassName$ $x.GName$Value() {
+	return $x.GName$().getValue(context);
+}
+
+public void $x.SName$Value($x.ValueClassName$ s) throws ActionException {
+	$x.GName$().setValue(context,s);
+}
+
+
+>>
+
+SQLSET( x ) ::= <<
+
+>>
+
+SQL( x ) ::= <<
+
+private $x.ObjectClassName$  $x.CName$ () {
+	return new $x.ObjectClassName$("$x.Name$","$x.stmt$");
+}
+
+$getDef(x)$
+
+>>
+
+BEAN( b ) ::= <<
+
+private $b.ObjectClassName$  $b.CName$ () {
+	return new $b.ObjectClassName$("$b.Name$","$b.RefClassname$");
+}
+
+$getDef(b)$
+
+		$b.listOfCALL:CALL( b )$
+>>
+
+CALL( x, b ) ::= <<
+
+private $x.ObjectClassName$  $x.CName$ () {
+	return new $x.ObjectClassName$("$x.Name$",$b.GName$(),"$x.command$");
+}
+
+$getDef(x)$
+
+>>
+
+
+
