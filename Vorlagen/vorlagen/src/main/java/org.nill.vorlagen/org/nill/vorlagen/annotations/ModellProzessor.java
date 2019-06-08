@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,11 +31,11 @@ public class ModellProzessor extends AbstractProcessor {
 	private File vorlagenVerzeichnisSingle;
 	private File vorlagenVerzeichnisMulti;
 	private File ausgabeVerzeichnis;
-	private Function<TypeElement, TypeElement> toVorlageModell;
+	private UnaryOperator<TypeElement> toVorlageModell;
 	
 	public ModellProzessor(File vorlagenVerzeichnisSingle, 
 			File vorlagenVerzeichnisMulti, File ausgabeVerzeichnis,
-			Function<TypeElement, TypeElement> toVorlageModell) {
+			UnaryOperator<TypeElement> toVorlageModell) {
 		super();
 		this.vorlagenVerzeichnisSingle = vorlagenVerzeichnisSingle;
 		this.vorlagenVerzeichnisMulti = vorlagenVerzeichnisMulti;
@@ -48,7 +48,7 @@ public class ModellProzessor extends AbstractProcessor {
 
 		processingEnv.getMessager().printMessage(Kind.WARNING, "Prozessor!!");
 		logger.log(Level.INFO, "Start Prozessor");
-		List<TypeElement> modelle = new ArrayList<TypeElement>();
+		List<TypeElement> modelle = new ArrayList<>();
 		for (TypeElement annotation : annotations) {
 			Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
 			for (Element e : annotatedElements) {
@@ -65,7 +65,7 @@ public class ModellProzessor extends AbstractProcessor {
 
 		}
 		try {
-			if(modelle.size()>0) {
+			if(!modelle.isEmpty()) {
 				logger.log(Level.INFO, "mehrere Elemente abarbeiten");
 				erzeugeListAusgabe(modelle);
 			}
@@ -76,7 +76,7 @@ public class ModellProzessor extends AbstractProcessor {
 		return false;
 	}
 
-	public void erzeugeAusgabe(TypeElement element) throws Exception {
+	public void erzeugeAusgabe(TypeElement element) {
 		Flux.just(element)
 		.map(toVorlageModell)
 		.map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))
@@ -86,8 +86,8 @@ public class ModellProzessor extends AbstractProcessor {
 		.subscribe(new AnnotationFileConsumer<TypeElement>(StandardCharsets.UTF_8, processingEnv));
 	}
 
-	public void erzeugeListAusgabe(List<TypeElement> elements) throws Exception {
-		if(elements.size()==0) {
+	public void erzeugeListAusgabe(List<TypeElement> elements)  {
+		if(elements.isEmpty()) {
 			return;
 		}
 		Flux.just(elements)
@@ -99,7 +99,7 @@ public class ModellProzessor extends AbstractProcessor {
 	}
 
 	
-	public void erzeugeAusgabeJava(TypeElement element) throws Exception {
+	public void erzeugeAusgabeJava(TypeElement element) {
 		Flux.just(element)
 		.map(toVorlageModell)
 		.map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))

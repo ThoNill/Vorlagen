@@ -40,7 +40,7 @@ extends STConsumerBasis<M> implements Consumer<ModellAndFile<M>> {
 
 	@Override
 	protected void erzeugeAusgabeAusVorlageModell(STGroupFile group, File ausgabeVerzeichnis, M vm)
-			throws IOException, FileNotFoundException {
+			throws IOException {
 		Writer writer = erzeugeWriter(vm.getQualifiedName().toString());
 		erzeugeAusgabe(group, writer, vm);
 		writer.close();

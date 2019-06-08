@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
+import java.util.List;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import nu.xom.Nodes;
 import nu.xom.ParentNode;
 
 public class File2Document implements Function<File, Document> {
+	private static final String DESCENDANT = "descendant::*";
 	static Logger logger = Logger.getLogger(File2Document.class.getSimpleName());
 
 	@Override
@@ -28,7 +30,7 @@ public class File2Document implements Function<File, Document> {
 			InputStream input = holeStream(file);
 			return ladeDasDokument(input);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
+			throw new IllegalStateException(e);
 		}
 	}
 
@@ -63,10 +65,10 @@ public class File2Document implements Function<File, Document> {
 
 			Document document = builder.build(in);
 			Element root = document.getRootElement();
-			erstzeIncludes(root);
+			ersetzeIncludes(root);
 			return document;
 		} catch (Exception ex) {
-			logger.log(Level.SEVERE, "Fehler in ladaDasDocument");
+			logger.log(Level.SEVERE, "Fehler in ladeDasDocument");
 		}
 		return null;
 	}
@@ -82,8 +84,8 @@ public class File2Document implements Function<File, Document> {
 	}
 
 	private static HashMap<String, Element> extractHashOfElementsWithName(Element source, String name) {
-		HashMap<String, Element> childs = new HashMap<String, Element>();
-		Nodes nodes = source.query("descendant::*");
+		HashMap<String, Element> childs = new HashMap<>();
+		Nodes nodes = source.query(DESCENDANT);
 		for (int i = 0; i < nodes.size(); i++) {
 			Node c = nodes.get(i);
 			if (c instanceof Element && name.equals(((Element) c).getLocalName())) {
@@ -94,8 +96,8 @@ public class File2Document implements Function<File, Document> {
 		return childs;
 	}
 
-	private static Vector<Element> extractVectorOfElementsWithName(Element source, String name) {
-		Vector<Element> childs = new Vector<Element>();
+	private static List<Element> extractListOfElements(Element source) {
+		List<Element> childs = new ArrayList<>();
 		Elements elements = source.getChildElements();
 		for (int i = 0; i < elements.size(); i++) {
 			childs.add(elements.get(i));
@@ -104,14 +106,14 @@ public class File2Document implements Function<File, Document> {
 	}
 
 	private static void ersetzePlacesDurchIntos(Element source, Element template) {
-		Vector<Element> intos = extractVectorOfElementsWithName(source, "INTO");
+		List<Element> intos = extractListOfElements(source);
 		HashMap<String, Element> places = extractHashOfElementsWithName(template, "PLACE");
 		for (Element into : intos) {
 			Element target = places.get(into.getAttributeValue("name"));
 			if (target != null) {
 				ersetzeZielDurchDieKinderDerQuelle(target, into);
 			} else {
-				throw new RuntimeException(
+				throw new IllegalStateException(
 						source.getLocalName() + " hat keinen Platz " + into.getAttributeValue("name"));
 			}
 		}
@@ -142,7 +144,7 @@ public class File2Document implements Function<File, Document> {
 
 	private static void ersetzeAlleAttribute(Element elem, String oldValue, String newValue, String sternValue) {
 		ersetzeAttributeEinesElements(elem, oldValue, newValue, sternValue);
-		Nodes nodes = elem.query("descendant::*");
+		Nodes nodes = elem.query(DESCENDANT);
 		for (int i = 0; i < nodes.size(); i++) {
 			Node c = nodes.get(i);
 			if (c instanceof Element) {
@@ -151,9 +153,9 @@ public class File2Document implements Function<File, Document> {
 		}
 	}
 
-	private static void erstzeIncludes(Element elem) {
-		Vector<IncludeElement> includes = new Vector<IncludeElement>();
-		Nodes nodes = elem.query("descendant::*");
+	private static void ersetzeIncludes(Element elem) {
+		List<IncludeElement> includes = new ArrayList<>();
+		Nodes nodes = elem.query(DESCENDANT);
 		for (int i = 0; i < nodes.size(); i++) {
 			Node c = nodes.get(i);
 			if (c instanceof IncludeElement) {
@@ -171,7 +173,7 @@ public class File2Document implements Function<File, Document> {
 		int index = p.indexOf(target);
 		target.detach();
 
-		Vector<Element> childs = new Vector<Element>();
+		List<Element> childs = new ArrayList<>();
 		Elements elements = source.getChildElements();
 		for (int i = 0; i < elements.size(); i++) {
 			childs.add(elements.get(i));

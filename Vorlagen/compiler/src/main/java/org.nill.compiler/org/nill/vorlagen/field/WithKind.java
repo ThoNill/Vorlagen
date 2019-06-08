@@ -1,4 +1,4 @@
-package org.nill.vorlagen.object;
+package org.nill.vorlagen.field;
 
 public class WithKind {
 		private String kind;

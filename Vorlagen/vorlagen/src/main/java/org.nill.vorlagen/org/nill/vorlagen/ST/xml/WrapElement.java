@@ -6,6 +6,7 @@ public class WrapElement {
 	private  Element elem;
 	
 	public WrapElement() {
+		super();
 	}
 
 	public Element getElem() {

@@ -141,7 +141,7 @@ public class DreiSichten implements FieldOrMethod {
 		if (element.getKind().equals(ElementKind.METHOD)) {
 			MethodTree mt = (MethodTree) tree;
 			Method m = (Method) reflektiv;
-			List<Parameter> list = new ArrayList<Parameter>();
+			List<Parameter> list = new ArrayList<>();
 			for (VariableTree v : mt.getParameters()) {
 				list.add(new Parameter(v.getType().toString(), v.getName().toString(),
 						Arrays.toString(m.getAnnotatedParameterTypes())));

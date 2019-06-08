@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 
 import org.nill.vorlagen.compiler.ObjectModell;
 import org.nill.vorlagen.compiler.ObjectModellAdapter;
+import org.nill.vorlagen.field.ReflectiveFieldAdapter;
 import org.nill.vorlagen.reactive.STConsumer;
 import org.stringtemplate.v4.STGroupFile;
 

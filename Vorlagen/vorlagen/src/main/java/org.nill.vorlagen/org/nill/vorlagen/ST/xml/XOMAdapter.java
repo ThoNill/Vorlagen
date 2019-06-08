@@ -63,31 +63,30 @@ public class XOMAdapter extends ObjectModelAdaptor {
 				if (o instanceof Attribute) {
 					return ((Attribute) o).getLocalName();
 				}
+				return "";
 			case "Value":
 				if (o instanceof Attribute) {
 					return ((Attribute) o).getValue();
 				}
+				return "";
+			default:
+				return superAufrufen(interpreter, self, property, propertyName, elem);
+			}
+		}
 
-			default: {
-				try {
-					if (elem != null) {
-						WrapElement wrap = getWrap(elem);
-						if (wrap != null) {
-							return super.getProperty(interpreter, self, wrap, property,
+		return "";
+	}
 
-									propertyName);
-						}
-					}
-				} catch (STNoSuchPropertyException ex) {
-				}
+	private Object superAufrufen(Interpreter interpreter, ST self, Object property, String propertyName, Element elem) {
+		if (elem != null) {
+			WrapElement wrap = getWrap(elem);
+			if (wrap != null) {
+				return super.getProperty(interpreter, self, wrap, property,
+
+						propertyName);
 			}
-			}
-			if (elem != null && elem.getAttribute(propertyName) == null) {
-				propertyName = propertyName.toLowerCase();
-			}
-			if (elem != null) {
-				return elem.getAttributeValue(propertyName);
-			}
+			propertyName = propertyName.toLowerCase();
+			return elem.getAttributeValue(propertyName);
 		}
 		return "";
 	}
@@ -132,7 +131,7 @@ public class XOMAdapter extends ObjectModelAdaptor {
 	private WrapElement getWrap(Element elem) {
 		WrapElement wrap = (WrapElement) createInstance(elem.getLocalName(), defaultClass == null);
 		if (wrap == null) {
-			wrap = (WrapElement) createInstance(defaultClass,false);
+			wrap = (WrapElement) createInstance(defaultClass, false);
 			if (wrap == null) {
 				return null;
 			}

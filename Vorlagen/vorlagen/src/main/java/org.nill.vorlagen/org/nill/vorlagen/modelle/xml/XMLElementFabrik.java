@@ -15,7 +15,7 @@ public class XMLElementFabrik extends NodeFactory {
 	}
 
 	public XMLElementFabrik() {
-
+		super();
 	}
 
 	@Override

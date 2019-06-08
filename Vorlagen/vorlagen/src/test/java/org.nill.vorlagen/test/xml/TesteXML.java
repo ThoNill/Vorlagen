@@ -15,7 +15,7 @@ public class TesteXML {
 	private static File basisVerzeicnis = new File("./target");
 
 	public TesteXML() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	@Test

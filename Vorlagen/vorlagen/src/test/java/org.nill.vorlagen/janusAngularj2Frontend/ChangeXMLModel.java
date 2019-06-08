@@ -2,14 +2,14 @@ package janusAngularj2Frontend;
 
 
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Node;
 
-public abstract class ChangeXMLModel implements
-Function<Document, Document>{
+public abstract class ChangeXMLModel implements UnaryOperator<Document>{
 
     String[] ignoriereElemente = { "STRINGSET", "MAPTABLESET", "SQLSET",
                 "BEANSET", "ACTIONSET", "GLOBALSET", "BATCHSET", "NAMESPACE" };

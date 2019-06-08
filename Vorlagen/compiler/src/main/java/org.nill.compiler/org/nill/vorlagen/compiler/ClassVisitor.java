@@ -16,7 +16,6 @@ import javax.lang.model.util.Elements;
 import org.nill.vorlagen.interfaces.ConverterVerzeichnis;
 
 import com.sun.source.tree.ClassTree;
-import com.sun.source.tree.CompilationUnitTree;
 import com.sun.source.tree.ImportTree;
 import com.sun.source.tree.MethodTree;
 import com.sun.source.tree.PackageTree;
@@ -38,11 +37,6 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 		this.data.setClazz(clazz);
 		this.data.setElements(elements);
 		this.converterVerzeichnis = converterVerzeichnis;
-	}
-
-	@Override
-	public Object visitCompilationUnit(CompilationUnitTree node, Trees p) {
-		return super.visitCompilationUnit(node, p);
 	}
 
 	@Override
@@ -98,7 +92,7 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 		return super.visitMethod(node, p);
 	}
 
-	private Method searchMethod(ExecutableElement elem) throws Exception {
+	private Method searchMethod(ExecutableElement elem)  {
 		for (Method m : data.getClazz().getMethods()) {
 			if (elem.getSimpleName().contentEquals(m.getName())) {
 				List<? extends VariableElement> parameter = elem.getParameters();
@@ -124,7 +118,7 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 	}
 
 	private String entferneSpitzeKlammern(String mparameter) {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		int anzahlOffeneSpitzeLinkeKlammern = 0;
 		for (char c : mparameter.toCharArray()) {
 			switch (c) {

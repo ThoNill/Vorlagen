@@ -9,12 +9,15 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
 import org.stringtemplate.v4.StringRenderer;
 
 public class STConsumerBasis<M> {
+	static Logger logger = Logger.getLogger(STConsumerBasis.class.getSimpleName());
+
 	protected Charset charset;
 
 	public STConsumerBasis(Charset charset) {
@@ -22,7 +25,7 @@ public class STConsumerBasis<M> {
 		this.charset = charset;
 	}
 
-	protected void erzeugeAusgabe(M vorlageModell, File vorlageDatei, File ausgabeVerzeichnis) throws Exception {
+	protected void erzeugeAusgabe(M vorlageModell, File vorlageDatei, File ausgabeVerzeichnis) throws IOException  {
 		STGroupFile group = createGroupFile(vorlageDatei);
 		register(group);
 		erzeugeAusgabeAusVorlageModell(group, ausgabeVerzeichnis, vorlageModell);
@@ -31,11 +34,12 @@ public class STConsumerBasis<M> {
 	private STGroupFile createGroupFile(File vorlageDatei) {
 		String vorlageDateiName = vorlageDatei.toString();
 		if (!vorlageDatei.exists()) {
-			System.out.println("Die Vorlage " + vorlageDatei.getAbsolutePath()+" existiert nicht");
+			logger.log(Level.INFO,() -> "Die Vorlage " + vorlageDatei.getAbsolutePath()+" existiert nicht");
 			int pos = vorlageDateiName.indexOf("resources");
 			if (pos >= 0) {
-				vorlageDateiName = vorlageDateiName.substring(pos + 9);
-				System.out.println("vorlage " + vorlageDateiName);
+				final String neuerVorlageDateiName = vorlageDateiName.substring(pos + 9);
+				vorlageDateiName = neuerVorlageDateiName;
+				logger.log(Level.INFO,() -> "vorlage " + neuerVorlageDateiName);
 			}
 		} 
 		return new STGroupFile(vorlageDateiName, '$', '$');
@@ -47,7 +51,7 @@ public class STConsumerBasis<M> {
 	}
 
 	protected void erzeugeAusgabeAusVorlageModell(STGroupFile group, File ausgabeVerzeichnis, M vm)
-			throws IOException, FileNotFoundException {
+			throws IOException{
 		String dateiName = getAusgabe(group, ausgabeVerzeichnis, vm).toString();
 		boolean überschreiben = isOverwrite(group, vm);
 		boolean erzeugen = isCreate(group, vm);
@@ -61,8 +65,8 @@ public class STConsumerBasis<M> {
 			}
 		} else {
 			if (überschreiben && d.exists()) {
-				boolean erg = d.delete();
-				if (!erg) {
+				Files.delete(d.toPath());
+				if ( d.exists()) {
 					throw new IllegalArgumentException("Konnte nicht gelöscht werden: "+ d.getAbsolutePath());
 				}
 			}

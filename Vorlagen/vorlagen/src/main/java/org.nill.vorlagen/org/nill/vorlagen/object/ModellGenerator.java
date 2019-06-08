@@ -34,11 +34,11 @@ public class ModellGenerator implements Generator {
 		super();
 		this.vorlagenVerzeichnis = vorlagenVerzeichnis;
 		this.ausgabeVerzeichnis = ausgabeVerzeichnis;
-		this.modelle = new ArrayList<ObjectModell>();
+		this.modelle = new ArrayList<>();
 	}
 
 
-	public void erzeugeAusgabe(ObjectModell element) throws Exception {
+	public void erzeugeAusgabe(ObjectModell element)  {
 		Flux.just(element)
 		.map(new FileDazu<ObjectModell>(new File(vorlagenVerzeichnis,"single")))
 		.flatMap(new ListPublisher<ModellAndFile<ObjectModell>, ModellAndFile<ObjectModell>>(
@@ -52,7 +52,7 @@ public class ModellGenerator implements Generator {
 	}
 
 	@Override
-	public void erzeugeAusgabe() throws Exception {
+	public void erzeugeAusgabe(){
 		modelle.forEach(x -> {
 			try {
 				erzeugeAusgabe(x);

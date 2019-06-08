@@ -27,7 +27,7 @@ public class VorlageGenerator<MODELL, MODELL_BESCHREIBUNG, VORLAGEN_MODELL> impl
 		this.ausgabeVerzeichnis = ausgabeVerzeichnis;
 	}
 	@Override
-	public void erzeugeAusgabe() throws Exception {
+	public void erzeugeAusgabe() {
 		Flux.just(beschreibung)
 		.flatMap(new ListPublisher<MODELL_BESCHREIBUNG, MODELL>(erzeugeModelle))
 		.flatMap(new ListPublisher<MODELL, VORLAGEN_MODELL>(erzeugeVorlagenModelle))

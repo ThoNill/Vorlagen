@@ -13,7 +13,7 @@ public class FileDazu<M> implements Function<M,ModellAndFile<M>>{
 
 	@Override
 	public ModellAndFile<M> apply(M modell) {
-		return new ModellAndFile<M>(modell, file);
+		return new ModellAndFile<>(modell, file);
 	}
 
 }

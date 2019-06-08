@@ -1,0 +1,33 @@
+group restservicebasis ;
+
+overwrite(model) ::= "true"
+create(model) ::= "$model.clazzValue.service$"
+
+mypfad() ::= "service"
+
+dateiName(model) ::= "$mypfad()$/$model.clazz.simpleName$RestBasis.java"
+
+dateiInhalt(model) ::= <<
+
+package $mypfad()$;
+
+
+import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+
+public class $model.clazz.simpleName$RestBasis  {
+    $model.methodSichten:methoden()$
+}
+>>
+
+methoden(v) ::= <<
+
+    public $v.return.typeDefinition$ $v.name$_intern($v.parameter:{p| $p$}; separator=", "$) {
+        // TODO
+        return null;
+    }
+}
+>>

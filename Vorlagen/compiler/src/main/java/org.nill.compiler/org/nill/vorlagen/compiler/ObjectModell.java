@@ -3,8 +3,6 @@ package org.nill.vorlagen.compiler;
 import java.lang.reflect.Field;
 import java.util.Iterator;
 
-import org.nill.vorlagen.object.Connection;
-
 public class ObjectModell extends ClassVisitorData {
 
 	public ObjectModell() {
@@ -20,7 +18,7 @@ public class ObjectModell extends ClassVisitorData {
 		}
 	}
 
-	public void addConnection(ObjectModell modell) throws Exception {
+	public void addConnection(ObjectModell modell) throws  IllegalAccessException {
 		for (Field f : modell.getClass().getFields()) {
 			Object o = f.get(modell);
 			if (o instanceof Connection) {

@@ -29,7 +29,7 @@ public class DateienEinesVerzeichnisses implements ListTransform<File, File> {
 		try {
 			verzeichnisDurcharbeiten(liste, verzeichnis);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new IllegalArgumentException(e);
 		}
 		return liste;
 	}
@@ -42,7 +42,7 @@ public class DateienEinesVerzeichnisses implements ListTransform<File, File> {
 				liste.add(startFile);
 			}
 		} else {
-			logger.log(Level.SEVERE, "Verzeichnis " + startFile + " existiert nicht");
+			logger.log(Level.SEVERE,() -> "Verzeichnis " + startFile + " existiert nicht");
 		}
 
 	}

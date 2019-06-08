@@ -1,4 +1,6 @@
-package org.nill.vorlagen.object;
+package org.nill.vorlagen.compiler;
+
+import org.nill.vorlagen.field.WithKind;
 
 public class Connection extends WithKind {
 	private Class<?> source;

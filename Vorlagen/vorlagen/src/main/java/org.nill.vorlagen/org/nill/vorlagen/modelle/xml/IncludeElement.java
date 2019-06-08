@@ -39,7 +39,7 @@ public class IncludeElement extends Element {
 		}
 	}
 
-	static public boolean hasTemplate(String name) {
+	public static boolean hasTemplate(String name) {
 		InputStream in = Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream(name);
 		if (in != null) {

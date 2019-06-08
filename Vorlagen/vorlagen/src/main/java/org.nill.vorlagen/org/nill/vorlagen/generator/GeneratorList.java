@@ -7,7 +7,7 @@ public class GeneratorList implements Generator{
 	List<Generator> generatoren = new ArrayList<>();
 
 	@Override
-	public void erzeugeAusgabe() throws Exception {
+	public void erzeugeAusgabe() {
 		for(Generator g : generatoren) {
 			g.erzeugeAusgabe();
 		}

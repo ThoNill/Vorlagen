@@ -39,8 +39,6 @@ public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<Model
 	public void accept(ModellAndFile<VORLAGEN_MODELL> vm) {
 		try {
 			erzeugeAusgabeAusVorlageModel(vm.modell, vm.file);
-		} catch (FileNotFoundException e) {
-			logger.log(Level.SEVERE, FEHLER_IN_ERZEUGE_AUSGABE_AUS_VORLAGE_MODEL);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, FEHLER_IN_ERZEUGE_AUSGABE_AUS_VORLAGE_MODEL);
 		}
@@ -48,7 +46,7 @@ public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<Model
 	}
 
 	private void erzeugeAusgabeAusVorlageModel(VORLAGEN_MODELL vm, File ausgabeVerzeichnis)
-			throws IOException, FileNotFoundException {
+			throws IOException {
 		String dateiName = getAusgabe(vm, ausgabeVerzeichnis).toString();
 		if (überschreiben || !(new File(dateiName)).exists()) {
 			erzeugeEventuellFehlendeVerzeichnisse(dateiName);
