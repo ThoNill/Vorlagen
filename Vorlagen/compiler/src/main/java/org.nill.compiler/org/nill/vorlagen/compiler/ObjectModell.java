@@ -1,10 +1,9 @@
-package org.nill.vorlagen.object;
+package org.nill.vorlagen.compiler;
 
 import java.lang.reflect.Field;
 import java.util.Iterator;
 
-import org.nill.vorlagen.compiler.ClassVisitorData;
-import org.nill.vorlagen.interfaces.FieldOrMethod;
+import org.nill.vorlagen.object.Connection;
 
 public class ObjectModell extends ClassVisitorData {
 

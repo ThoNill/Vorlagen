@@ -1,4 +1,4 @@
-package org.nill.vorlagen.object;
+package org.nill.vorlagen.compiler;
 
 import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ST;

@@ -6,9 +6,6 @@ import java.util.List;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.util.Elements;
 
-import org.nill.vorlagen.interfaces.ClazzValue;
-import org.nill.vorlagen.interfaces.FieldOrMethod;
-
 import com.sun.source.tree.ImportTree;
 
 public class ClassVisitorData {

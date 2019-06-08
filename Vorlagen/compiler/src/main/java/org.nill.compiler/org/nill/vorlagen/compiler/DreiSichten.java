@@ -16,8 +16,6 @@ import java.util.Optional;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 
-import org.nill.vorlagen.interfaces.ClazzValue;
-import org.nill.vorlagen.interfaces.FieldOrMethod;
 import org.nill.vorlagen.interfaces.Parameter;
 
 import com.sun.source.tree.MethodTree;

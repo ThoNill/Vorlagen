@@ -14,7 +14,6 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 
 import org.nill.vorlagen.interfaces.ConverterVerzeichnis;
-import org.nill.vorlagen.object.ObjectModell;
 
 import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.CompilationUnitTree;

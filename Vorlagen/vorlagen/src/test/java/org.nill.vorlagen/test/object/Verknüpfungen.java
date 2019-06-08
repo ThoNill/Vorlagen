@@ -1,7 +1,7 @@
 package test.object;
 
+import org.nill.vorlagen.compiler.ObjectModell;
 import org.nill.vorlagen.object.Connection;
-import org.nill.vorlagen.object.ObjectModell;
 
 public class Verknüpfungen extends ObjectModell {
 

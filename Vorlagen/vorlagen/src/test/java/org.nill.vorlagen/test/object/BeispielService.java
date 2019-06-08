@@ -1,6 +1,6 @@
 package test.object;
 
-import org.nill.vorlagen.object.ObjectModell;
+import org.nill.vorlagen.compiler.ObjectModell;
 import org.nill.vorlagen.object.ddd.Service;
 
 public class BeispielService extends ObjectModell implements Service{

@@ -1,10 +1,9 @@
-package org.nill.vorlagen.interfaces;
+package org.nill.vorlagen.compiler;
 
 import java.util.Collection;
 
 import javax.persistence.Embeddable;
 
-import org.nill.vorlagen.object.ObjectModell;
 import org.nill.vorlagen.object.ddd.Aggregate;
 import org.nill.vorlagen.object.ddd.Entity;
 import org.nill.vorlagen.object.ddd.Repository;

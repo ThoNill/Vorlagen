@@ -3,6 +3,7 @@ package test.xml;
 import java.io.File;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 import org.nill.vorlagen.ST.xml.DocumentSTGenerator;
 import org.nill.vorlagen.files.ExpandZip;
 

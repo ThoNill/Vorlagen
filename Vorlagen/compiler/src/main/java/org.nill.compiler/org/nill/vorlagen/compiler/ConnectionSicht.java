@@ -1,14 +1,10 @@
-package org.nill.vorlagen.object;
+package org.nill.vorlagen.compiler;
 
 import java.util.Collections;
 import java.util.List;
-
 import javax.lang.model.element.Element;
-
-import org.nill.vorlagen.interfaces.ClazzValue;
-import org.nill.vorlagen.interfaces.FieldOrMethod;
 import org.nill.vorlagen.interfaces.Parameter;
-
+import org.nill.vorlagen.object.Connection;
 import com.sun.source.tree.Tree;
 
 public class ConnectionSicht implements FieldOrMethod{

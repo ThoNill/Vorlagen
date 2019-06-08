@@ -1,6 +1,8 @@
-package org.nill.vorlagen.interfaces;
+package org.nill.vorlagen.compiler;
 
 import java.util.List;
+
+import org.nill.vorlagen.interfaces.Parameter;
 
 public interface FieldOrMethod {
 		String getKind();

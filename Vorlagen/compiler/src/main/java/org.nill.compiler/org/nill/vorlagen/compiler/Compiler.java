@@ -15,7 +15,6 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 import org.nill.vorlagen.interfaces.ConverterVerzeichnis;
-import org.nill.vorlagen.object.ObjectModell;
 
 import com.sun.source.tree.CompilationUnitTree;
 import com.sun.source.util.Trees;

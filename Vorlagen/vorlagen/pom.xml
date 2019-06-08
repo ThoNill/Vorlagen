@@ -23,7 +23,7 @@
 		<dependency>
 
 			<groupId>tho.nill</groupId>
-			<artifactId>Vorlagen-leererModul</artifactId>
+			<artifactId>Vorlagen-compiler</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
