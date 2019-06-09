@@ -2,7 +2,7 @@ package test.xml;
 
 import java.io.File;
 
-import org.nill.vorlagen.ST.xml.DocumentSTGenerator;
+import org.nill.vorlagen.xml.st.DocumentSTGenerator;
 
 
 public class XMLTestMaschine extends DocumentSTGenerator{

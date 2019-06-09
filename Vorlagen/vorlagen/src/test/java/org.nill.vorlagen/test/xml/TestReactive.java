@@ -4,8 +4,9 @@ import java.io.File;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.nill.vorlagen.ST.xml.DocumentSTGenerator;
+
 import org.nill.vorlagen.files.ExpandZip;
+import org.nill.vorlagen.xml.st.DocumentSTGenerator;
 
 import janusAngularj2Frontend.JanusAngular2Maschine;
 

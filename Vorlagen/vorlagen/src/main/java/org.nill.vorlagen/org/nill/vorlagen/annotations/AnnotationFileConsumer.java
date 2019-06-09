@@ -6,7 +6,7 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
-import org.nill.vorlagen.reactive.STConsumer;
+import org.nill.vorlagen.st.STConsumer;
 import org.stringtemplate.v4.STGroupFile;
 
 public class AnnotationFileConsumer<M extends TypeElement> 

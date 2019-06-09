@@ -5,8 +5,8 @@ import java.io.File;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.nill.vorlagen.compiler.Compiler;
-import org.nill.vorlagen.compiler.ObjectModell;
-import org.nill.vorlagen.interfaces.ConverterVerzeichnis;
+import org.nill.vorlagen.compiler.ConverterVerzeichnis;
+import org.nill.vorlagen.compiler.model.ObjectModell;
 import org.nill.vorlagen.object.ModellGenerator;
 
 public class ObjectTest {

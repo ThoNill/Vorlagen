@@ -2,8 +2,8 @@ package janusAngularj2Frontend;
 
 import java.io.File;
 
-import org.nill.vorlagen.ST.xml.DocumentSTGenerator;
 import org.nill.vorlagen.generator.GeneratorList;
+import org.nill.vorlagen.xml.st.DocumentSTGenerator;
 
 
 public class JanusAngular2Maschine extends GeneratorList{

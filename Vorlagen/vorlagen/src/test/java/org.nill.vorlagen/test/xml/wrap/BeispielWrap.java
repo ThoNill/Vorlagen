@@ -1,6 +1,6 @@
 package test.xml.wrap;
 
-import org.nill.vorlagen.ST.xml.WrapElement;
+import org.nill.vorlagen.xml.st.WrapElement;
 
 public class BeispielWrap extends WrapElement {
 

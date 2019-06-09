@@ -3,7 +3,7 @@ package janusAngular2Backend.wraps;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.nill.vorlagen.ST.xml.WrapElement;
+import org.nill.vorlagen.xml.st.WrapElement;
 
 public class SQL extends WrapElement {
 

@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.nill.vorlagen.compiler.ObjectModell;
-import org.nill.vorlagen.files.FileDazu;
-import org.nill.vorlagen.files.ModellAndFile;
-import org.nill.vorlagen.files.ModellAndFileErweitern;
+import org.nill.vorlagen.compiler.model.ObjectModell;
 import org.nill.vorlagen.generator.Generator;
+import org.nill.vorlagen.generator.file.FileDazu;
+import org.nill.vorlagen.generator.file.ModellAndFile;
+import org.nill.vorlagen.generator.file.ModellAndFileErweitern;
 import org.nill.vorlagen.lists.ListPublisher;
 
 import reactor.core.publisher.Flux;

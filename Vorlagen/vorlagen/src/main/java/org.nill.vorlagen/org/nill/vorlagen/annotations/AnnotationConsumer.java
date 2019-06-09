@@ -14,8 +14,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.JavaFileObject;
 
-import org.nill.vorlagen.files.ModellAndFile;
-import org.nill.vorlagen.reactive.STConsumerBasis;
+import org.nill.vorlagen.generator.file.ModellAndFile;
+import org.nill.vorlagen.st.STConsumerBasis;
 import org.stringtemplate.v4.STGroupFile;
 
 public class AnnotationConsumer<M extends TypeElement> 

@@ -3,7 +3,7 @@ package test.object;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.nill.vorlagen.compiler.ObjectModell;
+import org.nill.vorlagen.compiler.model.ObjectModell;
 import org.nill.vorlagen.object.ddd.Aggregate;
 import org.nill.vorlagen.object.ddd.Entity;
 

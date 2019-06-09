@@ -16,9 +16,9 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 
-import org.nill.vorlagen.files.FileDazu;
-import org.nill.vorlagen.files.ModellAndFile;
-import org.nill.vorlagen.files.ModellAndFileErweitern;
+import org.nill.vorlagen.generator.file.FileDazu;
+import org.nill.vorlagen.generator.file.ModellAndFile;
+import org.nill.vorlagen.generator.file.ModellAndFileErweitern;
 import org.nill.vorlagen.lists.ListPublisher;
 
 import reactor.core.publisher.Flux;

@@ -13,7 +13,8 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 
-import org.nill.vorlagen.interfaces.ConverterVerzeichnis;
+import org.nill.vorlagen.compiler.model.DreiSichten;
+import org.nill.vorlagen.compiler.model.ObjectModell;
 
 import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ImportTree;
