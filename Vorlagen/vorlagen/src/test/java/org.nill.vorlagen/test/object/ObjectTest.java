@@ -21,16 +21,16 @@ public class ObjectTest {
 			ConverterVerzeichnis converter = new ConverterVerzeichnis();
 			converter.put(MonatJahr.class, MonatJahrAdapter.class);
 
-			ModellGenerator g = new ModellGenerator(new File("src/test/resources/org.nill.vorlagen/vorlagen/object"), new File("../generiert/src/main/java/"));
-			ObjectModell a = new Compiler().analyse(new File("src/test/java/org.nill.vorlagen"),BeispielBuchung.class,converter); 
-			ObjectModell b = new Compiler().analyse(new File("src/test/java/org.nill.vorlagen"),BeispielMandant.class,converter);
+			ModellGenerator g = new ModellGenerator("vorlagen/object", "../generiert/src/main/java/",ObjectTest.class);
+			ObjectModell a = new Compiler().analyse("src/test/java/org.nill.vorlagen",BeispielBuchung.class,converter); 
+			ObjectModell b = new Compiler().analyse("src/test/java/org.nill.vorlagen",BeispielMandant.class,converter);
 		//	ObjectModell v = new Compiler().analyse(new File("src/test/java/org.nill.vorlagen"),Verknüpfungen.class);
 
 			a.addConnection(new Verknüpfungen());
 			b.addConnection(new Verknüpfungen());
 			g.erzeugeAusgabe(a);
 			g.erzeugeAusgabe(b);
-			ObjectModell s = new Compiler().analyse(new File("src/test/java/org.nill.vorlagen"),BeispielService.class,converter);
+			ObjectModell s = new Compiler().analyse("src/test/java/org.nill.vorlagen",BeispielService.class,converter);
 			g.erzeugeAusgabe(s);
 		} catch (Exception e) {
 			e.printStackTrace();

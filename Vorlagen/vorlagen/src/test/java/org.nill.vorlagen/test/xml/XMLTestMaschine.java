@@ -8,9 +8,9 @@ import org.nill.vorlagen.xml.st.DocumentSTGenerator;
 public class XMLTestMaschine extends DocumentSTGenerator{
 
 	public XMLTestMaschine() throws Exception {
-		super(new File(".","src/test/resources/modelle"), 
-				new File(".","src/test/resources/vorlagen") ,
-				new File("./target/java"),"test.xml.wrap","BeispielWrap");
+		super("modelle", 
+				"javavorlagen",
+				"./target/java","test.xml.wrap","BeispielWrap",XMLTestMaschine.class);
 	}
 
 

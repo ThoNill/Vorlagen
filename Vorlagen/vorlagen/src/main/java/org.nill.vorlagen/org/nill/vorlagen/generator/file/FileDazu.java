@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.function.Function;
 
 public class FileDazu<M> implements Function<M,ModellAndFile<M>>{
-	private File file;
+	private String file;
 	
-	public FileDazu(File file) {
+	public FileDazu(String file) {
 		super();
 		this.file = file;
 	}

@@ -17,8 +17,8 @@ public class TestReactive {
 
 		DocumentSTGenerator a = new DocumentSTGenerator(
 
-				new File(".", "src/test/resources/modelle"), new File(".", "src/test/resources/vorlagen"),
-				new File("./target/reactive"), "test.xml.wrap", "BeispielWrap");
+				"modelle", "vorlagen", "./target/reactive", "test.xml.wrap",
+				"BeispielWrap", TestReactive.class);
 		try {
 			a.erzeugeAusgabe();
 		} catch (Exception e) {
@@ -26,13 +26,13 @@ public class TestReactive {
 		}
 
 	}
+
 	@Test
 	public void testAngular() {
 		try {
 			JanusAngular2Maschine a = new JanusAngular2Maschine(
-					
-					new File(".", "src/test/resources/modelle"), 
-					new File(".", "src/test/resources/vorlagen"));
+
+					"modelle", "vorlagen");
 			a.erzeugeAusgabe();
 		} catch (Exception e) {
 			fail();
@@ -44,9 +44,8 @@ public class TestReactive {
 	public void testZip() {
 		try {
 			ExpandZip a = new ExpandZip(
-					
-					new File(".", "target/angular7/src"), 
-					new File(".", "src/test/resources/angular7/angular7.zip"));
+
+					new File(".", "target/angular7/src"), new File(".", "src/test/resources/angular7/angular7.zip"));
 			a.erzeugeAusgabe();
 		} catch (Exception e) {
 			fail();

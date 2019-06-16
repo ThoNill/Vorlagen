@@ -1,13 +1,13 @@
 group DIALOG ;
 
-overwrite(model) ::= "true"
-create(model) ::= "true"
+overwrite(model,root) ::= "true"
+create(model,root) ::= "true"
 
 mypfad() ::= "package"
 
-dateiName(model) ::= "$mypfad()$/beispiel.java"
+dateiName(model,root) ::= "$mypfad()$/beispiel.java"
 
-dateiInhalt(model) ::= <<
+dateiInhalt(model,root) ::= <<
 
 $DATA(model,model.SimpleName,mypfad())$
 

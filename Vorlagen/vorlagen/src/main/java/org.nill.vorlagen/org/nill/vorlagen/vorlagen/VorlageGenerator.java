@@ -14,11 +14,11 @@ public class VorlageGenerator<MODELL, MODELL_BESCHREIBUNG, VORLAGEN_MODELL> impl
 	private ListTransform<MODELL_BESCHREIBUNG, MODELL> erzeugeModelle;
 	private ListTransform<MODELL, VORLAGEN_MODELL> erzeugeVorlagenModelle;
 	private VorlageConsumer<VORLAGEN_MODELL> vorlagenConsumer;
-	private File ausgabeVerzeichnis;
+	private String ausgabeVerzeichnis;
 	
 	public VorlageGenerator(MODELL_BESCHREIBUNG beschreibung, ListTransform<MODELL_BESCHREIBUNG, MODELL> erzeugeModelle,
 			ListTransform<MODELL, VORLAGEN_MODELL> erzeugeVorlagenModelle,
-			VorlageConsumer<VORLAGEN_MODELL> vorlagenConsumer, File ausgabeVerzeichnis) {
+			VorlageConsumer<VORLAGEN_MODELL> vorlagenConsumer, String ausgabeVerzeichnis) {
 		super();
 		this.beschreibung = beschreibung;
 		this.erzeugeModelle = erzeugeModelle;

@@ -50,13 +50,13 @@ public class Compiler {
 		manager.close();
 	}
 
-	public ObjectModell analyse(File sourceDir, Class clazz, ConverterVerzeichnis converter) throws IOException {
+	public ObjectModell analyse(String sourceDir, Class clazz, ConverterVerzeichnis converter) throws IOException {
 		final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		final DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
 		final StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null);
 
 		File source = new File(sourceDir, clazz.getCanonicalName().replace(".", "/") + ".java");
-
+		System.out.println("Sourcedatei "+ source.getAbsolutePath());
 		final Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(Arrays.asList(source));
 		final CompilationTask task = compiler.getTask(null, manager, diagnostics, null, null, sources);
 

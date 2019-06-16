@@ -9,9 +9,9 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 public class TestModelProzessor extends ModellProzessor {
 
 	public TestModelProzessor() {
-		super(new File("src/main/resources/javavorlagen/single"), 
-				new File("src/main/resources/javavorlagen/multi"),
-				new File("./target/javatest"),UnaryOperator.identity());
+		super("src/main/resources/javavorlagen/single", 
+				"src/main/resources/javavorlagen/multi",
+				"./target/javatest",UnaryOperator.identity(),TestModelProzessor.class);
 	}
 
 }

@@ -19,7 +19,7 @@ public class TestVorlage extends VorlageConsumer<TestModell> {
 	}
 
 	@Override
-	public File getAusgabe(TestModell modell, File ausgabeVerzeichnis) {
+	public File getAusgabe(TestModell modell, String ausgabeVerzeichnis) {
 		return new File(ausgabeVerzeichnis,modell.getDateiname());
 	}
 

@@ -28,19 +28,21 @@ import reactor.core.publisher.Flux;
 public class ModellProzessor extends AbstractProcessor {
 	static Logger logger = Logger.getLogger(ModellProzessor.class.getSimpleName());
 
-	private File vorlagenVerzeichnisSingle;
-	private File vorlagenVerzeichnisMulti;
-	private File ausgabeVerzeichnis;
+	private String vorlagenVerzeichnisSingle;
+	private String vorlagenVerzeichnisMulti;
+	private String ausgabeVerzeichnis;
 	private UnaryOperator<TypeElement> toVorlageModell;
+	private Class ankerClass;
 	
-	public ModellProzessor(File vorlagenVerzeichnisSingle, 
-			File vorlagenVerzeichnisMulti, File ausgabeVerzeichnis,
-			UnaryOperator<TypeElement> toVorlageModell) {
+	public ModellProzessor(String vorlagenVerzeichnisSingle, 
+			String vorlagenVerzeichnisMulti, String ausgabeVerzeichnis,
+			UnaryOperator<TypeElement> toVorlageModell,Class ankerClass) {
 		super();
 		this.vorlagenVerzeichnisSingle = vorlagenVerzeichnisSingle;
 		this.vorlagenVerzeichnisMulti = vorlagenVerzeichnisMulti;
 		this.ausgabeVerzeichnis = ausgabeVerzeichnis;
 		this.toVorlageModell = toVorlageModell;
+		this.ankerClass = ankerClass;
 	}
 
 	@Override
@@ -81,7 +83,7 @@ public class ModellProzessor extends AbstractProcessor {
 		.map(toVorlageModell)
 		.map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))
 		.flatMap(new ListPublisher<ModellAndFile<TypeElement>, ModellAndFile<TypeElement>>(
-				new ModellAndFileErweitern<TypeElement>()))
+				new ModellAndFileErweitern<TypeElement>(ankerClass)))
 		.map(new FileDazu<ModellAndFile<TypeElement>>(ausgabeVerzeichnis))
 		.subscribe(new AnnotationFileConsumer<TypeElement>(StandardCharsets.UTF_8, processingEnv));
 	}
@@ -93,7 +95,7 @@ public class ModellProzessor extends AbstractProcessor {
 		Flux.just(elements)
 		.map(new FileDazu<List<TypeElement>>(vorlagenVerzeichnisMulti))
 		.flatMap(new ListPublisher<ModellAndFile<List<TypeElement>>, ModellAndFile<List<TypeElement>>>(
-				new ModellAndFileErweitern<List<TypeElement>>()))
+				new ModellAndFileErweitern<List<TypeElement>>(ankerClass)))
 		.map(new FileDazu<ModellAndFile<List<TypeElement>>>(ausgabeVerzeichnis))
 		.subscribe(new ElementListFileConsumer(StandardCharsets.UTF_8, processingEnv));
 	}
@@ -104,7 +106,7 @@ public class ModellProzessor extends AbstractProcessor {
 		.map(toVorlageModell)
 		.map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))
 		.flatMap(new ListPublisher<ModellAndFile<TypeElement>, ModellAndFile<TypeElement>>(
-						new ModellAndFileErweitern<TypeElement>()))
+						new ModellAndFileErweitern<TypeElement>(ankerClass)))
 		.subscribe(new AnnotationConsumer<TypeElement>(StandardCharsets.UTF_8, processingEnv));
 	}
 }

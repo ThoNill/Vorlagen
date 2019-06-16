@@ -19,7 +19,7 @@ public class TesteDieVorlagen {
     	VorlageGenerator<TestModell,String,TestModell> ausgabe = new  VorlageGenerator("test", new TestModellFabrik(),
     			new TestVorlagenModellFabrik(),
     			new TestVorlage() , 
-    			new File("./target/java/package"));
+    			"./target/java/package");
 
             File f = new File("./target/java/package/test");
             if (f.exists()) {

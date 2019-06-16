@@ -39,7 +39,7 @@ extends STConsumerBasis<M> implements Consumer<ModellAndFile<M>> {
 	}
 
 	@Override
-	protected void erzeugeAusgabeAusVorlageModell(STGroupFile group, File ausgabeVerzeichnis, M vm)
+	protected void erzeugeAusgabeAusVorlageModell(STGroupFile group, String ausgabeVerzeichnis, M vm)
 			throws IOException {
 		Writer writer = erzeugeWriter(vm.getQualifiedName().toString());
 		erzeugeAusgabe(group, writer, vm);

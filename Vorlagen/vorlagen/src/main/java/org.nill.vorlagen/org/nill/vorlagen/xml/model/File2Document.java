@@ -20,23 +20,28 @@ import nu.xom.Node;
 import nu.xom.Nodes;
 import nu.xom.ParentNode;
 
-public class File2Document implements Function<File, Document> {
+public class File2Document implements Function<String, Document> {
 	private static final String DESCENDANT = "descendant::*";
 	static Logger logger = Logger.getLogger(File2Document.class.getSimpleName());
 
 	@Override
-	public Document apply(File file) {
+	public Document apply(String file) {
 		try {
+			logger.info("Lade: " + file);
 			InputStream input = holeStream(file);
-			return ladeDasDokument(input);
+			logger.info("istream: " + input);
+
+			Document doc = ladeDasDokument(input);
+			logger.info("document: " + doc);
+			return doc;
 		} catch (FileNotFoundException e) {
 			throw new IllegalStateException(e);
 		}
 	}
 
-	protected InputStream holeStream(File file) throws FileNotFoundException {
+	protected InputStream holeStream(String file) throws FileNotFoundException {
 		InputStream fileStream;
-		if (file.exists()) {
+		if (new File(file).exists()) {
 			fileStream = new FileInputStream(file);
 		} else {
 			fileStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(file.toString());

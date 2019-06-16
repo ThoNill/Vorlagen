@@ -7,12 +7,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 import org.stringtemplate.v4.StringRenderer;
 
@@ -26,23 +28,18 @@ public class STConsumerBasis<M> {
 		this.charset = charset;
 	}
 
-	protected void erzeugeAusgabe(M vorlageModell, File vorlageDatei, File ausgabeVerzeichnis) throws IOException  {
+	protected void erzeugeAusgabe(M vorlageModell, String vorlageDatei, String ausgabeVerzeichnis) throws IOException  {
 		STGroupFile group = createGroupFile(vorlageDatei);
 		register(group);
 		erzeugeAusgabeAusVorlageModell(group, ausgabeVerzeichnis, vorlageModell);
 	}
 
-	private STGroupFile createGroupFile(File vorlageDatei) {
-		String vorlageDateiName = vorlageDatei.toString();
-		if (!vorlageDatei.exists()) {
-			logger.log(Level.INFO,() -> "Die Vorlage " + vorlageDatei.getAbsolutePath()+" existiert nicht");
-			int pos = vorlageDateiName.indexOf("resources");
-			if (pos >= 0) {
-				final String neuerVorlageDateiName = vorlageDateiName.substring(pos + 9);
-				vorlageDateiName = neuerVorlageDateiName;
-				logger.log(Level.INFO,() -> "vorlage " + neuerVorlageDateiName);
-			}
-		} 
+	private STGroupFile createGroupFile(String vorlageDateiName) {
+		/*URL url = Thread.currentThread().getContextClassLoader().getResource(vorlageDateiName);
+		System.out.println("vorgabe = " + vorlageDateiName);
+		System.out.println("url = " + url);
+		System.out.println("file " +url.getFile());
+	*/
 		return new STGroupFile(vorlageDateiName, '$', '$');
 	}
 
@@ -51,12 +48,14 @@ public class STConsumerBasis<M> {
 		group.registerRenderer(String.class, new StringRenderer());
 	}
 
-	protected void erzeugeAusgabeAusVorlageModell(STGroupFile group, File ausgabeVerzeichnis, M vm)
+	protected void erzeugeAusgabeAusVorlageModell(STGroupFile group, String ausgabeVerzeichnis, M vm)
 			throws IOException{
 		String dateiName = getAusgabe(group, ausgabeVerzeichnis, vm).toString();
 		boolean überschreiben = isOverwrite(group, vm);
 		boolean erzeugen = isCreate(group, vm);
 		File d = new File(dateiName);
+		System.out.println("ausgabe: " + dateiName+" " +d.getAbsolutePath());
+
 		if (erzeugen) {
 			if (überschreiben || !d.exists()) {
 				erzeugeEventuellFehlendeVerzeichnisse(dateiName);
@@ -74,7 +73,7 @@ public class STConsumerBasis<M> {
 		}
 	}
 
-	private File getAusgabe(STGroupFile group, File ausgabeVerzeichnis, M modell) {
+	private File getAusgabe(STGroupFile group, String ausgabeVerzeichnis, M modell) {
 		return new File(ausgabeVerzeichnis, getDateiName(group, modell));
 	}
 

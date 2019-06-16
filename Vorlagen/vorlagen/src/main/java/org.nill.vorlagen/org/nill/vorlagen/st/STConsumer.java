@@ -20,13 +20,14 @@ implements Consumer<ModellAndFile<ModellAndFile<M>>> {
 	@Override
 	public void accept(ModellAndFile<ModellAndFile<M>> t) {
 		ModellAndFile<M> mf = t.modell;
-		File ausgabeVerzeichnis = t.file;
-		File vorlageDatei = mf.file;
+		String ausgabeVerzeichnis = t.file;
+		String vorlageDatei = mf.file;
 		M vorlageModell = mf.modell;
 
 		try {
 			erzeugeAusgabe(vorlageModell, vorlageDatei, ausgabeVerzeichnis);
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.log(Level.SEVERE, "Fehler in accept");
 			
 		}

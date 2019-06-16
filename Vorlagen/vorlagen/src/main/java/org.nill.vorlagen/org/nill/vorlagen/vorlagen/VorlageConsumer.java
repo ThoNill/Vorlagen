@@ -33,7 +33,7 @@ public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<Model
 
 	public abstract void erzeugeAusgabe(Writer writer, VORLAGEN_MODELL modell) throws IOException;
 
-	public abstract File getAusgabe(VORLAGEN_MODELL modell, File ausgabeVerzeichnis);
+	public abstract File getAusgabe(VORLAGEN_MODELL modell, String ausgabeVerzeichnis);
 
 	@Override
 	public void accept(ModellAndFile<VORLAGEN_MODELL> vm) {
@@ -45,7 +45,7 @@ public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<Model
 
 	}
 
-	private void erzeugeAusgabeAusVorlageModel(VORLAGEN_MODELL vm, File ausgabeVerzeichnis)
+	private void erzeugeAusgabeAusVorlageModel(VORLAGEN_MODELL vm,String ausgabeVerzeichnis)
 			throws IOException {
 		String dateiName = getAusgabe(vm, ausgabeVerzeichnis).toString();
 		if (überschreiben || !(new File(dateiName)).exists()) {

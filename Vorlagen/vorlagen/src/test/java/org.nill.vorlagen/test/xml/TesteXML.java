@@ -33,7 +33,7 @@ public class TesteXML {
 		try {
 		File2Document modellFabrik = new File2Document();
 			Document document = modellFabrik.apply(
-					new File("src/test/resources/org.nill.vorlagen/modelle/beispiel.xml"));
+					"modelle/beispiel.xml");
 
 			assertNotNull(document);
 		} catch (Exception ex) {
@@ -49,13 +49,13 @@ public class TesteXML {
 	public void ladeModelUndVorlage() {
 		try {
 			File2Document modellFabrik = new File2Document();
-			Document document = modellFabrik.apply(new File("src/test/resources/org.nill.vorlagen/modelle/beispiel.xml"));
+			Document document = modellFabrik.apply("modelle/beispiel.xml");
 			assertNotNull(document);
 
 			DocumentSTConsumer consumer = new DocumentSTConsumer(StandardCharsets.UTF_8,"test.xml.wrap","BeispielWrap");
 			
-			ModellAndFile<Document> mf1 = new ModellAndFile<Document>(document, new File("src/test/resources/org.nill.vorlagen/vorlagen/beispiel.stg"));
-			ModellAndFile<ModellAndFile<Document>> mf2 = new ModellAndFile<>(mf1,new File("./target/java"));
+			ModellAndFile<Document> mf1 = new ModellAndFile<Document>(document, "vorlagen/beispiel.stg");
+			ModellAndFile<ModellAndFile<Document>> mf2 = new ModellAndFile<>(mf1,"./target/java");
 			consumer.accept(mf2);
 
 		} catch (Exception ex) {
