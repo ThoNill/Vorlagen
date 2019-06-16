@@ -56,7 +56,7 @@ public class Compiler {
 		final StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null);
 
 		File source = new File(sourceDir, clazz.getCanonicalName().replace(".", "/") + ".java");
-		System.out.println("Sourcedatei "+ source.getAbsolutePath());
+		logger.log(Level.INFO,"Sourcedatei "+ source.getAbsolutePath());
 		final Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(Arrays.asList(source));
 		final CompilationTask task = compiler.getTask(null, manager, diagnostics, null, null, sources);
 

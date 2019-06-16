@@ -2,12 +2,16 @@ package org.nill.vorlagen.compiler.transformation;
 
 import java.io.IOException;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.nill.vorlagen.compiler.Compiler;
 import org.nill.vorlagen.compiler.ConverterVerzeichnis;
 import org.nill.vorlagen.compiler.model.ObjectModell;
 
 public class AnalyseTransformation implements Function<Class<? extends ObjectModell>, ObjectModell> {
+	static Logger logger = Logger.getLogger(AnalyseTransformation.class.getSimpleName());
+
 	private ConverterVerzeichnis converter;
 	private ObjectModell verknüpfungen;
 	private String modelVerzeichnis;
@@ -25,7 +29,7 @@ public class AnalyseTransformation implements Function<Class<? extends ObjectMod
 	public ObjectModell apply(Class<? extends ObjectModell> modellClass) {
 		ObjectModell a;
 		try {
-			System.out.println("analyse modelVerzeichnis "+modelVerzeichnis);
+			logger.log(Level.INFO, "analyse modelVerzeichnis "+modelVerzeichnis);
 			a = new Compiler().analyse(modelVerzeichnis, modellClass, converter);
 			a.addConnection(verknüpfungen);
 			return a;

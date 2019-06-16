@@ -1,6 +1,7 @@
 package org.nill.vorlagen.files;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -41,6 +42,10 @@ public class DateienEinesVerzeichnisses implements ListTransform<String, String>
 			throws IOException, URISyntaxException {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		String fileListName = directory + "/filelist.list";
+		File f = new File(fileListName);
+		if (f.exists()) {
+			logger.log(Level.INFO, "File " + f.getAbsolutePath() +" exists");
+		}
 		logger.log(Level.INFO, "fileListName " + fileListName);
 		InputStream in = loader.getResourceAsStream(fileListName);
 		logger.log(Level.INFO, "Stream: " + in);
