@@ -1,5 +1,7 @@
 package test.xml;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
@@ -9,7 +11,6 @@ import org.nill.vorlagen.xml.model.File2Document;
 import org.nill.vorlagen.xml.st.DocumentSTConsumer;
 
 import nu.xom.Document;
-
 public class TesteXML {
 	private static File basisVerzeicnis = new File("./target");
 

@@ -1,5 +1,6 @@
 package test.object;
 
+import static org.junit.Assert.*;
 import org.junit.Test;
 import org.nill.vorlagen.compiler.Compiler;
 import org.nill.vorlagen.compiler.ConverterVerzeichnis;

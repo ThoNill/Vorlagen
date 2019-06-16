@@ -1,5 +1,7 @@
 package test.xml;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 
 import org.junit.Test;
@@ -7,7 +9,6 @@ import org.nill.vorlagen.files.ExpandZip;
 import org.nill.vorlagen.xml.st.DocumentSTGenerator;
 
 import janusAngularj2Frontend.JanusAngular2Maschine;
-
 public class TestReactive {
 
 	@Test
