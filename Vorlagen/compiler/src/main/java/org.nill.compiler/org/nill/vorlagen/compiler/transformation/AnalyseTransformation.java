@@ -1,8 +1,8 @@
 package org.nill.vorlagen.compiler.transformation;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.function.Function;
+
 import org.nill.vorlagen.compiler.Compiler;
 import org.nill.vorlagen.compiler.ConverterVerzeichnis;
 import org.nill.vorlagen.compiler.model.ObjectModell;

@@ -2,6 +2,8 @@ package org.nill.vorlagen.compiler;
 
 import java.util.HashMap;
 
+import javax.persistence.AttributeConverter;
+
 /**
  * Verwaltet eine Map von Class zu {@link AttributeConverter} Class.
  * 

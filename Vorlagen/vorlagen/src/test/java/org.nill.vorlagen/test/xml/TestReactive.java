@@ -3,8 +3,6 @@ package test.xml;
 import java.io.File;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
-
 import org.nill.vorlagen.files.ExpandZip;
 import org.nill.vorlagen.xml.st.DocumentSTGenerator;
 
@@ -18,7 +16,7 @@ public class TestReactive {
 		DocumentSTGenerator a = new DocumentSTGenerator(
 
 				"modelle", "vorlagen", "./target/reactive", "test.xml.wrap",
-				"BeispielWrap", TestReactive.class);
+				"BeispielWrap");
 		try {
 			a.erzeugeAusgabe();
 		} catch (Exception e) {

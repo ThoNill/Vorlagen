@@ -1,6 +1,5 @@
 package org.nill.vorlagen.object;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +24,17 @@ public class ModellGenerator implements Generator {
 	private String vorlagenVerzeichnis;
 	private String ausgabeVerzeichnis;
 	private List<ObjectModell> modelle;
-	private Class ankerClass;
 
 	public boolean add(ObjectModell e) {
 		return modelle.add(e);
 	}
 
-	public ModellGenerator(String vorlagenVerzeichnis, String ausgabeVerzeichnis, Class ankerClass) {
+	public ModellGenerator(String vorlagenVerzeichnis, String ausgabeVerzeichnis) {
 		super();
 		this.vorlagenVerzeichnis = vorlagenVerzeichnis;
 		this.ausgabeVerzeichnis = ausgabeVerzeichnis;
 		this.modelle = new ArrayList<>();
-		this.ankerClass = ankerClass;
+	
 	}
 
 	public void erzeugeAusgabe(ObjectModell element) {
@@ -46,7 +44,7 @@ public class ModellGenerator implements Generator {
 	public void erzeugeAusgabe(Flux<ObjectModell> flux) {
 		flux.map(new FileDazu<ObjectModell>(vorlagenVerzeichnis + "/single"))
 				.flatMap(new ListPublisher<ModellAndFile<ObjectModell>, ModellAndFile<ObjectModell>>(
-						new ModellAndFileErweitern<ObjectModell>(ankerClass)))
+						new ModellAndFileErweitern<ObjectModell>()))
 				.map(new FileDazu<ModellAndFile<ObjectModell>>(ausgabeVerzeichnis))
 				.subscribe(new ObjectModellConsumer(StandardCharsets.UTF_8));
 	}

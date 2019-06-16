@@ -1,6 +1,5 @@
 package org.nill.vorlagen.annotations;
 
-import java.io.File;
 import java.util.function.UnaryOperator;
 
 import javax.annotation.processing.SupportedAnnotationTypes;
@@ -11,7 +10,7 @@ public class TestModelProzessor extends ModellProzessor {
 	public TestModelProzessor() {
 		super("src/main/resources/javavorlagen/single", 
 				"src/main/resources/javavorlagen/multi",
-				"./target/javatest",UnaryOperator.identity(),TestModelProzessor.class);
+				"./target/javatest",UnaryOperator.identity());
 	}
 
 }

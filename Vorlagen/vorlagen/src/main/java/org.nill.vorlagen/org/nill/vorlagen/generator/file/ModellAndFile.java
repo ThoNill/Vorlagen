@@ -1,7 +1,5 @@
 package org.nill.vorlagen.generator.file;
 
-import java.io.File;
-
 public class ModellAndFile<M>{
 	public M modell;
 	public String file;

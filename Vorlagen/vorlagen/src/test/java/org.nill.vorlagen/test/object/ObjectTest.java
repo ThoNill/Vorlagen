@@ -1,9 +1,6 @@
 package test.object;
 
-import java.io.File;
-
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.nill.vorlagen.compiler.Compiler;
 import org.nill.vorlagen.compiler.ConverterVerzeichnis;
 import org.nill.vorlagen.compiler.model.ObjectModell;
@@ -21,7 +18,7 @@ public class ObjectTest {
 			ConverterVerzeichnis converter = new ConverterVerzeichnis();
 			converter.put(MonatJahr.class, MonatJahrAdapter.class);
 
-			ModellGenerator g = new ModellGenerator("vorlagen/object", "../generiert/src/main/java/",ObjectTest.class);
+			ModellGenerator g = new ModellGenerator("vorlagen/object", "../generiert/src/main/java/");
 			ObjectModell a = new Compiler().analyse("src/test/java/org.nill.vorlagen",BeispielBuchung.class,converter); 
 			ObjectModell b = new Compiler().analyse("src/test/java/org.nill.vorlagen",BeispielMandant.class,converter);
 		//	ObjectModell v = new Compiler().analyse(new File("src/test/java/org.nill.vorlagen"),Verknüpfungen.class);

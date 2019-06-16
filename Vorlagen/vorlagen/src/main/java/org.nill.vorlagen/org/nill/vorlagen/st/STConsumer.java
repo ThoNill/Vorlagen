@@ -1,6 +1,5 @@
 package org.nill.vorlagen.st;
 
-import java.io.File;
 import java.nio.charset.Charset;
 import java.util.function.Consumer;
 import java.util.logging.Level;

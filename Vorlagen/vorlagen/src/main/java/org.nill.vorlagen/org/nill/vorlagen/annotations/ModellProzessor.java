@@ -1,6 +1,5 @@
 package org.nill.vorlagen.annotations;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +31,15 @@ public class ModellProzessor extends AbstractProcessor {
 	private String vorlagenVerzeichnisMulti;
 	private String ausgabeVerzeichnis;
 	private UnaryOperator<TypeElement> toVorlageModell;
-	private Class ankerClass;
 	
 	public ModellProzessor(String vorlagenVerzeichnisSingle, 
 			String vorlagenVerzeichnisMulti, String ausgabeVerzeichnis,
-			UnaryOperator<TypeElement> toVorlageModell,Class ankerClass) {
+			UnaryOperator<TypeElement> toVorlageModell) {
 		super();
 		this.vorlagenVerzeichnisSingle = vorlagenVerzeichnisSingle;
 		this.vorlagenVerzeichnisMulti = vorlagenVerzeichnisMulti;
 		this.ausgabeVerzeichnis = ausgabeVerzeichnis;
 		this.toVorlageModell = toVorlageModell;
-		this.ankerClass = ankerClass;
 	}
 
 	@Override
@@ -83,7 +80,7 @@ public class ModellProzessor extends AbstractProcessor {
 		.map(toVorlageModell)
 		.map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))
 		.flatMap(new ListPublisher<ModellAndFile<TypeElement>, ModellAndFile<TypeElement>>(
-				new ModellAndFileErweitern<TypeElement>(ankerClass)))
+				new ModellAndFileErweitern<TypeElement>()))
 		.map(new FileDazu<ModellAndFile<TypeElement>>(ausgabeVerzeichnis))
 		.subscribe(new AnnotationFileConsumer<TypeElement>(StandardCharsets.UTF_8, processingEnv));
 	}
@@ -95,7 +92,7 @@ public class ModellProzessor extends AbstractProcessor {
 		Flux.just(elements)
 		.map(new FileDazu<List<TypeElement>>(vorlagenVerzeichnisMulti))
 		.flatMap(new ListPublisher<ModellAndFile<List<TypeElement>>, ModellAndFile<List<TypeElement>>>(
-				new ModellAndFileErweitern<List<TypeElement>>(ankerClass)))
+				new ModellAndFileErweitern<List<TypeElement>>()))
 		.map(new FileDazu<ModellAndFile<List<TypeElement>>>(ausgabeVerzeichnis))
 		.subscribe(new ElementListFileConsumer(StandardCharsets.UTF_8, processingEnv));
 	}
@@ -106,7 +103,7 @@ public class ModellProzessor extends AbstractProcessor {
 		.map(toVorlageModell)
 		.map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))
 		.flatMap(new ListPublisher<ModellAndFile<TypeElement>, ModellAndFile<TypeElement>>(
-						new ModellAndFileErweitern<TypeElement>(ankerClass)))
+						new ModellAndFileErweitern<TypeElement>()))
 		.subscribe(new AnnotationConsumer<TypeElement>(StandardCharsets.UTF_8, processingEnv));
 	}
 }

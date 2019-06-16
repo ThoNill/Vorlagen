@@ -1,6 +1,5 @@
 package org.nill.vorlagen.generator.file;
 
-import java.io.File;
 import java.util.function.Function;
 
 public class FileDazu<M> implements Function<M,ModellAndFile<M>>{

@@ -2,8 +2,6 @@ package org.nill.vorlagen.compiler.transformation;
 
 import java.util.function.Function;
 
-import javax.management.RuntimeErrorException;
-
 import org.nill.vorlagen.compiler.model.ObjectModell;
 
 public class GenerateClass implements Function<String, Class<? extends ObjectModell>> {

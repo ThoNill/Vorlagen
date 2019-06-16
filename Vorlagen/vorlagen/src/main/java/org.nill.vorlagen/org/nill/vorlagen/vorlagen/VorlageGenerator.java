@@ -1,7 +1,5 @@
 package org.nill.vorlagen.vorlagen;
 
-import java.io.File;
-
 import org.nill.vorlagen.generator.Generator;
 import org.nill.vorlagen.generator.file.FileDazu;
 import org.nill.vorlagen.lists.ListPublisher;

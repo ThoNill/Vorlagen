@@ -4,8 +4,6 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
-
 import org.nill.vorlagen.generator.file.ModellAndFile;
 import org.nill.vorlagen.xml.model.File2Document;
 import org.nill.vorlagen.xml.st.DocumentSTConsumer;

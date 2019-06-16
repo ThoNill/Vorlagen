@@ -1,7 +1,6 @@
 package janusAngularj2Frontend;
 
 
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 import nu.xom.Attribute;
