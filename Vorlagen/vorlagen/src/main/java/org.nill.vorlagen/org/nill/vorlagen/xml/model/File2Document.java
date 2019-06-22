@@ -11,6 +11,8 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
+
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
@@ -57,9 +59,8 @@ public class File2Document implements Function<String, Document> {
 			}
 			return doc.getRootElement();
 		} catch (Exception ex) {
-			logger.log(Level.SEVERE, "Fehler in ladeDassRootElement");
+			throw new RuntimeVorlagenException( "Error at LadeDasRootElement",ex);
 		}
-		return null;
 	}
 
 	private static Document ladeDasDokument(InputStream in) {
@@ -73,9 +74,8 @@ public class File2Document implements Function<String, Document> {
 			ersetzeIncludes(root);
 			return document;
 		} catch (Exception ex) {
-			logger.log(Level.SEVERE, "Fehler in ladeDasDocument");
+			throw new RuntimeVorlagenException( "Error at LadeDasDocument",ex);
 		}
-		return null;
 	}
 
 	public static void ersetzeElementDurchTemplate(Element source, Element template, String sternValue) {

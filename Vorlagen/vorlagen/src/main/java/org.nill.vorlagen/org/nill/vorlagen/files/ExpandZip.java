@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.nill.vorlagen.generator.Generator;
+import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
 
 public class ExpandZip implements Generator {
 	static Logger logger = Logger.getLogger(ExpandZip.class.getSimpleName());
@@ -39,7 +40,7 @@ public class ExpandZip implements Generator {
 			Path root = zipFileSystem.getPath("/");
 			Files.walkFileTree(root, new ExtractZipFileVisitor(dest));
 		} catch (IOException ex) {
-			logger.log(Level.SEVERE,ex.getLocalizedMessage());
+			throw new RuntimeVorlagenException( "Error at ExpandZip",ex);
 		}
 	}
 }

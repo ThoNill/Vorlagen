@@ -30,7 +30,7 @@ public class BeispielMandant extends ObjectModell implements Entity, Aggregate{
 	
 	public BeispielMandant() throws Exception {
 		super();
-		addConnection(new Verknüpfungen());
+		addConnection(new VerknÃ¼pfungen());
 	}
 
 	

@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.nill.vorlagen.compiler.model.ObjectModell;
+import org.nill.vorlagen.compiler.util.RuntimeCompilerException;
 
 public class GenerateClass implements Function<String, Class<? extends ObjectModell>> {
 	static Logger logger = Logger.getLogger(GenerateClass.class.getSimpleName());
@@ -22,10 +23,10 @@ public class GenerateClass implements Function<String, Class<? extends ObjectMod
 				logger.log(Level.INFO,"Habe class "+className + " erzeugt");
 				return (Class<? extends ObjectModell>)clazz;
 			} else {
-				throw new RuntimeException("The Class " + clazz.getCanonicalName() + " isnt a ObjectModell");
+				throw new RuntimeCompilerException("The Class " + clazz.getCanonicalName() + " isnt a ObjectModell");
 			}
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("class " + className,e);
+			throw new RuntimeCompilerException("class not found " + className,e);
 		}
 	}
 

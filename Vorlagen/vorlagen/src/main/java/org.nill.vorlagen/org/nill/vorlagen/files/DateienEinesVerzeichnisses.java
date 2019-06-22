@@ -1,7 +1,6 @@
 package org.nill.vorlagen.files;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.nill.vorlagen.lists.ListTransform;
+import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
 
 public class DateienEinesVerzeichnisses implements ListTransform<String, String> {
 	static Logger logger = Logger.getLogger(DateienEinesVerzeichnisses.class.getSimpleName());
@@ -32,7 +32,7 @@ public class DateienEinesVerzeichnisses implements ListTransform<String, String>
 				liste.stream().forEach(x -> logger.log(Level.INFO, "Datei " + x));
 			}
 		} catch (IOException | URISyntaxException e) {
-			throw new IllegalArgumentException(e);
+			throw new RuntimeVorlagenException( "Error file search",e);
 		}
 		return liste;
 	}
@@ -42,10 +42,12 @@ public class DateienEinesVerzeichnisses implements ListTransform<String, String>
 			throws IOException, URISyntaxException {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		String fileListName = directory + "/filelist.list";
-		File f = new File(fileListName);
-		if (f.exists()) {
+/*		File f = new File(fileListName);
+		if (!f.exists()) {
 			logger.log(Level.INFO, "File " + f.getAbsolutePath() +" exists");
+			throw new RuntimeCompilerException("File " + f.getAbsolutePath() +" did not exists");
 		}
+*/
 		logger.log(Level.INFO, "fileListName " + fileListName);
 		InputStream in = loader.getResourceAsStream(fileListName);
 		logger.log(Level.INFO, "Stream: " + in);

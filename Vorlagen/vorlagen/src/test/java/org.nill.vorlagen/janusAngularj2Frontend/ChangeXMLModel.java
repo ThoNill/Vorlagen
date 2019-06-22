@@ -29,14 +29,14 @@ public abstract class ChangeXMLModel implements UnaryOperator<Document>{
     
     abstract protected Element changeElement(Element source);
 
-    protected void dieKinderHinzufügen(Element newElement, Element source) {
+    protected void dieKinderHinzufÃ¼gen(Element newElement, Element source) {
         for (int i = 0; i < source.getChildCount(); i++) {
             Node node = source.getChild(i);
             if (node instanceof Element) {
                 Element childElement = (Element) node;
                 if (istDerNameImArrayEnthalten(childElement.getLocalName(),
                         ignoriereElemente)) {
-                    dieKinderHinzufügen(newElement, childElement);
+                    dieKinderHinzufÃ¼gen(newElement, childElement);
                 } else {
                     newElement.appendChild(changeElement(childElement));
                 }
@@ -46,7 +46,7 @@ public abstract class ChangeXMLModel implements UnaryOperator<Document>{
         }
     }
 
-    protected void dieAttributeHinzufügen(Element newElement, Element source) {
+    protected void dieAttributeHinzufÃ¼gen(Element newElement, Element source) {
         for (int i = 0; i < source.getAttributeCount(); i++) {
             Attribute attr = source.getAttribute(i);
             Attribute neuesAttribut = changeAttribute(source, attr);

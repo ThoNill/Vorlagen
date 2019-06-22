@@ -49,23 +49,23 @@ public class STConsumerBasis<M> {
 	protected void erzeugeAusgabeAusVorlageModell(STGroupFile group, String ausgabeVerzeichnis, M vm)
 			throws IOException{
 		String dateiName = getAusgabe(group, ausgabeVerzeichnis, vm).toString();
-		boolean überschreiben = isOverwrite(group, vm);
+		boolean Ã¼berschreiben = isOverwrite(group, vm);
 		boolean erzeugen = isCreate(group, vm);
 		File d = new File(dateiName);
 		logger.log(Level.INFO,"ausgabe: " + dateiName+" " +d.getAbsolutePath());
 
 		if (erzeugen) {
-			if (überschreiben || !d.exists()) {
+			if (Ã¼berschreiben || !d.exists()) {
 				erzeugeEventuellFehlendeVerzeichnisse(dateiName);
 				Writer writer = erzeugeWriter(dateiName);
 				erzeugeAusgabe(group, writer, vm);
 				writer.close();
 			}
 		} else {
-			if (überschreiben && d.exists()) {
+			if (Ã¼berschreiben && d.exists()) {
 				Files.delete(d.toPath());
 				if ( d.exists()) {
-					throw new IllegalArgumentException("Konnte nicht gelöscht werden: "+ d.getAbsolutePath());
+					throw new IllegalArgumentException("Konnte nicht gelï¿½scht werden: "+ d.getAbsolutePath());
 				}
 			}
 		}

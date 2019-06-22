@@ -2,7 +2,10 @@ package org.nill.vorlagen.compiler;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,12 +20,15 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 import org.nill.vorlagen.compiler.model.ObjectModell;
+import org.nill.vorlagen.compiler.util.RuntimeCompilerException;
 
 import com.sun.source.tree.CompilationUnitTree;
 import com.sun.source.util.Trees;
 import com.sun.tools.javac.api.JavacTaskImpl;
 
 public class Compiler {
+	private static final String SOURCE_DIR = "C:/Users/tnill/git/Vorlagen/Vorlagen/compiler/src/main/java/org.nill.compiler";
+
 	static Logger logger = Logger.getLogger(Compiler.class.getSimpleName());
 
 	public Compiler() {
@@ -40,43 +46,92 @@ public class Compiler {
 		final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		final DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
 		final StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null);
+
 		final Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(Arrays.asList(source));
-		final CompilationTask task = compiler.getTask(null, manager, diagnostics, null, null, sources);
+		List<String> opts = Arrays.asList("-source","1.8", "-target","1.8","-encoding","UTF8");
+		final CompilationTask task = compiler.getTask(null, manager, diagnostics, opts, null, sources);
 		task.call();
-		for (final Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
-			logger.log(Level.INFO, String.format("%s, line %d in %s", diagnostic.getMessage(null),
-					diagnostic.getLineNumber(), diagnostic.getSource().getName()));
-		}
+		diagnoseAusgeben(diagnostics);
 		manager.close();
 	}
 
 	public ObjectModell analyse(String sourceDir, Class clazz, ConverterVerzeichnis converter) throws IOException {
+		return analyse(sourceDir,clazz,converter,Collections.emptyList(),new ArrayList<String>());
+	}
+	
+	public ObjectModell analyse(String sourceDir, Class<?> clazz, ConverterVerzeichnis converter,List<String> sourcePaths,List<String> optsCompiler) throws IOException {
 		final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		final DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
 		final StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null);
+		System.out.println("ManagerClass: " + manager.getClass().getCanonicalName());
 
-		File source = new File(sourceDir, clazz.getCanonicalName().replace(".", "/") + ".java");
-		logger.log(Level.INFO,"Sourcedatei "+ source.getAbsolutePath());
+		logger.log(Level.INFO, "Manager " + manager.getClass().getCanonicalName());
+		File source = getFileFromClass(sourceDir, clazz);
+		logger.log(Level.INFO, "Sourcedatei " + source.getAbsolutePath());
 		final Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(Arrays.asList(source));
-		final CompilationTask task = compiler.getTask(null, manager, diagnostics, null, null, sources);
+		//= Arrays.asList("-source", "1.10", "-target", "1.10");
+		
+		optsCompiler.add("-encoding");
+		optsCompiler.add("UTF8");
+		
+		if (!sourcePaths.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+			boolean first=true;
+			for(String path : sourcePaths) {
+				if (!first) {
+					sb.append(";");
+				}
+				first = false;
+				sb.append(path);
+			};
+			String sourcepath = sb.toString();
+			optsCompiler.add("-sourcepath");
+			optsCompiler.add(sourcepath);
+		}
+		
+		final CompilationTask task = compiler.getTask(null, manager, diagnostics, optsCompiler, null, sources);
 
 		JavacTaskImpl javaTask = (JavacTaskImpl) task;
 
 		Iterable<? extends CompilationUnitTree> asts = javaTask.parse();
 		javaTask.analyze();
 
-		Elements elements = javaTask.getElements();
+		diagnoseAusgeben(diagnostics);
 
+		Elements elements = javaTask.getElements();
 		ClassVisitor myVisitor = new ClassVisitor(clazz, elements, converter);
 		for (CompilationUnitTree ast : asts) {
 			myVisitor.scan(ast, Trees.instance(task));
 		}
 
-		for (final Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
-			logger.log(Level.INFO, String.format("%s, line %d in %s", diagnostic.getMessage(null),
-					diagnostic.getLineNumber(), diagnostic.getSource().getName()));
-		}
 		manager.close();
 		return myVisitor.getData();
+	}
+
+	private void diagnoseAusgeben(final DiagnosticCollector<JavaFileObject> diagnostics) {
+		if (diagnostics.getDiagnostics() != null) {
+			for (final Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
+				logger.log(Level.INFO, String.format("%s, line %d in %s", diagnostic.getMessage(null),
+						diagnostic.getLineNumber(), (diagnostic.getSource()==null) ? "nn" : diagnostic.getSource().getName()));
+			}
+		}
+	}
+
+	private File getFileFromClass(String sourceDir, Class<?> clazz) {
+		if (!(new File(sourceDir).exists())) {
+			throw new RuntimeCompilerException("Datei " + sourceDir + " did not exist");
+		}
+		return new File(sourceDir, clazz.getCanonicalName().replace(".", "/") + ".java");
+	}
+
+	private List<File> getFileList(File sourceDir) {
+		if (!sourceDir.exists()) {
+			throw new RuntimeCompilerException("Datei " + sourceDir + " did not exist");
+		}
+		List<File> liste = new ArrayList<>();
+		for (File f : sourceDir.listFiles()) {
+			liste.add(f);
+		}
+		return liste;
 	}
 }

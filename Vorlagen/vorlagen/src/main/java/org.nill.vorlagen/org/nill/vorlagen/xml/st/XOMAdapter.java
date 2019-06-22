@@ -140,27 +140,27 @@ public class XOMAdapter extends ObjectModelAdaptor {
 		return wrap;
 	}
 
-	protected Object createInstance(String name, boolean prüfen) {
+	protected Object createInstance(String name, boolean prÃ¼fen) {
 		if (name != null && packageName != null) {
 			String className = packageName + "." + name;
 			try {
 				Class cl = XOMAdapter.class.getClassLoader().loadClass(className);
 				Object obj = cl.newInstance();
-				if (prüfen && logger.isLoggable(Level.INFO)) {
+				if (prÃ¼fen && logger.isLoggable(Level.INFO)) {
 					logger.info("Create object of class [" + className + "]");
 				}
 				return obj;
 
 			} catch (ClassNotFoundException e) {
-				if (prüfen) {
+				if (prÃ¼fen) {
 					logger.severe("class [" + className + "] not found");
 				}
 			} catch (InstantiationException e) {
-				if (prüfen) {
+				if (prÃ¼fen) {
 					logger.severe("class [" + className + "] can not be instantated");
 				}
 			} catch (IllegalAccessException e) {
-				if (prüfen) {
+				if (prÃ¼fen) {
 					logger.severe("class [" + className + "] Illegal Access at instantiation");
 				}
 			}

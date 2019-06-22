@@ -1,10 +1,8 @@
 package test.xml;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-
+import static org.junit.Assert.*;
 import org.junit.Test;
 import org.nill.vorlagen.generator.file.ModellAndFile;
 import org.nill.vorlagen.xml.model.File2Document;

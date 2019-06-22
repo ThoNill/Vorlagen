@@ -22,7 +22,7 @@ public class CreateBackendElements extends ChangeXMLModel {
                 Element newSqlElement = changeElement(sqlElement);
                 newElement.appendChild(newSqlElement);
             }
-            dieAttributeHinzufügen(newElement, source);
+            dieAttributeHinzufÃ¼gen(newElement, source);
         
         } else if (istEinElementVomTyp(source, "BATCH")) {
             String sqlName = source.getAttributeValue("foreach");
@@ -39,8 +39,8 @@ public class CreateBackendElements extends ChangeXMLModel {
                     newElement.appendChild(newSqlElement);
                 }   
             }
-            dieKinderHinzufügen(newElement, source);
-            dieAttributeHinzufügen(newElement, source);
+            dieKinderHinzufÃ¼gen(newElement, source);
+            dieAttributeHinzufÃ¼gen(newElement, source);
         
         } else if (istEinElementVomTyp(source, "CALLREF")) {
                String callName = source.getAttributeValue("ref");
@@ -49,16 +49,16 @@ public class CreateBackendElements extends ChangeXMLModel {
             if(calls.size()==1) {
                 Element callElement = (Element)calls.get(0);
                 Element newBeanElement = new Element("BEAN");
-                dieAttributeHinzufügen(newBeanElement,(Element) callElement.getParent());
+                dieAttributeHinzufÃ¼gen(newBeanElement,(Element) callElement.getParent());
 
                 Element newCallElement = changeElement(callElement);
                 newBeanElement.appendChild(newCallElement);
                 newElement.appendChild(newBeanElement);
             }
-            dieAttributeHinzufügen(newElement, source);
+            dieAttributeHinzufÃ¼gen(newElement, source);
         } else {
-            dieKinderHinzufügen(newElement, source);
-            dieAttributeHinzufügen(newElement, source);
+            dieKinderHinzufÃ¼gen(newElement, source);
+            dieAttributeHinzufÃ¼gen(newElement, source);
         }
         return newElement;
     }

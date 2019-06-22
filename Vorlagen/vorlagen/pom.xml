@@ -19,6 +19,11 @@
 
 	</parent>
 
+	<properties>
+		<java.source.version>1.8</java.source.version>
+		<java.target.version>1.8</java.target.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 
@@ -27,9 +32,9 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-    		<groupId>commons-beanutils</groupId>
-    		<artifactId>commons-beanutils</artifactId>
-    		<version>1.9.3</version>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.3</version>
 		</dependency>
 	</dependencies>
 
@@ -51,6 +56,19 @@
 
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<executions>
@@ -61,17 +79,22 @@
 							<goal>compile</goal>
 						</goals>
 						<configuration>
-							<source>10</source>
-							<target>10</target>
-							<encoding>ISO-8859-1</encoding>
+							<source>${java.source.version}</source>
+							<target>${java.target.version}</target>
+							<encoding>UTF8</encoding>
 							<verbose>true</verbose>
 							<debug>true</debug>
 							<forceJavacCompilerUse>false</forceJavacCompilerUse>
-							<compilerArgs>
-								<arg>--add-exports</arg>
-								<arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED	jdk.compiler/com.sun.source.util=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+<!-- 							<compilerArgs>
+								<arg>-add-exports</arg>
+								<arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+									jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+									jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+									jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
+									jdk.compiler/com.sun.source.util=ALL-UNNAMED
+									jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
 							</compilerArgs>
-
+ -->
 						</configuration>
 					</execution>
 					<execution>
@@ -81,22 +104,27 @@
 							<goal>testCompile</goal>
 						</goals>
 						<configuration>
-							<source>10</source>
-							<target>10</target>
-							<encoding>ISO-8859-1</encoding>
+							<source>${java.source.version}</source>
+							<target>${java.target.version}</target>
+							<encoding>UTF8</encoding>
 							<verbose>true</verbose>
 							<debug>true</debug>
-							<compilerArgs>
-								<arg>--add-exports</arg>
-								<arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED	jdk.compiler/com.sun.source.util=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+	<!--  						<compilerArgs>
+								<arg>-add-exports</arg>
+								<arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+									jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+									jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+									jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
+									jdk.compiler/com.sun.source.util=ALL-UNNAMED
+									jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
 							</compilerArgs>
-
+-->
 						</configuration>
 					</execution>
 				</executions>
 				<configuration>
-					<source>10</source>
-					<target>10</target>
+					<source>${java.source.version}</source>
+					<target>${java.target.version}</target>
 				</configuration>
 			</plugin>
 

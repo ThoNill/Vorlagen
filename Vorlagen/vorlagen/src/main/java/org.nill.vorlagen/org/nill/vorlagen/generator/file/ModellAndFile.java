@@ -1,8 +1,8 @@
 package org.nill.vorlagen.generator.file;
 
 public class ModellAndFile<M>{
-	public M modell;
-	public String file;
+	public final M modell;
+	public final String file;
 
 	public ModellAndFile(M modell, String file) {
 		super();

@@ -15,6 +15,7 @@ import javax.tools.JavaFileObject;
 
 import org.nill.vorlagen.generator.file.ModellAndFile;
 import org.nill.vorlagen.st.STConsumerBasis;
+import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
 import org.stringtemplate.v4.STGroupFile;
 
 public class AnnotationConsumer<M extends TypeElement> 
@@ -33,7 +34,7 @@ extends STConsumerBasis<M> implements Consumer<ModellAndFile<M>> {
 		try {
 			erzeugeAusgabe(mf.modell, mf.file, null);
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Fehler beim Erzeugen der Ausgabe");
+			throw new RuntimeVorlagenException( "Error a output creation ",e);
 		}
 	}
 

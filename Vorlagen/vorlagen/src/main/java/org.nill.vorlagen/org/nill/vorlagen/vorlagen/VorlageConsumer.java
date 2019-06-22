@@ -22,12 +22,12 @@ public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<Model
 	static Logger logger = Logger.getLogger(VorlageConsumer.class.getSimpleName());
 
 	private Charset charset = StandardCharsets.UTF_8;
-	private boolean überschreiben;
+	private boolean Ã¼berschreiben;
 
-	public VorlageConsumer(Charset charSet, boolean überschreiben) {
+	public VorlageConsumer(Charset charSet, boolean Ã¼berschreiben) {
 		super();
 		this.charset = charSet;
-		this.überschreiben = überschreiben;
+		this.Ã¼berschreiben = Ã¼berschreiben;
 
 	}
 
@@ -40,7 +40,7 @@ public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<Model
 		try {
 			erzeugeAusgabeAusVorlageModel(vm.modell, vm.file);
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, FEHLER_IN_ERZEUGE_AUSGABE_AUS_VORLAGE_MODEL);
+			throw new RuntimeVorlagenException( "Error at VorlageConsumer",e);
 		}
 
 	}
@@ -48,7 +48,7 @@ public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<Model
 	private void erzeugeAusgabeAusVorlageModel(VORLAGEN_MODELL vm,String ausgabeVerzeichnis)
 			throws IOException {
 		String dateiName = getAusgabe(vm, ausgabeVerzeichnis).toString();
-		if (überschreiben || !(new File(dateiName)).exists()) {
+		if (Ã¼berschreiben || !(new File(dateiName)).exists()) {
 			erzeugeEventuellFehlendeVerzeichnisse(dateiName);
 			Writer writer = erzeugeWriter(dateiName);
 			erzeugeAusgabe(writer, vm);

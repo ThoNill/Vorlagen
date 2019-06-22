@@ -1,5 +1,6 @@
 package janusAngularj2Frontend;
 
+
 import org.nill.vorlagen.generator.GeneratorList;
 import org.nill.vorlagen.xml.st.DocumentSTGenerator;
 

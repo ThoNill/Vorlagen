@@ -19,6 +19,7 @@ import org.nill.vorlagen.generator.file.FileDazu;
 import org.nill.vorlagen.generator.file.ModellAndFile;
 import org.nill.vorlagen.generator.file.ModellAndFileErweitern;
 import org.nill.vorlagen.lists.ListPublisher;
+import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
 
 import reactor.core.publisher.Flux;
 
@@ -58,7 +59,7 @@ public class ModellProzessor extends AbstractProcessor {
 						erzeugeAusgabe((TypeElement) e);
 					}
 				} catch (Exception e1) {
-					logger.log(Level.SEVERE, "Fehler beim Erzeugen der Ausgabe");
+					throw new RuntimeVorlagenException( "Fehler beim Erzeugen der Ausgabe",e1);
 				}
 			}
 

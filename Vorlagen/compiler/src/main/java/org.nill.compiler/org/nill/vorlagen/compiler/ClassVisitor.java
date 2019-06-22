@@ -15,6 +15,7 @@ import javax.lang.model.util.Elements;
 
 import org.nill.vorlagen.compiler.model.DreiSichten;
 import org.nill.vorlagen.compiler.model.ObjectModell;
+import org.nill.vorlagen.compiler.util.RuntimeCompilerException;
 
 import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ImportTree;
@@ -35,6 +36,7 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 	}
 
 	public ClassVisitor(Class<?> clazz, Elements elements,ConverterVerzeichnis converterVerzeichnis) {
+		
 		this.data.setClazz(clazz);
 		this.data.setElements(elements);
 		this.converterVerzeichnis = converterVerzeichnis;
@@ -42,18 +44,21 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 
 	@Override
 	public Object visitPackage(PackageTree node, Trees p) {
+		logger.log(Level.INFO, "start visitPackage "+node);
 		data.setPackageElement(data.getElements().getPackageElement(node.getPackageName().toString()));
 		return super.visitPackage(node, p);
 	}
 
 	@Override
 	public Object visitImport(ImportTree node, Trees p) {
+		logger.log(Level.INFO, "start visitImport "+node);
 		data.getImportsTrees().add(node);
 		return super.visitImport(node, p);
 	}
 
 	@Override
 	public Object visitVariable(VariableTree node, Trees p) {
+		logger.log(Level.INFO, "start visitVariable "+node);
 		Element elem = p.getElement(this.getCurrentPath());
 		if (elem != null && elem.getKind().equals(ElementKind.FIELD)) {
 			try {
@@ -63,7 +68,7 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 								f,
 								p.getDocComment(this.getCurrentPath()),converterVerzeichnis.get(f.getType())));
 			} catch (Exception e) {
-				logger.log(Level.SEVERE, "Fehler in visitVariable");
+				throw new RuntimeCompilerException("Fehler in visitVariable element: " +elem.toString(),e);
 			}
 
 		}
@@ -72,6 +77,7 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 
 	@Override
 	public Object visitClass(ClassTree node, Trees p) {
+		logger.log(Level.INFO, "start visitClass "+node);
 		Element elem = p.getElement(this.getCurrentPath());
 		if (elem != null && node.getSimpleName().contentEquals(data.getClazz().getSimpleName())) {
 			data.setClassSicht(new DreiSichten(elem, node, data.getClazz(), p.getDocComment(this.getCurrentPath())));
@@ -81,6 +87,7 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 
 	@Override
 	public Object visitMethod(MethodTree node, Trees p) {
+		logger.log(Level.INFO, "start visitMethod "+node);
 		Element elem = p.getElement(this.getCurrentPath());
 		if (elem != null && elem.getKind().equals(ElementKind.METHOD)) {
 			try {

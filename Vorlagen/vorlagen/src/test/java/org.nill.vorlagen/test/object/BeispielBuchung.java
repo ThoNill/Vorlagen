@@ -10,7 +10,7 @@ public class BeispielBuchung extends ObjectModell implements Entity {
 	
 	public BeispielBuchung() throws Exception {
 		super();
-		addConnection(new Verknüpfungen());
+		addConnection(new VerknÃ¼pfungen());
 	}
 
 }

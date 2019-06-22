@@ -8,7 +8,7 @@ import nu.xom.Text;
 public class CreateFrontendElements extends ChangeXMLModel {
     String[] datenQuellen = { "STRING", "MAPTABLE", "SQL", "MUTABLE", "BEAN",
             "CALL", "SELECTION", "COLUMN" };
-    String[] sql‹bergehen = { "stmt", "contStmt", "prepare", "countOn" };
+    String[] sql√ºbergehen = { "stmt", "contStmt", "prepare", "countOn" };
 
     public CreateFrontendElements() {
     }
@@ -49,7 +49,7 @@ public class CreateFrontendElements extends ChangeXMLModel {
             }
             if (aText != null) {
                 templateElement.appendChild(new Text(
-                        ‰ndereVariablen(‰ndereVariablen(aText))));
+                        √§ndereVariablen(√§ndereVariablen(aText))));
                 templateElement.addAttribute(new Attribute("let-dialog",
                         "dialog"));
                 templateElement.addAttribute(new Attribute("emptyAttribute",
@@ -57,8 +57,8 @@ public class CreateFrontendElements extends ChangeXMLModel {
             }
             newElement.appendChild(templateElement);
         } else {
-            dieKinderHinzuf¸gen(newElement, source);
-            dieAttributeHinzuf¸gen(newElement, source);
+            dieKinderHinzuf√ºgen(newElement, source);
+            dieAttributeHinzuf√ºgen(newElement, source);
         }
         return newElement;
     }
@@ -68,7 +68,7 @@ public class CreateFrontendElements extends ChangeXMLModel {
     @Override
 	protected Attribute changeAttribute(Element source, Attribute attr) {
         if (istEinElementVomTyp(source, "SQL")
-                && istDerNameImArrayEnthalten(attr.getLocalName(), sql‹bergehen)) {
+                && istDerNameImArrayEnthalten(attr.getLocalName(), sql√ºbergehen)) {
             return null;
         }
         if ("name".equals(attr.getLocalName())
@@ -81,7 +81,7 @@ public class CreateFrontendElements extends ChangeXMLModel {
     }
 
 
-    protected String ‰ndereVariablen(String text) {
+    protected String √§ndereVariablen(String text) {
         String texte[] = text.split("\\?");
         boolean istVariablenName = false;
         StringBuilder builder = new StringBuilder();

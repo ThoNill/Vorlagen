@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
+
 import nu.xom.Element;
 
 
@@ -47,6 +49,7 @@ public class IncludeElement extends Element {
 				in.close();
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Fehler in  hasTemplate");
+				throw new RuntimeVorlagenException( "Error at hasTemplate",e);
 				
 			}
 			return true;

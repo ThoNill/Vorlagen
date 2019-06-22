@@ -3,9 +3,9 @@ package test.object;
 import org.nill.vorlagen.compiler.model.ObjectModell;
 import org.nill.vorlagen.compiler.util.Connection;
 
-public class Verknüpfungen extends ObjectModell {
+public class VerknÃ¼pfungen extends ObjectModell {
 
-	public Verknüpfungen() {
+	public VerknÃ¼pfungen() {
 		super();
 	}
 

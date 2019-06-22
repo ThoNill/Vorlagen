@@ -1,7 +1,6 @@
 package test.xml;
 
 import static org.junit.Assert.*;
-
 import java.io.File;
 
 import org.junit.Test;
@@ -44,7 +43,8 @@ public class TestReactive {
 		try {
 			ExpandZip a = new ExpandZip(
 
-					new File(".", "target/angular7/src"), new File(".", "src/test/resources/angular7/angular7.zip"));
+					new File("./target/angular7/src"),
+					new File("./src/test/resources/org.nill.vorlagen/angular7/angular7.zip"));
 			a.erzeugeAusgabe();
 		} catch (Exception e) {
 			fail();
