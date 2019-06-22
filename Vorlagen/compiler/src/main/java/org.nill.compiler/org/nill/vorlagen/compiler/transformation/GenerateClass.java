@@ -17,10 +17,10 @@ public class GenerateClass implements Function<String, Class<? extends ObjectMod
 	@Override
 	public Class<? extends ObjectModell> apply(String className) {
 		try {
-			logger.log(Level.INFO,"Erzeuge class "+className);
+			logger.log(Level.INFO,"Erzeuge class {0}",className);
 			Class<?> clazz = Thread.currentThread().getContextClassLoader().loadClass(className);
 			if (ObjectModell.class.isAssignableFrom(clazz)) {
-				logger.log(Level.INFO,"Habe class "+className + " erzeugt");
+				logger.log(Level.INFO,"Habe class {0} erzeugt",className);
 				return (Class<? extends ObjectModell>)clazz;
 			} else {
 				throw new RuntimeCompilerException("The Class " + clazz.getCanonicalName() + " isnt a ObjectModell");

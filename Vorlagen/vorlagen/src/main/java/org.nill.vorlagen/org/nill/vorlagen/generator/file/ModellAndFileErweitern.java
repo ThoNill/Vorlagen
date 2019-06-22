@@ -17,11 +17,11 @@ public class ModellAndFileErweitern<M>  implements ListTransform<ModellAndFile<M
 
 	@Override
 	public List<ModellAndFile<M>> transform(ModellAndFile<M> x) {
-		logger.log(Level.INFO,"Durchsuche " + x.file);
+		logger.log(Level.INFO,"Durchsuche {0}",x.file);
 		DateienEinesVerzeichnisses d = new DateienEinesVerzeichnisses();
 		List<ModellAndFile<M>> liste = new ArrayList<>();
 		for ( String f : d.transform(x.file)) {
-			logger.log(Level.INFO,"Finde " + f);
+			logger.log(Level.INFO,"Finde {0}",f);
 			liste.add(new ModellAndFile<M>(x.modell, f));
 		}
 		return liste;

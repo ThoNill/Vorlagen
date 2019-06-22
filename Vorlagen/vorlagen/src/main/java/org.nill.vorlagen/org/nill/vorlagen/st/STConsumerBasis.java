@@ -33,11 +33,8 @@ public class STConsumerBasis<M> {
 	}
 
 	private STGroupFile createGroupFile(String vorlageDateiName) {
-		/*URL url = Thread.currentThread().getContextClassLoader().getResource(vorlageDateiName);
-		logger.log(Level.INFO,"vorgabe = " + vorlageDateiName);
-		logger.log(Level.INFO,"url = " + url);
-		logger.log(Level.INFO,"file " +url.getFile());
-	*/
+		logger.log(Level.INFO,"vorgabe = {0}",vorlageDateiName);
+
 		return new STGroupFile(vorlageDateiName, '$', '$');
 	}
 
@@ -52,7 +49,7 @@ public class STConsumerBasis<M> {
 		boolean überschreiben = isOverwrite(group, vm);
 		boolean erzeugen = isCreate(group, vm);
 		File d = new File(dateiName);
-		logger.log(Level.INFO,"ausgabe: " + dateiName+" " +d.getAbsolutePath());
+		logger.log(Level.INFO,"ausgabe: {0} ", dateiName);
 
 		if (erzeugen) {
 			if (überschreiben || !d.exists()) {

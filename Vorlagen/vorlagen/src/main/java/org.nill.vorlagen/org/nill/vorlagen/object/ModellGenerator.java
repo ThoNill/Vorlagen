@@ -3,7 +3,6 @@ package org.nill.vorlagen.object;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.nill.vorlagen.compiler.ConverterVerzeichnis;

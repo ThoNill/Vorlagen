@@ -11,14 +11,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.function.Consumer;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.nill.vorlagen.generator.file.ModellAndFile;
 
 public abstract class VorlageConsumer<VORLAGEN_MODELL> implements Consumer<ModellAndFile<VORLAGEN_MODELL>> {
-	private static final String FEHLER_IN_ERZEUGE_AUSGABE_AUS_VORLAGE_MODEL = "Fehler in erzeugeAusgabeAusVorlageModel";
-
 	static Logger logger = Logger.getLogger(VorlageConsumer.class.getSimpleName());
 
 	private Charset charset = StandardCharsets.UTF_8;

@@ -29,24 +29,24 @@ public class File2Document implements Function<String, Document> {
 	@Override
 	public Document apply(String file) {
 		try {
-			logger.info("Lade: " + file);
+			logger.log(Level.INFO,"Load: {0}",file);
 			InputStream input = holeStream(file);
-			logger.info("istream: " + input);
+			logger.log(Level.INFO,"istream: {0}",input);
 
 			Document doc = ladeDasDokument(input);
-			logger.info("document: " + doc);
+			logger.log(Level.INFO,"document: {0}",doc);
 			return doc;
 		} catch (FileNotFoundException e) {
 			throw new IllegalStateException(e);
 		}
 	}
 
-	protected InputStream holeStream(String file) throws FileNotFoundException {
+	protected InputStream holeStream(String fileName) throws FileNotFoundException {
 		InputStream fileStream;
-		if (new File(file).exists()) {
-			fileStream = new FileInputStream(file);
+		if (new File(fileName).exists()) {
+			fileStream = new FileInputStream(fileName);
 		} else {
-			fileStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(file.toString());
+			fileStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
 		}
 		return fileStream;
 	}
@@ -54,9 +54,6 @@ public class File2Document implements Function<String, Document> {
 	public static Element ladeDasRootElement(InputStream in) {
 		try {
 			Document doc = ladeDasDokument(in);
-			if (doc == null) {
-				throw new IllegalArgumentException("Dokument ist nicht vorhanden");
-			}
 			return doc.getRootElement();
 		} catch (Exception ex) {
 			throw new RuntimeVorlagenException( "Error at LadeDasRootElement",ex);

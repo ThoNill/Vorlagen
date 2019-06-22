@@ -35,7 +35,7 @@ public class AnalyseTransformation implements Function<Class<? extends ObjectMod
 	public ObjectModell apply(Class<? extends ObjectModell> modellClass) {
 		ObjectModell a;
 		try {
-			logger.log(Level.INFO, "analyse modelVerzeichnis "+modelVerzeichnis);
+			logger.log(Level.INFO, "analyse modelVerzeichnis {0}",modelVerzeichnis);
 			a = new Compiler().analyse(modelVerzeichnis, modellClass, converter,sourcePaths,optsCompiler);
 			a.addConnection(verknüpfungen);
 			return a;

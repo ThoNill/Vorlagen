@@ -27,11 +27,11 @@ public class DateienEinesVerzeichnisses implements ListTransform<String, String>
 		try {
 			filesFromFileListClassloader(liste, verzeichnis);
 			if (liste.isEmpty()) {
-				logger.log(Level.INFO, "Keine Dateien gefunden in " + verzeichnis);
+				logger.log(Level.INFO, "No file found in {0}",verzeichnis);
 			} else {
-				liste.stream().forEach(x -> logger.log(Level.INFO, "Datei " + x));
+				liste.stream().forEach(x -> logger.log(Level.INFO, "File {0}",x));
 			}
-		} catch (IOException | URISyntaxException e) {
+		} catch (IOException | URISyntaxException  e) {
 			throw new RuntimeVorlagenException( "Error file search",e);
 		}
 		return liste;
@@ -42,15 +42,10 @@ public class DateienEinesVerzeichnisses implements ListTransform<String, String>
 			throws IOException, URISyntaxException {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		String fileListName = directory + "/filelist.list";
-/*		File f = new File(fileListName);
-		if (!f.exists()) {
-			logger.log(Level.INFO, "File " + f.getAbsolutePath() +" exists");
-			throw new RuntimeCompilerException("File " + f.getAbsolutePath() +" did not exists");
-		}
-*/
-		logger.log(Level.INFO, "fileListName " + fileListName);
+
+		logger.log(Level.INFO, "fileListName {0}",fileListName);
 		InputStream in = loader.getResourceAsStream(fileListName);
-		logger.log(Level.INFO, "Stream: " + in);
+		logger.log(Level.INFO, "Stream: {0}",in);
 		if (in != null) {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 			reader.lines()

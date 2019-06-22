@@ -27,7 +27,6 @@ import com.sun.source.util.Trees;
 import com.sun.tools.javac.api.JavacTaskImpl;
 
 public class Compiler {
-	private static final String SOURCE_DIR = "C:/Users/tnill/git/Vorlagen/Vorlagen/compiler/src/main/java/org.nill.compiler";
 
 	static Logger logger = Logger.getLogger(Compiler.class.getSimpleName());
 
@@ -63,13 +62,10 @@ public class Compiler {
 		final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		final DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
 		final StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null);
-		System.out.println("ManagerClass: " + manager.getClass().getCanonicalName());
-
 		logger.log(Level.INFO, "Manager " + manager.getClass().getCanonicalName());
 		File source = getFileFromClass(sourceDir, clazz);
 		logger.log(Level.INFO, "Sourcedatei " + source.getAbsolutePath());
 		final Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(Arrays.asList(source));
-		//= Arrays.asList("-source", "1.10", "-target", "1.10");
 		
 		optsCompiler.add("-encoding");
 		optsCompiler.add("UTF8");
@@ -83,7 +79,7 @@ public class Compiler {
 				}
 				first = false;
 				sb.append(path);
-			};
+			}
 			String sourcepath = sb.toString();
 			optsCompiler.add("-sourcepath");
 			optsCompiler.add(sourcepath);
@@ -124,14 +120,5 @@ public class Compiler {
 		return new File(sourceDir, clazz.getCanonicalName().replace(".", "/") + ".java");
 	}
 
-	private List<File> getFileList(File sourceDir) {
-		if (!sourceDir.exists()) {
-			throw new RuntimeCompilerException("Datei " + sourceDir + " did not exist");
-		}
-		List<File> liste = new ArrayList<>();
-		for (File f : sourceDir.listFiles()) {
-			liste.add(f);
-		}
-		return liste;
-	}
+
 }

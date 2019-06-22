@@ -44,21 +44,21 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 
 	@Override
 	public Object visitPackage(PackageTree node, Trees p) {
-		logger.log(Level.INFO, "start visitPackage "+node);
+		logger.log(Level.INFO, "start visitPackage {0}",node);
 		data.setPackageElement(data.getElements().getPackageElement(node.getPackageName().toString()));
 		return super.visitPackage(node, p);
 	}
 
 	@Override
 	public Object visitImport(ImportTree node, Trees p) {
-		logger.log(Level.INFO, "start visitImport "+node);
+		logger.log(Level.INFO, "start visitImport {0}",node);
 		data.getImportsTrees().add(node);
 		return super.visitImport(node, p);
 	}
 
 	@Override
 	public Object visitVariable(VariableTree node, Trees p) {
-		logger.log(Level.INFO, "start visitVariable "+node);
+		logger.log(Level.INFO, "start visitVariable {0}",node);
 		Element elem = p.getElement(this.getCurrentPath());
 		if (elem != null && elem.getKind().equals(ElementKind.FIELD)) {
 			try {
@@ -77,7 +77,7 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 
 	@Override
 	public Object visitClass(ClassTree node, Trees p) {
-		logger.log(Level.INFO, "start visitClass "+node);
+		logger.log(Level.INFO, "start visitClass {0}",node);
 		Element elem = p.getElement(this.getCurrentPath());
 		if (elem != null && node.getSimpleName().contentEquals(data.getClazz().getSimpleName())) {
 			data.setClassSicht(new DreiSichten(elem, node, data.getClazz(), p.getDocComment(this.getCurrentPath())));
@@ -87,7 +87,7 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 
 	@Override
 	public Object visitMethod(MethodTree node, Trees p) {
-		logger.log(Level.INFO, "start visitMethod "+node);
+		logger.log(Level.INFO, "start visitMethod {0}",node);
 		Element elem = p.getElement(this.getCurrentPath());
 		if (elem != null && elem.getKind().equals(ElementKind.METHOD)) {
 			try {

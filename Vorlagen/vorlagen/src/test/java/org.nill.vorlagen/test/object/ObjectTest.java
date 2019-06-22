@@ -14,7 +14,7 @@ public class ObjectTest {
 	
 
 	public ObjectTest() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	@Test
