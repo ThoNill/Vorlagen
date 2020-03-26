@@ -15,8 +15,6 @@ public class BeispielMandant extends ObjectModell implements Entity, Aggregate{
 	 erstens
 	 */
 	public String name = "name";
-	
-	@Deprecated
 	public int count;
 	public MonatJahr mj;
 	

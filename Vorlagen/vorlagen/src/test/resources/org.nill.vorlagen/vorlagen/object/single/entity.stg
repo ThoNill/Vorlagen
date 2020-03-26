@@ -46,6 +46,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Enumerated;
+import javax.persistence.Lob; 
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -171,6 +172,20 @@ OffsetDateTime(v,classname) ::= <<
 	$timevalues(v,classname,"TIMESTAMP WITH TIME ZONE")$
 >>
 	
+ByteBLOB(v,classname) ::= <<
+	@Lob
+    @Column(name = "$v.name; format="upper"$")
+    $converter(v.clazz)$
+    private byte[] $v.name$;
+>>	
+
+CharBLOB(v,classname) ::= <<
+	@Lob
+    @Column(name = "$v.name; format="upper"$")
+    $converter(v.clazz)$
+    private String $v.name$;
+>>	
+
 	
 value(v,classname) ::= <<	
 	@Basic
@@ -451,7 +466,7 @@ public class Buchung implements IBuchung {
 
     @ElementCollection
     @CollectionTable(name = "Buchung_TypeReference", joinColumns = @JoinColumn(name = "BUCHUNGID"))
-    private Set<TypeReference> bezüge = new HashSet<>();
+    private Set<TypeReference> bezï¿½ge = new HashSet<>();
 
     @Override
     public void addBewegungen(KontoBewegung bewegungen) {
@@ -465,12 +480,12 @@ public class Buchung implements IBuchung {
 
     @Override
     public void addBezug(TypeReference bezug) {
-        this.bezüge.add(bezug);
+        this.bezï¿½ge.add(bezug);
     }
 
     @Override
     public void removeBezug(TypeReference bezug) {
-        this.bezüge.remove(bezug);
+        this.bezï¿½ge.remove(bezug);
     }
 
     @Override
@@ -521,9 +536,9 @@ public interface IBuchung {
 
     public void setBewegungen(Set<KontoBewegung> bewegungen);
 
-    public Set<TypeReference> getBezüge();
+    public Set<TypeReference> getBezï¿½ge();
 
-    public void setBezüge(Set<TypeReference> bezüge);
+    public void setBezï¿½ge(Set<TypeReference> bezï¿½ge);
 
     public IAbrechnung getAbrechnung();
 

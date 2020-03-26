@@ -16,6 +16,8 @@ import java.util.Optional;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 
+import org.nill.vorlagen.compiler.markerClasses.ByteBLOB;
+import org.nill.vorlagen.compiler.markerClasses.CharBLOB;
 import org.nill.vorlagen.compiler.util.Parameter;
 
 import com.sun.source.tree.MethodTree;
@@ -67,7 +69,7 @@ public class DreiSichten implements FieldOrMethod {
 	@Override
 	public String getKind() {
 		Class<?>[] classes = { LocalDate.class, LocalDateTime.class, LocalTime.class, OffsetDateTime.class,
-				OffsetTime.class };
+				OffsetTime.class,ByteBLOB.class,CharBLOB.class };
 		for (Class<?> c : classes) {
 			Optional<String> s = extraClass(c);
 			if (s.isPresent()) {
