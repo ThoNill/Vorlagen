@@ -1,0 +1,92 @@
+group VALUE;
+
+overwrite(model) ::= "true"
+create(model) ::= "true"
+
+mypfad() ::= "values"
+
+dateiName(model) ::= "$mypfad()$/$model.class.simpleName$.java"
+
+dateiInhalt(model) ::= <<
+$DATA(model,model.class.simpleName,mypfad())$
+
+>>
+
+DATA(x,classname,pfad) ::= <<
+package $pfad$;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Embeddable;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Embedded;
+
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+@Data
+@EqualsAndHashCode
+@ToString
+@Embeddable
+public class $model.class.simpleName$ {
+
+    @Basic
+    @Column(name = "ART")
+    private int art;
+
+    @Basic
+    @Column(name = "KONTONR")
+    private int kontoNr;
+
+    @Basic
+    @Column(name = "BETRAG")
+    @Convert(converter = org.nill.basiskomponenten.betrag.GeldKonverter.class)
+    private javax.money.MonetaryAmount betrag;
+
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "iban.iban", column = @Column(name = "bank_iban")),
+            @AttributeOverride(name = "iban.bic", column = @Column(name = "bank_bic")),
+            @AttributeOverride(name = "name", column = @Column(name = "bank_name")) })
+    public BankVerbindung bank;
+
+    @Embedded
+    private IBAN iban;
+
+    @Embedded
+    private BIC bic;
+
+package org.nill.zahlungen.values;
+
+import javax.persistence.Embeddable;
+
+import lombok.Data;
+
+@Data
+public @Embeddable class BIC {
+    private String bic;
+
+    public BIC() {
+        this("");
+    }
+
+    public BIC(String bic) {
+        super();
+        this.bic = bic;
+    }
+
+    @Override
+    public String toString() {
+        return bic;
+    }
+
+}
+
+
+}
+>>
