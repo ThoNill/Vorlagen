@@ -1,0 +1,44 @@
+group DIALOG ;
+
+overwrite(model) ::= "true"
+create(model) ::= "true"
+
+mypfad() ::= "package"
+
+dateiName(model) ::= "$mypfad()$/$model.simpleName$.java"
+
+dateiInhalt(model) ::= <<
+
+$DATA(model,mypfad())$
+
+>>
+
+DATA(x,pfad) ::= <<
+package $pfad$.pages;
+
+
+import java.io.Serializable;
+import org.nill.vorlagen.compiler.model.ObjectModell;
+
+
+public class $x.simpleName$ extends ObjectModell {
+ 	$x.fields:feld(x.simpleName)$
+ // Von hier
+}
+
+>>
+
+feld(x,name) ::= <<
+
+  private $x.type$ $x.name$;
+ 
+  public $x.type$ get$x.name; format="cap"$ () {
+  	return this.$x.simpleName$;
+  }
+  
+  public $name$ set$x.name; format="cap"$ ($x.type$ $x.simpleName$) {
+  	this.$x.simpleName$ = $x.simpleName$;
+  	return this;
+  }
+   
+>>

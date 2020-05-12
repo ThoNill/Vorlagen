@@ -1,0 +1,46 @@
+group DIALOG ;
+
+overwrite(model) ::= "true"
+create(model) ::= "true"
+mypfad() ::= "package"
+
+dateiName(model) ::= "$mypfad()$/VerarbeiteKlassen.java"
+
+dateiInhalt(model) ::= <<
+
+Size $model.size$
+ 
+$DATA(model,mypfad())$
+
+>>
+
+DATA(x,pfad) ::= <<
+package $pfad$.pages;
+
+
+import java.io.Serializable;
+import org.nill.vorlagen.object.ModellGenerator;
+
+$x.this:{ y | import $y$;
+}$
+
+public class VerarbeiteKlassen extends ModellGenerator{
+	static {
+		VerarbeiteKlassen v = new VerarbeiteKlassen();
+		v.erzeugeAusgabe();
+	};
+	
+    public VerarbeiteKlassen() {
+    	super();
+    	
+    	$x.this:{ y | add(new $y.name$());
+    	}$
+ 	}
+ 	
+}
+
+>>
+
+klasse(x) ::= <<
+  add(new $x.class$());
+>>
