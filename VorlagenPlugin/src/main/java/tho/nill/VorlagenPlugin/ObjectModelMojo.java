@@ -109,7 +109,7 @@ public class ObjectModelMojo extends MojoWithFileChecks {
 	}
 
 	private Object createObject(String className) throws  
-			IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+			IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalArgumentException, SecurityException {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		Class<?> clazz = loader.loadClass(className);
 		return clazz.getConstructor().newInstance();
