@@ -1,6 +1,7 @@
 package org.nill.vorlagen.files;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,13 +9,12 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.nill.vorlagen.lists.ListTransform;
 import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
 
-public class DateienEinesVerzeichnisses implements ListTransform<String, String> {
+public class DateienEinesVerzeichnisses implements Function<String, List<String>> {
 	static Logger logger = Logger.getLogger(DateienEinesVerzeichnisses.class.getSimpleName());
 
 	public DateienEinesVerzeichnisses() {
@@ -22,12 +22,12 @@ public class DateienEinesVerzeichnisses implements ListTransform<String, String>
 	}
 
 	@Override
-	public List<String> transform(String verzeichnis) {
+	public List<String> apply(String verzeichnis) {
 		List<String> liste = new ArrayList<>();
 		try {
 			filesFromFileListClassloader(liste, verzeichnis);
 			if (liste.isEmpty()) {
-				logger.log(Level.INFO, "No file found in {0}",verzeichnis);
+				logger.log(Level.INFO, "No entries found in classpath {0} ",verzeichnis);
 			} else {
 				liste.stream().forEach(x -> logger.log(Level.INFO, "File {0}",x));
 			}
@@ -53,6 +53,8 @@ public class DateienEinesVerzeichnisses implements ListTransform<String, String>
 					.forEach(f3 -> plist.add(directory + "/" + f3));
 
 			reader.close();
+		} else {
+			logger.log(Level.INFO," No filelist.list in {0} ",directory);
 		}
 	}
 

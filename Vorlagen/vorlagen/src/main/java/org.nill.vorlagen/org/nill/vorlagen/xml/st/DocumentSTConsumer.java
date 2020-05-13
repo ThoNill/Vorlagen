@@ -10,17 +10,17 @@ import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 
-public class DocumentSTConsumer extends STConsumer<Document> {
+public class DocumentSTConsumer extends  STConsumer<Document> {
 
-	private String packageName;
-	private String defaultClass;
-
+	protected String packageName;
+	protected String defaultClass;
+	
 	public DocumentSTConsumer(Charset charset, String packageName, String defaultCLass) {
 		super(charset);
 		this.packageName = packageName;
 		this.defaultClass = defaultCLass;
 	}
-
+	
 	@Override
 	protected void register(STGroupFile group) {
 		super.register(group);
@@ -28,8 +28,9 @@ public class DocumentSTConsumer extends STConsumer<Document> {
 		group.registerModelAdaptor(Attribute.class, new XOMAdapter(packageName, defaultClass));
 	}
 
-    @Override
-	protected void setzeSTModel(ST t,Document document) {
+	
+	@Override
+	protected void setzeSTModel(ST t, Document document) {
 		super.setzeSTModel(t,document);
 		Element root = document.getRootElement();
 	    t.add("root", root);

@@ -45,12 +45,6 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>tho.nill</groupId>
-			<artifactId>VorlagenPluginTest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
 
 		<!-- test dependencies -->
 		<dependency>
@@ -161,7 +155,7 @@
 					<encoding>UTF8</encoding>
 				</configuration>
 			</plugin>
-	
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
@@ -179,6 +173,7 @@
 			</plugin>
 
 		</plugins>
+
 	</build>
 	<profiles>
 		<profile>

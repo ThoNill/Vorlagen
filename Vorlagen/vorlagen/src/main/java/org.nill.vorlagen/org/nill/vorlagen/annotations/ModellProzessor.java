@@ -18,11 +18,9 @@ import javax.tools.Diagnostic.Kind;
 import org.nill.vorlagen.generator.file.FileDazu;
 import org.nill.vorlagen.generator.file.ModellAndFile;
 import org.nill.vorlagen.generator.file.ModellAndFileErweitern;
-import org.nill.vorlagen.lists.ListPublisher;
 import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
 
 import reactor.core.publisher.Flux;
-
 
 @SupportedAnnotationTypes("org.nill.vorlagen.annotations1.Modell")
 public class ModellProzessor extends AbstractProcessor {
@@ -32,9 +30,8 @@ public class ModellProzessor extends AbstractProcessor {
 	private String vorlagenVerzeichnisMulti;
 	private String ausgabeVerzeichnis;
 	private UnaryOperator<TypeElement> toVorlageModell;
-	
-	public ModellProzessor(String vorlagenVerzeichnisSingle, 
-			String vorlagenVerzeichnisMulti, String ausgabeVerzeichnis,
+
+	public ModellProzessor(String vorlagenVerzeichnisSingle, String vorlagenVerzeichnisMulti, String ausgabeVerzeichnis,
 			UnaryOperator<TypeElement> toVorlageModell) {
 		super();
 		this.vorlagenVerzeichnisSingle = vorlagenVerzeichnisSingle;
@@ -55,17 +52,17 @@ public class ModellProzessor extends AbstractProcessor {
 				try {
 					if (e instanceof TypeElement) {
 						logger.log(Level.INFO, "Element abarbeiten");
-						modelle.add((TypeElement)e);
+						modelle.add((TypeElement) e);
 						erzeugeAusgabe((TypeElement) e);
 					}
 				} catch (Exception e1) {
-					throw new RuntimeVorlagenException( "Fehler beim Erzeugen der Ausgabe",e1);
+					throw new RuntimeVorlagenException("Fehler beim Erzeugen der Ausgabe", e1);
 				}
 			}
 
 		}
 		try {
-			if(!modelle.isEmpty()) {
+			if (!modelle.isEmpty()) {
 				logger.log(Level.INFO, "mehrere Elemente abarbeiten");
 				erzeugeListAusgabe(modelle);
 			}
@@ -77,34 +74,25 @@ public class ModellProzessor extends AbstractProcessor {
 	}
 
 	public void erzeugeAusgabe(TypeElement element) {
-		Flux.just(element)
-		.map(toVorlageModell)
-		.map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))
-		.flatMap(new ListPublisher<ModellAndFile<TypeElement>, ModellAndFile<TypeElement>>(
-				new ModellAndFileErweitern<TypeElement>()))
-		.map(new FileDazu<ModellAndFile<TypeElement>>(ausgabeVerzeichnis))
-		.subscribe(new AnnotationFileConsumer<TypeElement>(StandardCharsets.UTF_8, processingEnv));
+		Flux.just(element).map(toVorlageModell).map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))
+				.flatMapIterable(new ModellAndFileErweitern<TypeElement>())
+				.map(new FileDazu<ModellAndFile<TypeElement>>(ausgabeVerzeichnis))
+				.subscribe(new AnnotationFileConsumer<TypeElement>(StandardCharsets.UTF_8, processingEnv));
 	}
 
-	public void erzeugeListAusgabe(List<TypeElement> elements)  {
-		if(elements.isEmpty()) {
+	public void erzeugeListAusgabe(List<TypeElement> elements) {
+		if (elements.isEmpty()) {
 			return;
 		}
-		Flux.just(elements)
-		.map(new FileDazu<List<TypeElement>>(vorlagenVerzeichnisMulti))
-		.flatMap(new ListPublisher<ModellAndFile<List<TypeElement>>, ModellAndFile<List<TypeElement>>>(
-				new ModellAndFileErweitern<List<TypeElement>>()))
-		.map(new FileDazu<ModellAndFile<List<TypeElement>>>(ausgabeVerzeichnis))
-		.subscribe(new ElementListFileConsumer(StandardCharsets.UTF_8, processingEnv));
+		Flux.just(elements).map(new FileDazu<List<TypeElement>>(vorlagenVerzeichnisMulti))
+				.flatMapIterable(new ModellAndFileErweitern<List<TypeElement>>())
+				.map(new FileDazu<ModellAndFile<List<TypeElement>>>(ausgabeVerzeichnis))
+				.subscribe(new ElementListFileConsumer(StandardCharsets.UTF_8, processingEnv));
 	}
 
-	
 	public void erzeugeAusgabeJava(TypeElement element) {
-		Flux.just(element)
-		.map(toVorlageModell)
-		.map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))
-		.flatMap(new ListPublisher<ModellAndFile<TypeElement>, ModellAndFile<TypeElement>>(
-						new ModellAndFileErweitern<TypeElement>()))
-		.subscribe(new AnnotationConsumer<TypeElement>(StandardCharsets.UTF_8, processingEnv));
+		Flux.just(element).map(toVorlageModell).map(new FileDazu<TypeElement>(vorlagenVerzeichnisSingle))
+				.flatMapIterable(new ModellAndFileErweitern<TypeElement>())
+				.subscribe(new AnnotationConsumer<TypeElement>(StandardCharsets.UTF_8, processingEnv));
 	}
 }

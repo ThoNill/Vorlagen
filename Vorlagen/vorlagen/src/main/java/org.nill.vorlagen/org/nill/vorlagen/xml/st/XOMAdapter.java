@@ -35,6 +35,9 @@ public class XOMAdapter extends ObjectModelAdaptor {
 		}
 
 		if (propertyName != null) {
+			if (propertyName.startsWith("element")) {
+				return getElement(elem, propertyName.substring(7));
+			}
 			if (propertyName.startsWith("listOf")) {
 				return getElements(elem, propertyName.substring(6));
 			}
@@ -68,6 +71,9 @@ public class XOMAdapter extends ObjectModelAdaptor {
 				if (o instanceof Attribute) {
 					return ((Attribute) o).getValue();
 				}
+				if (o instanceof Element) {
+					return ((Element) o).getValue();
+				}
 				return "";
 			default:
 				return superAufrufen(interpreter, self, property, propertyName, elem);
@@ -75,6 +81,14 @@ public class XOMAdapter extends ObjectModelAdaptor {
 		}
 
 		return "";
+	}
+
+	private Object getElement(Element elem, String name) {
+		Elements elements = elem.getChildElements(name);
+		if (elements.size()>0) {
+			return elements.get(0);
+		}
+		return null;
 	}
 
 	private Object superAufrufen(Interpreter interpreter, ST self, Object property, String propertyName, Element elem) {

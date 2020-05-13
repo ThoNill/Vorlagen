@@ -2,16 +2,15 @@ package test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
-import org.nill.vorlagen.lists.ListTransform;
-
-public class TestModellFabrik implements ListTransform<String,TestModell>{
+public class TestModellFabrik implements Function<String,List<TestModell>>{
 
     public TestModellFabrik() {
     }
     
     @Override
-    public List<TestModell> transform(String beschreibung) {
+    public List<TestModell> apply(String beschreibung) {
         TestModell m = new TestModell(beschreibung);
         List<TestModell> liste = new ArrayList<>();
         liste.add(m);

@@ -13,7 +13,6 @@ import org.nill.vorlagen.generator.Generator;
 import org.nill.vorlagen.generator.file.FileDazu;
 import org.nill.vorlagen.generator.file.ModellAndFile;
 import org.nill.vorlagen.generator.file.ModellAndFileErweitern;
-import org.nill.vorlagen.lists.ListPublisher;
 import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
 
 import reactor.core.publisher.Flux;
@@ -51,8 +50,8 @@ public class ModellGenerator implements Generator {
 
 	public void erzeugeAusgabe(Flux<ObjectModell> flux) {
 		flux.map(new FileDazu<ObjectModell>(vorlagenVerzeichnis))
-				.flatMap(new ListPublisher<ModellAndFile<ObjectModell>, ModellAndFile<ObjectModell>>(
-						new ModellAndFileErweitern<ObjectModell>()))
+				.flatMapIterable(
+						new ModellAndFileErweitern<ObjectModell>())
 				.map(new FileDazu<ModellAndFile<ObjectModell>>(ausgabeVerzeichnis))
 				.subscribe(new ObjectModellConsumer(StandardCharsets.UTF_8));
 	}

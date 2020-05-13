@@ -2,7 +2,10 @@ package janusAngularj2Frontend;
 
 
 import org.nill.vorlagen.generator.GeneratorList;
+import org.nill.vorlagen.lists.OneElementList;
 import org.nill.vorlagen.xml.st.DocumentSTGenerator;
+
+import nu.xom.Document;
 
 public class JanusAngular2Maschine extends GeneratorList {
 
@@ -16,7 +19,8 @@ public class JanusAngular2Maschine extends GeneratorList {
 				"./target/angular2/backend", 
 				"test.xml.wrap", 
 				"BeispielWrap",
-				new CreateBackendElements()));
+				new OneElementList<Document>( 
+						new CreateBackendElements())));
             
     }
 
