@@ -16,6 +16,7 @@ public class AngularTest {
 					"angular");
 			a.erzeugeAusgabe();
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
 		}
 

@@ -1,0 +1,132 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>tho.nill</groupId>
+	<artifactId>project-to-test</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Test MyMojo</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven.plugin-testing</groupId>
+			<artifactId>maven-plugin-testing-harness</artifactId>
+			<version>3.3.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>tho.nill</groupId>
+			<artifactId>Vorlagen-maven-plugin</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>tho.nill</groupId>
+				<artifactId>Vorlagen-maven-plugin</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<dependencies>
+
+					<dependency>
+						<groupId>tho.nill</groupId>
+						<artifactId>VorlagenPluginTestModelle</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+					</dependency>
+
+					<dependency>
+						<groupId>tho.nill</groupId>
+						<artifactId>VorlagenPluginTestModelle</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+						<classifier>sources</classifier>
+					</dependency>
+
+				</dependencies>
+				<executions>
+					<execution>
+						<id>id1</id>
+						<goals>
+							<goal>generateFromXMLModel</goal>
+						</goals>
+
+						<configuration>
+							<modellDir>modelle</modellDir>
+							<templateDir>vorlagen</templateDir>
+							<outputDir>erzeugt/id1</outputDir>
+							<packageName>test.xml.wrap</packageName>
+							<defaultClass>BeispielWrap</defaultClass>
+						</configuration>
+
+					</execution>
+					<execution>
+						<id>id2</id>
+						<goals>
+							<goal>generateFromObjectModel</goal>
+						</goals>
+
+						<configuration>
+							<modellDir>${project.basedir}/src/main/java</modellDir>
+							<templateDir>entity/single</templateDir>
+							<outputDir>erzeugt/id2</outputDir>
+							<modelClasses>
+								<modelClass>test.BeispielBuchung</modelClass>
+
+							</modelClasses>
+							<converterClass>org.nill.vorlagen.compiler.ConverterVerzeichnis</converterClass>
+							<connectionClass>test.Verknuepfungen</connectionClass>
+						</configuration>
+
+					</execution>
+					<execution>
+						<id>id3</id>
+						<goals>
+							<goal>generateFromObjectModel</goal>
+						</goals>
+
+						<configuration>
+							<modellDir>${project.basedir}/src/main/java</modellDir>
+							<templateDir>entity/single</templateDir>
+							<outputDir>erzeugt/id3</outputDir>
+							<modelClasses>
+								<modelClass>test.BeispielMandant</modelClass>
+							</modelClasses>
+							<converterClass>org.nill.vorlagen.compiler.ConverterVerzeichnis</converterClass>
+							<connectionClass>test.Verknuepfungen</connectionClass>
+						</configuration>
+
+					</execution>
+					<execution>
+						<id>id4</id>
+						<goals>
+							<goal>generateFromFreeformModel</goal>
+						</goals>
+
+						<configuration>
+							<modelClasses>
+								<modelClass>test.BeispielMandant</modelClass>
+							</modelClasses>
+							<connectionClass>test.Verknuepfungen</connectionClass>
+							<templateDir>vorlagen</templateDir>
+							<outputDir>erzeugt/id4</outputDir>
+
+						</configuration>
+
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

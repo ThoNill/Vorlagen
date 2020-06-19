@@ -6,6 +6,8 @@
 	<artifactId>AngularSpringVorlagen</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>AngularSpringVorlagen</name>
+	<packaging>jar</packaging>
+	<description>Vorlagen für Spring und Angular</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,7 +18,13 @@
 
 	<dependencies>
 
-	<dependency>
+		<dependency>
+			<groupId>tho.nill</groupId>
+			<artifactId>Grundgestein</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
 			<groupId>tho.nill</groupId>
 			<artifactId>Vorlagen-vorlagen</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -91,6 +99,23 @@
 	</dependencies>
 	<build>
 		<defaultGoal>install</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>version.properties</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+						<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>version.properties</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+			
+		</resources>
 
 		<plugins>
 			<plugin>
@@ -103,12 +128,10 @@
 					<verbose>true</verbose>
 					<debug>true</debug>
 					<forceJavacCompilerUse>false</forceJavacCompilerUse>
-						<!-- 	
-					<compilerArgs>
-								<arg>-add-exports</arg>
-								<arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED	jdk.compiler/com.sun.source.util=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
-					</compilerArgs>
--->
+					<!-- <compilerArgs> <arg>-add-exports</arg> <arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED 
+						jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED 
+						jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED jdk.compiler/com.sun.source.util=ALL-UNNAMED 
+						jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg> </compilerArgs> -->
 
 				</configuration>
 			</plugin>

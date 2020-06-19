@@ -63,6 +63,15 @@ public class ConnectionSicht implements FieldOrMethod{
 			return name;
 	}
 
+	public String getConnectionName() {
+		if (name.startsWith("_")) {
+			return getSource().getSimpleName();
+		} else {
+			return name;
+		}
+	}
+
+	
 	public String getSourceName() {
 		if (name.startsWith("_")) {
 			return getSource().getSimpleName();

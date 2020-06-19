@@ -3,6 +3,7 @@ encoding//compiler/src/main/java/org.nill.compiler=UTF8
 encoding//compiler/src/main/java/org.nill.compiler/org/nill/vorlagen/compiler/transformation/AnalyseTransformation.java=UTF8
 encoding//vorlagen/src/main/java=ISO-8859-1
 encoding//vorlagen/src/main/java/org.nill.vorlagen=UTF8
+encoding//vorlagen/src/main/java/org.nill.vorlagen/org/nill/vorlagen/object/ClassNames2ModellGenerator.java=UTF8
 encoding//vorlagen/src/main/java/org.nill.vorlagen/org/nill/vorlagen/object/ModellGenerator.java=UTF8
 encoding//vorlagen/src/main/java/org.nill.vorlagen/org/nill/vorlagen/xml/st/XOMAdapter.java=UTF8
 encoding//vorlagen/src/test/java/org.nill.vorlagen=UTF8

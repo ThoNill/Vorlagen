@@ -1,11 +1,12 @@
 package org.nill.vorlagen.xml.st;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
-import java.util.List;
-import java.util.function.Function;
 
 public class ListOfElements implements Function<Document,List<Document>> {
 	private String elementName;

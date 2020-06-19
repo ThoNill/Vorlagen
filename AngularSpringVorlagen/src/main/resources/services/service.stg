@@ -1,0 +1,46 @@
+group controller;
+
+overwrite(model) ::= "true"
+create(model) ::= "true"
+
+mypfad() ::= "services"
+
+
+controller(model) ::= "$model.name$Controller"
+
+service(model) ::= "$model.name$Service"
+
+dateiName(model) ::= "$mypfad()$/$service(model)$.java"
+
+dateiInhalt(model) ::= <<
+
+$DATA(model,model.name,mypfad())$
+
+>>
+
+DATA(x,classname,pfad) ::= <<
+
+package $pfad$;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class $service(model)$ {
+
+	@Autowired
+	EingangTextRepository eingangTextRepo;
+
+	public $service(model)$() {
+		super();
+	}
+	
+	
+	public void service() {
+	}
+}
+
+>>

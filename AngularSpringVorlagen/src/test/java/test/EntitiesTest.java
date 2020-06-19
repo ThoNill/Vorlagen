@@ -1,7 +1,9 @@
 package test;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.util.Collections;
 
 import org.junit.Test;
@@ -23,26 +25,26 @@ public class EntitiesTest {
 	@Test
 	public void teste() {
 		try {
-/*			ModellGenerator g = new ModellGenerator(new File("src/main/resources/entity"), new File("./target/src/java/"));
-			BeispielBuchung b = new BeispielBuchung();
-			BeispielMandant a = new BeispielMandant();
-			g.erzeugeAusgabe(a);
-			g.erzeugeAusgabe(b);
-	*/		
+	
 				ConverterVerzeichnis converter = new ConverterVerzeichnis();
 
-				ModellGenerator g = new ModellGenerator("src/main/resources/entity/single", "../generiert/src/main/java/",Collections.emptyList());
 				ObjectModell a = new Compiler().analyse("src/test/java",BeispielBuchung.class,converter); 
 				ObjectModell b = new Compiler().analyse("src/test/java",BeispielMandant.class,converter);
 
 				a.addConnection(new Verknüpfungen());
 				b.addConnection(new Verknüpfungen());
-				g.erzeugeAusgabe(a);
-				g.erzeugeAusgabe(b);
-					
+				new ModellGenerator("src/main/resources/entity/single", "target/generiert/src/main/java/",Collections.singleton(a)).erzeugeAusgabe();
+				testeFileExistiert("target/generiert/src/main/java/entities/BeispielBuchung.java");
+
+				new ModellGenerator("src/main/resources/entity/single", "target/generiert/src/main/java/",Collections.singleton(b)).erzeugeAusgabe();				
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
+	}
+	
+	public void testeFileExistiert(String filename) {
+		File f = new File(filename);
+		assertTrue(f.exists());
 	}
 }

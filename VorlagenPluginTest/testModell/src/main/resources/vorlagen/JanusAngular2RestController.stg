@@ -1,0 +1,133 @@
+group JanusAngular2Backend ;
+
+overwrite(model,root) ::= "true"
+create(model,root) ::= "true"
+
+mypfad() ::= "janusAngular2Backend"
+
+myclassName(x) ::=<<$x.Page; format="cap"$RestController>>
+
+pageclassName(x) ::=<<$x.Page; format="cap"$Page>>
+
+dateiName(model,root) ::= "$mypfad()$/$myclassName(root)$.java"
+
+dateiInhalt(model,root) ::= <<$element(root)$>>
+
+element(x) ::= <<$if(x.isElement)$$(x.LocalName)(x)$$endif$ >>
+
+childs(x) ::= << $x.Childs:element()$ >>
+
+
+DIALOG(x) ::= << 
+
+package $mypfad()$;
+
+import janusAngular2Backend.basis.PageBasis;
+import janusAngular2Backend.basis.CallTag;
+import janusAngular2Backend.basis.ColumnTag;
+import janusAngular2Backend.basis.SetTag;
+import janusAngular2Backend.basis.SqlTag;
+import janusAngular2Backend.basis.BeanTag;
+import janusAngular2Backend.basis.BatchTag;
+import janusAngular2Backend.basis.Ergebnis;
+import janusAngular2Backend.basis.Parameter;
+import janusAngular2Backend.basis.ParameteImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.net.URI;
+import java.util.Collection;
+import java.util.HashMap;
+
+import thomas.nill.AccountRepository;
+
+@RestController
+@RequestMapping("/api/{userId}/$x.Page; format="lower"$")
+public class $myclassName(x)$  {
+
+	private final AccountRepository accountRepository;
+    private $pageclassName(x)$ page;
+
+	@Autowired
+	$myclassName(x)$(  AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
+		this.page = new $pageclassName(x)$();
+		
+	}
+
+	private void validateUser(String userId) {
+		this.accountRepository.findByUsername(userId).orElseThrow(
+				() -> new UserNotFoundException(userId));
+	}
+
+$childs(x)$
+
+}
+
+>>
+
+STRINGSET( x ) ::= << $childs(x)$ >>
+SQLSET( x ) ::= << $childs(x)$ >>
+BEANSET( x ) ::= << $childs(x)$ >>
+BEAN( x ) ::= << $childs(x)$ >>
+BATCHSET( x ) ::= << $childs(x)$ >>
+ACTIONSET( x ) ::= << $childs(x)$ >>
+GLOBALSET( x ) ::= << $childs(x)$ >>
+NAMESPACE( x ) ::= << $childs(x)$ >>
+
+SQL(x) ::= <<
+
+	@RequestMapping(method = RequestMethod.GET, value = "$x.name$/")
+	Bookmark read$x.name; format="cap"$(@PathVariable String userId,
+	  $x.AbfrageParameter:sqlParameter()$
+	   ) {
+		this.validateUser(userId);
+
+		HashMa<String,String> map = new HashMap<>();
+		$x.AbfrageParameter:{ t | $if(t)$map.put("$t$",$t$);$endif$ }$
+		Ergebnis ergebnis = page.execute("$x.name$",new ParemeterImpl(map));
+		
+		return ergebnis;
+	}
+
+>>
+
+sqlParameter(p) ::= <<,@RequestParam("$p$") String $p$ >>
+
+CALL(x) ::= << 
+	@RequestMapping(method = RequestMethod.PUT, value = "$x.name$/")
+	Ergebnis do$x.name; format="cap"$(@PathVariable String userId $childs(x)$ ) {
+		this.validateUser(userId);
+		
+		HashMa<String,String> map = new HashMap<>();
+		$x.Childs:{ t | $if(t.var)$map.put("$t.var$",$t.var$);$endif$ }$
+		Ergebnis ergebnis = page.execute("$x.name$",new ParemeterImpl(map));
+		
+		return ergebnis;
+	}
+>>
+
+SET(x) ::= <<, @RequestParam("$x.var$") String $x.var$>>
+
+COLUMN(x) ::= << >>
+BATCH(x) ::= <<  >>
+MAPTABLE(x) ::= <<  >>
+GLOBAL(x) ::= <<  >>
+STRING(x) ::= <<  >>
+GUI(x) ::= <<  >>
+
+
+internPROTOKOLL(x) ::= << >>
+PROTOKOLL(x) ::= <<  >>
+ 
+erzeugeParamterHash(x)  ::= << 
+
+
+ >>
+  

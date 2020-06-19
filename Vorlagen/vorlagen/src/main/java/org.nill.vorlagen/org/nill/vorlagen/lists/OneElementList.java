@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-import nu.xom.Document;
-
 public class OneElementList<T> implements Function<T,List<T>> {
 	private UnaryOperator<T> transform;
 

@@ -14,12 +14,14 @@ public class DocumentSTConsumer extends  STConsumer<Document> {
 
 	protected String packageName;
 	protected String defaultClass;
+
 	
-	public DocumentSTConsumer(Charset charset, String packageName, String defaultCLass) {
+	public DocumentSTConsumer(Charset charset, String packageName, String defaultClass) {
 		super(charset);
 		this.packageName = packageName;
-		this.defaultClass = defaultCLass;
+		this.defaultClass = defaultClass;
 	}
+
 	
 	@Override
 	protected void register(STGroupFile group) {
@@ -27,7 +29,6 @@ public class DocumentSTConsumer extends  STConsumer<Document> {
 		group.registerModelAdaptor(Element.class, new XOMAdapter(packageName, defaultClass));
 		group.registerModelAdaptor(Attribute.class, new XOMAdapter(packageName, defaultClass));
 	}
-
 	
 	@Override
 	protected void setzeSTModel(ST t, Document document) {

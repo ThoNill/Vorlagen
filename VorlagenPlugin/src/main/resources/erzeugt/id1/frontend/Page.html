@@ -1,0 +1,358 @@
+
+  <DIALOG  page="beispiel" title="Eine Beispiel XML Datei" url="TestServlet"   >
+
+  	    
+
+   <NAMESPACE  prefix="daten"   >
+
+   		    
+
+    <GLOBALSET    >
+    			    
+
+     <GLOBAL  name="MONAT"   ></GLOBAL>
+
+     
+
+    
+    			    
+
+     <GLOBAL  name="JAHR"   ></GLOBAL>
+
+     
+
+    
+    			    
+
+     <GLOBAL  name="USERID"   ></GLOBAL>
+
+     
+
+    
+    		   </GLOBALSET>
+
+    
+
+   
+
+   		    
+
+    <STRINGSET    >
+    			    
+
+     <STRING  name="bisDatum"   ></STRING>
+
+     
+
+    
+    		   </STRINGSET>
+
+    
+
+   
+
+   		    
+
+    <SQLSET    >
+    			    
+
+     <SQL  countOn="true" name="getWerte" stmt="         SELECT a.Werteid          FROM Werte a          WHERE gebucht is null          AND storniert is null         and erstellungsdatum >= date(?bisDatum?)         "   >
+     				    
+
+      <COLUMN  name="Werteid"   ></COLUMN>
+
+      
+
+     
+     			   </SQL>
+
+     
+
+    
+    		   </SQLSET>
+
+    
+
+   
+
+   		    
+
+    <BEANSET    >
+    			    
+
+     <BEAN  class="beans.WerteBuchungsWorker" name="einbuchenWerte"   >
+
+     				    
+
+      <CALL  command="buchen" name="buchen" post="updateList,clear"   >
+      					    
+
+       <SET  var="werteId" to="getWerte.Werteid"   ></SET>
+
+       
+
+      
+      					    
+
+       <SET  var="monat" to="model_MONAT"   ></SET>
+
+       
+
+      
+      					    
+
+       <SET  var="jahr" to="model_JAHR"   ></SET>
+
+       
+
+      
+      					    
+
+       <SET  var="userID" to="model_USERID"   ></SET>
+
+       
+
+      
+      				   </CALL>
+
+      
+
+     
+     			   </BEAN>
+
+     
+
+    
+    			    
+
+     <BEAN  class="beans.TestCall" name="gotoPage"   >
+     				    
+
+      <CALL  command="moveZurueck" name="moveZurueck" test="false"   ></CALL>
+
+      
+
+     
+     			   </BEAN>
+
+     
+
+    
+
+    		   </BEANSET>
+
+    
+
+   
+
+   		    
+
+    <BATCHSET    >
+    			    
+
+     <BATCH  listeners="gui.batch.BatchListener" name="WerteBuchen" post="on" pre="off" foreach="getWerte"   >
+     				    
+
+      <CALLREF  on="run" ref="buchen"   >
+      					    
+
+       <PROTOKOLL  level="OK" onResult="Operation "buchen" performed" text="Objekte ?getWerte.Werteid? wurde verbucht ..."   ></PROTOKOLL>
+
+       
+
+      
+      				   </CALLREF>
+
+      
+
+     
+     			   </BATCH>
+
+     
+
+    
+    		   </BATCHSET>
+
+    
+
+   
+   	   </NAMESPACE>
+
+   
+
+  
+  	    
+
+   <GUI    >
+   		    
+
+    <ACTIONSET    >
+    			    
+
+     <ACTION  class="gui.action.SetOn" foreach="WerteBuchen" name="on"   ></ACTION>
+
+     
+
+    
+    			    
+
+     <ACTION  class="gui.action.SetOff" foreach="WerteBuchen" name="off"   ></ACTION>
+
+     
+
+    
+    		   </ACTIONSET>
+
+    
+
+   
+
+
+
+
+   		    
+
+    <ERRORMANAGER  errors="einbuchenWerte.getErrors"   ></ERRORMANAGER>
+
+    
+
+   
+
+   		    
+
+    <FOCUSMANAGER    ></FOCUSMANAGER>
+
+    
+
+   
+   		    
+
+    <GLUE    >
+    			    
+
+     <VBOX    >
+     				    
+
+      <HBOX    >
+      					    
+
+       <LABEL  size="10" text="Bis Datum" name="bisDatum"   ></LABEL>
+
+       
+
+      
+      					    
+
+       <DATEFIELD  name="bisDatum"   ></DATEFIELD>
+
+       
+
+      
+      					    
+
+       <BUTTON  call="WerteBuchen" size="12" text="Buchen"   ></BUTTON>
+
+       
+
+      
+      					    
+
+       <GLUE    ></GLUE>
+
+       
+
+      
+      				   </HBOX>
+
+      
+
+     
+
+
+     				    
+
+      <GLUE    >
+      					    
+
+       <HBOX    >
+       						    
+
+        <GLUE    >
+        							    
+
+         <SHOWTABLE  name="WerteBuchen.getMessages" rows="10" title="Meldungen" height="170" width="350"   >
+         								    
+
+          <COLUMN  name="message" header="Meldung" type="STRING" width="350"   ></COLUMN>
+
+          
+
+         
+         							   </SHOWTABLE>
+
+         
+
+        
+        						   </GLUE>
+
+        
+
+       
+       						    
+
+        <GLUE    >
+        							    
+
+         <SHOWTABLE  name="WerteBuchen.getErrors" rows="10" title="Fehler" height="170" width="350"   >
+         								    
+
+          <COLUMN  name="error" header="Meldung" type="STRING" width="350"   ></COLUMN>
+
+          
+
+         
+         							   </SHOWTABLE>
+
+         
+
+        
+        						   </GLUE>
+
+        
+
+       
+       					   </HBOX>
+
+       
+
+      
+      				   </GLUE>
+
+      
+
+     
+     				    
+
+      <GLUE    ></GLUE>
+
+      
+
+     
+     			   </VBOX>
+
+     
+
+    
+    		   </GLUE>
+
+    
+
+   
+   	   </GUI>
+
+   
+
+  
+    </DIALOG>
+
+ 

@@ -213,6 +213,11 @@ valueCollection(v,classname) ::= <<
     private $v.clazz.typeDefinition$ $v.name$;
 
     @Override
+    public $v.clazz.collectionTypeDefinition$ get$v.name; format="cap"$() {
+        return this.$v.name$;
+    }
+
+    @Override
     public void add$v.name; format="cap"$($v.clazz.collectionTypeDefinition$ x) {
         this.$v.name$.add(x);
     }

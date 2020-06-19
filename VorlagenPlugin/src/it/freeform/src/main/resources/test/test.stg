@@ -1,0 +1,13 @@
+group entity ;
+
+overwrite(model) ::= "true"
+create(model) ::= "true"
+
+mypfad() ::= "zumTest"
+
+dateiName(model) ::= "$mypfad()$/$model.name$.txt"
+
+dateiInhalt(model) ::= <<
+Test $model.name$
+>>
+

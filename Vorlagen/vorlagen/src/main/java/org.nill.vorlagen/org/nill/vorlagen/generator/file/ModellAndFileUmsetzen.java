@@ -2,7 +2,6 @@ package org.nill.vorlagen.generator.file;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.List;
 import java.util.function.Function;
 
 public class ModellAndFileUmsetzen<Q,Z>  implements Function<ModellAndFile<Q>, List<ModellAndFile<Z>>>{

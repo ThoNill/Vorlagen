@@ -1,0 +1,32 @@
+group JanusAngular2Frontend ;
+
+overwrite(model,root) ::= "true"
+create(model,root) ::= "true"
+
+mypfad() ::= "frontend"
+
+
+dateiName(model,root) ::= "$mypfad()$/$root.Page$Page.html"
+
+dateiInhalt(model,root) ::= <<
+
+$element(root)$
+
+>>
+
+element(x) ::= <<
+ 
+  <$x.LocalName$  $attributes(x)$ >$x.Childs:elementOrText()$</$x.LocalName$>
+ 
+ >>
+
+elementOrText(x) ::= << $if(x.isElement)$ 
+$element(x)$ 
+
+$else$$text(x)$$endif$  >>
+
+text(x) ::= << $x.value$ >>
+
+attributes(x) ::= << $x.Attributes:attribute()$ >>
+
+attribute(x) ::= << $if(x.isEmptyAttribute)$$x.Value$$else$$x.LocalName$="$x.Value$"$endif$ >>

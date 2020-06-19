@@ -1,0 +1,43 @@
+group irepository ;
+
+overwrite(model) ::= "true"
+create(model) ::= "$model.clazzValue.aggregate$"
+
+mypfad() ::= "repositories"
+
+dateiName(model) ::= "$mypfad()$/$model.clazz.simpleName$Repository.java"
+
+dateiInhalt(model) ::= <<
+
+package $mypfad()$;
+
+import java.util.List;
+
+import javax.money.MonetaryAmount;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import interfaces.I$model.clazz.simpleName$Repository;
+import interfaces.I$model.clazz.simpleName$;
+import entities.$model.clazz.simpleName$;
+
+public interface $model.clazz.simpleName$Repository extends CrudRepository<$model.clazz.simpleName$, Long>,
+        I$model.clazz.simpleName$Repository {
+
+    @Override
+    public List<I$model.clazz.simpleName$> get$model.clazz.simpleName; format="cap"$(long n);
+  
+    @Override
+    default I$model.clazz.simpleName$ save(I$model.clazz.simpleName$ buchung) {
+        return this.save(($model.clazz.simpleName$) buchung);
+    }
+
+/*
+    @Override
+    @Query("select bew from org.nill.abrechnung.entities.Buchung buch JOIN buch.bewegungen bew where buch.abrechnung = :abr  ")
+    public List<KontoBewegung> getBewegungen(@Param("abr") IAbrechnung abr);
+*/
+
+}
+>>

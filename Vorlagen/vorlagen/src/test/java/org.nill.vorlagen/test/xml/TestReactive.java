@@ -1,7 +1,10 @@
 package test.xml;
 
-import static org.junit.Assert.*;
 import java.io.File;
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 
 import org.junit.Test;
 import org.nill.vorlagen.files.ExpandZip;

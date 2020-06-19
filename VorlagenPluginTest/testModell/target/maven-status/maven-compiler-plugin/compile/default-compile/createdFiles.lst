@@ -1,0 +1,10 @@
+test\xml\wrap\BeispielWrap.class
+test\Verknuepfungen.class
+test\BeispielBuchung.class
+test\object\Adresse.class
+test\object\MonatJahr.class
+test\object\MonatJahrAdapter.class
+test\object\AdresseTelefon.class
+test\BeispielMandant.class
+test\object\BeispielEnumeration.class
+test\object\BeispielService.class

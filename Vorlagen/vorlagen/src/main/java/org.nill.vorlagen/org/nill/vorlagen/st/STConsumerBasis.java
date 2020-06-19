@@ -49,10 +49,15 @@ public class STConsumerBasis<M> {
 		boolean überschreiben = isOverwrite(group, vm);
 		boolean erzeugen = isCreate(group, vm);
 		File d = new File(dateiName);
-		logger.log(Level.INFO,"ausgabe: {0} ", dateiName);
+		logger.log(Level.INFO,"Dateiname: {0} ", dateiName);
+		logger.log(Level.INFO,"Datei wird erzeugt: {0} ", (erzeugen) ? "an" : "aus");
+		logger.log(Level.INFO,"Datei wird überschrieben: {0} ", (überschreiben) ? "an" : "aus");
 
+		
 		if (erzeugen) {
 			if (überschreiben || !d.exists()) {
+				logger.log(Level.INFO,"Ausgabe: {0} ", dateiName);
+				logger.log(Level.INFO,"Absoluter Dateiname: {0} ", d.getAbsolutePath());
 				erzeugeEventuellFehlendeVerzeichnisse(dateiName);
 				Writer writer = erzeugeWriter(dateiName);
 				erzeugeAusgabe(group, writer, vm);

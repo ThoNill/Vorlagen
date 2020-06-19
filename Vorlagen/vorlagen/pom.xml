@@ -22,6 +22,7 @@
 	<properties>
 		<java.source.version>1.8</java.source.version>
 		<java.target.version>1.8</java.target.version>
+		<encoding>UTF-8</encoding>
 	</properties>
 
 	<dependencies>
@@ -85,16 +86,7 @@
 							<verbose>true</verbose>
 							<debug>true</debug>
 							<forceJavacCompilerUse>false</forceJavacCompilerUse>
-<!-- 							<compilerArgs>
-								<arg>-add-exports</arg>
-								<arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
-									jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
-									jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
-									jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
-									jdk.compiler/com.sun.source.util=ALL-UNNAMED
-									jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
-							</compilerArgs>
- -->
+
 						</configuration>
 					</execution>
 					<execution>
@@ -109,16 +101,6 @@
 							<encoding>UTF8</encoding>
 							<verbose>true</verbose>
 							<debug>true</debug>
-	<!--  						<compilerArgs>
-								<arg>-add-exports</arg>
-								<arg>jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
-									jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
-									jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
-									jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
-									jdk.compiler/com.sun.source.util=ALL-UNNAMED
-									jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
-							</compilerArgs>
--->
 						</configuration>
 					</execution>
 				</executions>

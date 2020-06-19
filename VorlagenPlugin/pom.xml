@@ -199,6 +199,8 @@
 							<goals>
 								<goal>clean</goal>
 								<goal>test-compile</goal>
+								<goal>compile</goal>
+								<goal>process-classes</goal>
 							</goals>
 						</configuration>
 						<executions>

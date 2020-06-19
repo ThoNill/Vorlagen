@@ -119,6 +119,7 @@ value(v,classname) ::= <<
 
 valueCollection(v,classname) ::= <<	
 
+    $v.clazz.collectionTypeDefinition$ get$v.name; format="cap"$();
     void add$v.name; format="cap"$($v.clazz.collectionTypeDefinition$ x);
     void remove$v.name; format="cap"$($v.clazz.collectionTypeDefinition$ x);
 

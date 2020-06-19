@@ -60,19 +60,18 @@ public class ClassVisitor extends TreePathScanner<Object, Trees> {
 	public Object visitVariable(VariableTree node, Trees p) {
 		logger.log(Level.INFO, "start visitVariable {0}",node);
 		Element elem = p.getElement(this.getCurrentPath());
-		logger.log(Level.INFO,"Eement: " + elem);
+		logger.log(Level.INFO,"Eement: {0}",elem);
 		if (elem != null && elem.getKind().equals(ElementKind.FIELD)) {
 			try {
 				logger.log(Level.INFO,"declared Field: " + elem.getSimpleName().toString());
-				logger.log(Level.INFO,"Class: " + data.getClazz().getSimpleName());
+				logger.log(Level.INFO,"Class: {0}",data.getClazz().getSimpleName());
 				Field f = data.getClazz().getDeclaredField(elem.getSimpleName().toString());
-				logger.log(Level.INFO,"Field: " + f);	
+				logger.log(Level.INFO,"Field: {0}",f);	
 				data.getFieldSichten()
 						.add(new DreiSichten(elem, node,
 								f,
 								p.getDocComment(this.getCurrentPath()),converterVerzeichnis.get(f.getType())));
 			} catch (Exception e) {
-				e.printStackTrace();
 				throw new RuntimeCompilerException("Fehler in visitVariable element: " +elem.toString(),e);
 			}
 

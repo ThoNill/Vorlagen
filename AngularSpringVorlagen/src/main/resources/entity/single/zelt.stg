@@ -1,0 +1,390 @@
+group entity ;
+
+overwrite(model) ::= "true"
+create(model) ::= "$model.clazzValue.entity$"
+
+mypfad() ::= "zelte"
+
+dateiName(model) ::= "$mypfad()$/$model.clazz.simpleName$Zelt.java"
+
+dateiInhalt(model) ::= <<
+
+$DATA(model,model.clazz.simpleName,mypfad())$
+
+>>
+
+DATA(x,classname,pfad) ::= <<
+package $pfad$;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.List;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Enumerated;
+import javax.persistence.Lob;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import tho.nill.grundgestein.zelt.DefaultZelt;
+import org.springframework.beans.factory.annotation.Autowired;
+import entities.*;
+
+    $x.fieldSichten:importDefinition()$
+    $x.fieldSichten:entitiesImportDefinition()$
+ 
+import zelte.StandardZelt;
+
+public class $classname$Zelt extends StandardZelt {
+
+
+	private $classname$ entity;
+	
+	@Autowired
+	private $classname$Repository repo;
+	
+	public void save() {
+		if (entity != null ) {
+			entity = repo.saveAndFlush(entity);
+		}
+	}
+	
+	
+	public void saveIfNeeded() {
+		if (entity != null && entity.get$classname; format="cap"$Id() == null) {
+			entity = repo.saveAndFlush(entity);
+		}
+	}
+	
+	
+		
+	
+	public void create() {
+		save();
+		entity = new $classname$();
+	}
+	
+	
+	$classname$ getEntity() {
+		return entity;
+	}
+		
+    public java.lang.Long get$classname ; format="cap"$Id() {
+			return entity.get$classname ; format="cap"$Id();    
+    }
+  
+    $x.fieldSichten:elements(classname)$
+}
+
+
+>>
+
+
+importDefinition(v) ::= <<
+$if(!v.clazz.PrimitiveType)$
+$if(!v.clazz.array)$
+$if(!v.clazz.objectModell)$
+import $v.clazz.canonicalName$;
+
+   
+import interfaces.I$classname; format="cap"$;
+import entities.$classname; format="cap"$;
+import repositories.$classname; format="cap"$Repository;
+$endif$
+$endif$
+$endif$
+>>
+
+
+entitiesImportDefinition(v) ::= <<
+$if(v.source)$
+$if(v.source.objectModell)$
+import interfaces.I$v.source.simpleName$;
+import repositories.$v.source.simpleName$Repository;
+$endif$
+$endif$
+
+$if(v.target)$
+$if(v.target.objectModell)$
+import interfaces.I$v.target.simpleName$;
+import zelte.$v.target.simpleName$Zelt;
+$endif$
+$endif$
+>>
+
+
+elements(v,classname) ::= <<
+    $documentation(v)$
+ 
+ 	$(v.kind)(v,classname)$
+>>
+
+documentation(v) ::= <<
+   $if(! v.documentation.empty)$
+    /**
+     $v.documentation$
+     */$endif$
+ >>
+
+
+delegateGetWithType(v,type) ::= <<
+
+public $type$ get$v.name; format="cap"$() {
+     return entity.get$v.name; format="cap"$(); 
+}
+>>
+
+delegateSetWithType(v,type,convertType) ::= <<
+
+public void set$v.name; format="cap"$WithString(String value) {
+    	entity.set$v.name; format="cap"$(convertTo$convertType; format="cap"$( value));
+    }
+>>
+
+
+delegateGet(v) ::= <<
+$delegateGetWithType(v,v.clazz.typeDefinition)$
+>>
+
+delegateSet(v) ::= <<
+$delegateSetWithType(v,v.clazz.typeDefinition,v.clazz.typeDefinition)$
+>>
+    
+enumeration(v,classname) ::= <<	
+    $delegateGet(v)$
+    $delegateSet(v)$
+  
+   public $v.clazz.typeDefinition$ convertTo$v.clazz.typeDefinition$(String value) {
+				return $v.clazz.typeDefinition$.valueOf(value);
+			}  
+>>
+
+timevalues(v,classname) ::= <<	
+    $delegateGet(v)$
+    $delegateSet(v)$
+
+>>
+
+LocalTime(v,classname) ::= <<
+	$timevalues(v,classname)$
+>>
+
+LocalDate(v,classname) ::= <<
+	$timevalues(v,classname)$
+>>
+
+LocalDateTime(v,classname) ::= <<
+	$timevalues(v,classname)$
+>>
+
+OffsetTime(v,classname) ::= <<
+	$timevalues(v,classname)$
+>>
+
+OffsetDateTime(v,classname) ::= <<
+	$timevalues(v,classname)$
+>>
+
+ByteBLOB(v,classname) ::= <<
+    $delegateSetWithType(v,"byte[]","ByteArray")$
+>>	
+
+CharBLOB(v,classname) ::= <<
+    $delegateSetWithType(v,"String")$
+>>	
+	
+	
+value(v,classname) ::= <<	
+    $delegateGet(v)$
+    $delegateSet(v)$
+
+>>
+
+valueCollection(v,classname) ::= <<	
+
+  
+    public $v.clazz.collectionTypeDefinition$ get$v.name; format="cap"$() {
+        return entity.get$v.name; format="cap"$();
+    }
+    
+   
+    public void add$v.name; format="cap"$($v.clazz.collectionTypeDefinition$ x) {
+        entity.add$v.name; format="cap"$(x);
+    }
+
+  
+    public void remove$v.name; format="cap"$($v.clazz.collectionTypeDefinition$ x) {
+         entity.remove$v.name; format="cap"$(x);
+    }
+
+>>
+
+valueArray(v,classname) ::= <<	
+
+	public $v.clazz.arrayListTypeDefinition$[] get$v.name; format="cap"$() {
+		return entity.get$v.name; format="cap"$();
+    }
+
+
+   
+    public void add$v.name; format="cap"$($v.clazz.arrayTypeDefinition$ x) {
+        entity.add$v.name; format="cap"$(x);
+    }
+
+ 
+    public void remove$v.name; format="cap"$($v.clazz.arrayTypeDefinition$ x) {
+        entity.remove$v.name; format="cap"$(x);
+    }
+
+>>
+
+connection(v) ::= <<$v.connectionName; format="cap"$>>
+
+fromone2many(v,classname) ::= << 
+
+
+    
+    public void connect$connection(v)$($v.target.simpleName$Zelt x) {
+        $v.target.simpleName$ target = x.getEntity();
+        
+        saveIfNeeded();
+        x.saveIfNeeded();
+        
+        entity.add$v.targetName; format="cap"$(target);
+        target.set$v.sourceName; format="cap"$(entity);
+    }
+
+ 
+    public void disconnect$connection(v)$($v.target.simpleName$Zelt x) {
+        $v.target.simpleName$ target = x.getEntity();
+        entity.remove$v.targetName; format="cap"$(target);
+        target.set$v.sourceName; format="cap"$(null);
+    }
+
+
+>>
+
+toone2many(v,classname) ::= <<
+
+
+>>
+
+
+frommany2many(v,classname) ::= << 
+
+
+   public void connect$connection(v)$($v.target.simpleName$Zelt x) {
+        $v.target.simpleName$ target = x.getEntity();
+
+        saveIfNeeded();
+        target.saveIfNeeded();
+
+        entity.add$v.targetName; format="cap"$(target);
+        target.add$v.sourceName; format="cap"$(entity);
+    }
+
+ 
+    public void diconnect$connection(v)$($v.target.simpleName$Zelt x) {
+        $v.target.simpleName$ target = x.getEntity();
+        entity.remove$v.targetName; format="cap"$(target);
+        target.remove$v.sourceName; format="cap"$(null);
+    }
+
+>>
+
+tomany2many(v,classname) ::= << 
+
+>>
+
+
+fromone2one(v,classname) ::= << 
+
+    public void connect$connection(v)$($v.target.simpleName$Zelt x) {
+        $v.target.simpleName$ target = x.getEntity();
+        
+        saveIfNeeded();
+        target.saveIfNeeded();
+        
+        entity.set$v.targetName; format="cap"$(target);
+        target.set$v.sourceName; format="cap"$(entity);
+    }
+
+ 
+    public void disconnect$connection(v)$($v.target.simpleName$Zelt x) {
+        $v.target.simpleName$ target = x.getEntity();
+        entity.set$v.targetName; format="cap"$(null);
+        target.set$v.sourceName; format="cap"$(null);
+    }
+    
+
+>>
+
+toone2one(v,classname) ::= << 
+
+>>
+
+fromone2oneEmbedabble(v,classname) ::= << 
+
+    public void set$connection(v)$($v.target.simpleName$ x) {
+        entity.set$v.targetName; format="cap"$(x);
+    }
+
+
+>>
+
+zusammen1(feldName,name) ::= <<$if(feldName.empty)$$name$$else$$feldName$.$name$$endif$>>
+
+zusammen2(feldName,name) ::= <<$if(feldName.empty)$$name$$else$$feldName$_$name$$endif$>>
+
+attributeOverride(f,feldName,entityfeldName) ::= << 
+$if(f.embeddable)$
+$f.type.fields:attributeOverride(zusammen1(feldName,f.name),zusammen2(entityfeldName,f.name))$
+$else$
+@AttributeOverride(name = "$zusammen1(feldName,f.name)$", column = @Column(name = "$zusammen2(entityfeldName,f.name)$")),
+$endif$
+>>
+
+fromone2manyEmbedabble(v,classname) ::= << 
+
+    
+    public void add$connection(v)$($v.target.simpleName$ x) {
+        entity.add$v.targetName; format="cap"$(x);
+    }
+
+ 
+    public void remove$connection(v)$(I$v.target.simpleName$ x) {
+        entity.remove$v.targetName; format="cap"$(x);
+    }
+    
+>>
+
+
+converter(v) ::= << $if(v.withConverter)$@Convert(converter = $v.converterClass.canonicalName$.class)$endif$>>
+
+

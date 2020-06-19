@@ -19,6 +19,7 @@
 
 	</parent>
 	<properties>
+		<encoding>UTF-8</encoding>
 		<java.source.version>1.8</java.source.version>
 		<java.target.version>1.8</java.target.version>
 	</properties>

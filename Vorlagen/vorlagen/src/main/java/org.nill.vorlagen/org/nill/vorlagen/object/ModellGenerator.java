@@ -1,80 +1,34 @@
 package org.nill.vorlagen.object;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.logging.Logger;
 
-import org.nill.vorlagen.compiler.ConverterVerzeichnis;
 import org.nill.vorlagen.compiler.model.ObjectModell;
-import org.nill.vorlagen.compiler.transformation.AnalyseTransformation;
-import org.nill.vorlagen.compiler.transformation.GenerateClass;
-import org.nill.vorlagen.generator.Generator;
-import org.nill.vorlagen.generator.file.FileDazu;
-import org.nill.vorlagen.generator.file.ModellAndFile;
-import org.nill.vorlagen.generator.file.ModellAndFileErweitern;
-import org.nill.vorlagen.vorlagen.RuntimeVorlagenException;
+import org.nill.vorlagen.st.GeneralSTGenerator;
+import org.nill.vorlagen.st.STConsumer;
 
 import reactor.core.publisher.Flux;
 
-public class ModellGenerator implements Generator {
+public class ModellGenerator extends GeneralSTGenerator<ObjectModell> {
 	static Logger logger = Logger.getLogger(ModellGenerator.class.getSimpleName());
 
-	private String vorlagenVerzeichnis;
-	private String ausgabeVerzeichnis;
-	private List<ObjectModell> modelle;
-	private List<String> sourcePaths;
-	private List<String> optsCompiler;
+	private Collection<ObjectModell> modelle;
 
-	public boolean add(ObjectModell e) {
-		return modelle.add(e);
-	}
-
-	
-	public boolean addSourcePath(String path) {
-		return sourcePaths.add(path);
-	}
-
-	public ModellGenerator(String vorlagenVerzeichnis, String ausgabeVerzeichnis,List<String> optsCompiler) {
-		super();
-		this.vorlagenVerzeichnis = vorlagenVerzeichnis;
-		this.ausgabeVerzeichnis = ausgabeVerzeichnis;
-		this.modelle = new ArrayList<>();
-		this.sourcePaths = new ArrayList<>();
-		this.optsCompiler = optsCompiler;
-	}
-
-	public void erzeugeAusgabe(ObjectModell element) {
-		erzeugeAusgabe(Flux.just(element));
-	}
-
-	public void erzeugeAusgabe(Flux<ObjectModell> flux) {
-		flux.map(new FileDazu<ObjectModell>(vorlagenVerzeichnis))
-				.flatMapIterable(
-						new ModellAndFileErweitern<ObjectModell>())
-				.map(new FileDazu<ModellAndFile<ObjectModell>>(ausgabeVerzeichnis))
-				.subscribe(new ObjectModellConsumer(StandardCharsets.UTF_8));
-	}
-
-	public void setModelle(List<ObjectModell> modelle) {
+	public ModellGenerator(String vorlagenVerzeichnis, String ausgabeVerzeichnis,Collection<ObjectModell> modelle) {
+		super(vorlagenVerzeichnis,ausgabeVerzeichnis);
 		this.modelle = modelle;
 	}
 
+	
 	@Override
-	public void erzeugeAusgabe() {
-		modelle.forEach(x -> {
-			try {
-				erzeugeAusgabe(x);
-			} catch (Exception e) {
-				throw new RuntimeVorlagenException( "Error at output creation",e);
-			}
-		});
-
+	protected STConsumer<ObjectModell> createConsumer() {
+		return new ObjectModellConsumer(StandardCharsets.UTF_8);
 	}
 
-	public void erzeugeAusgabe(String className, ConverterVerzeichnis converter, ObjectModell verknüpfungen,
-			String modelVerzeichnis) {
-		erzeugeAusgabe(Flux.just(className).map(new GenerateClass())
-				.map(new AnalyseTransformation(converter, verknüpfungen, modelVerzeichnis,sourcePaths,optsCompiler)));
+
+	@Override
+	protected Flux<ObjectModell> createModelFlux() {
+		return Flux.fromIterable(modelle);
 	}
 }

@@ -1,12 +1,16 @@
 package test.xml;
 
 import java.io.File;
+
 import java.nio.charset.StandardCharsets;
-import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.nill.vorlagen.generator.file.ModellAndFile;
 import org.nill.vorlagen.xml.model.File2Document;
 import org.nill.vorlagen.xml.st.DocumentSTConsumer;
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import nu.xom.Document;
 public class TesteXML {
