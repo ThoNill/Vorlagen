@@ -1,0 +1,169 @@
+group restservice ;
+
+overwrite(model) ::= "true"
+create(model) ::= "true"
+
+mypfad() ::= "services"
+
+dateiName(model) ::= "$mypfad()$/$model.clazz.simpleName$EntityController.java"
+
+nurNamen(v) ::= <<
+$(nameKind(v))(v)$
+>> 
+
+nameKind(v) ::= "name_$v.kind$"
+
+name_enumeration(v) ::= "$v.name$"
+
+name_value(v) ::= "$v.name$"
+
+name_fromone2many(v) ::= <<
+$v.targetName; format="lower"$
+>>
+
+name_toone2many(v) ::= <<
+$v.sourceName; format="lower"$
+>>
+
+name_LocalDate(v) ::= "$v.name$"
+
+requestParam(v) ::= <<
+$(requestKind(v))(v)$ // $v.kind$
+
+>> 
+
+requestKind(v) ::= "req_$v.kind$" 
+
+req_enumeration(v) ::= <<
+@RequestParam(name = "$v.name$") $v.clazz.typeDefinition$ $v.name$
+
+>> 
+
+req_value(v) ::= <<
+@RequestParam(name = "$v.name$") $v.clazz.typeDefinition$ $v.name$
+
+>> 
+
+req_fromone2many(v) ::= <<
+@RequestParam(name = "$v.targetName; format="lower"$") long $v.targetName; format="lower"$ // $v.target.simpleName$
+
+>>
+
+req_toone2many(v) ::= <<
+@RequestParam(name = "$v.sourceName; format="lower"$") long $v.sourceName; format="lower"$ // $v.source.simpleName$
+
+>>
+
+req_LocalDate(v) ::= <<
+@RequestParam(name = "$v.name$") $v.clazz.typeDefinition$ $v.name$
+
+>> 
+
+
+progname(model) ::= <<$model.clazz.simpleName; format="lower"$>>
+
+dateiInhalt(model) ::= <<
+
+package $mypfad()$;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import entities.$model.clazz.simpleName$;
+$model.fieldSichten:importDefinition()$
+
+@RestController
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600)
+@RequestMapping("/api")
+public class $model.clazz.simpleName$EntityController  {
+
+    $methoden(model,model.clazz.simpleName,progname(model))$
+    
+}
+>>
+
+
+importDefinition(v) ::= << 
+$if(!v.clazz.PrimitiveType)$
+$if(!v.clazz.array)$
+$if(!v.clazz.objectModell)$
+import $v.clazz.canonicalName$;
+$endif$
+$endif$
+$endif$
+>>
+
+methoden(model,classname,progname) ::= <<
+
+
+
+	private static final String DER_DATENSATZ_MIT_DER = "Der $classname$ Datensatz mit der ";
+	@Autowired
+	private $classname$EntityService service;
+
+	public $classname$EntityController() {
+		super();
+	}
+
+	@CrossOrigin
+	@RequestMapping(path = "/entity/$progname$/insert", produces = "application/json", method = RequestMethod.POST)
+	public String create($model.fieldSichten:requestParam(); separator=", "$) {
+
+		try {
+			$classname$ d = service.create($model.fieldSichten:nurNamen(); separator=", "$);
+			return DER_DATENSATZ_MIT_DER + d.get$classname$Id() + " wurden erfolgreich angelegt";
+		} catch (Exception e) {
+			return "Beim Anlegen eines $classname$ Datensatzes trat ein Fehler auf";
+		}
+	}
+
+	@CrossOrigin
+	@RequestMapping(path = "/entity/$progname$/update/{id}", produces = "application/json", method = RequestMethod.PUT)
+	public String update(@PathVariable(name = "id") long id,
+	              $model.fieldSichten:requestParam(); separator=", "$) {
+
+		try {
+			service.update(id,$model.fieldSichten:nurNamen(); separator=", "$);
+			return DER_DATENSATZ_MIT_DER + id + " wurden erfolgreich geändert";
+		} catch (Exception e) {
+			return "Beim Ändern des $classname$ Datensatzes mit der " + id + " trat ein Fehler auf";
+		}
+	}
+
+	@CrossOrigin
+	@RequestMapping(path = "/entity/$progname$/delete/{id}", produces = "application/json", method = RequestMethod.DELETE)
+	public String delete(@PathVariable(name = "id") long id) {
+
+		try {
+			service.delete(id);
+			return DER_DATENSATZ_MIT_DER + id + " wurden erfolgreich entfernt";
+		} catch (Exception e) {
+			return "Beim Entfernen des $classname$ Datensatzes mit der " + id + " trat ein Fehler auf";
+		}
+	}
+
+	@CrossOrigin
+	@RequestMapping(path = "/entity/$progname$/get/{id}", produces = "application/json", method = RequestMethod.GET)
+	public $classname$ get(@PathVariable(name = "id") long id) {
+
+		try {
+			Optional<$classname$> o = service.get(id);
+			if (o.isPresent()) {
+				return o.get();
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Exception bei get ", e);
+		}
+		return null;
+	}
+
+
+
+>>
+

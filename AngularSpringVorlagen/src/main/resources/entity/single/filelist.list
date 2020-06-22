@@ -3,5 +3,5 @@ interface.stg
 irepository.stg
 repository.stg
 restService.stg
-restServiceBasis.stg
+restController.stg
 zelt.stg

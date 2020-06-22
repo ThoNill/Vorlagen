@@ -1,6 +1,6 @@
 group repository ;
 
-overwrite(model) ::= "false"
+overwrite(model) ::= "true"
 create(model) ::= "$model.clazzValue.aggregate$"
 
 mypfad() ::= "repositories"
@@ -24,19 +24,6 @@ import org.springframework.stereotype.Repository;
 public interface $model.clazz.simpleName$Repository extends JpaRepository<$model.clazz.simpleName$, Long>,
         I$model.clazz.simpleName$Repository {
 
-/*
-    @Override
-    public List<I$model.clazz.simpleName$> get$model.clazz.simpleName; format="cap"$(long n);
-  
-    @Override
-    default I$model.clazz.simpleName$ save(I$model.clazz.simpleName$ buchung) {
-        return this.save(($model.clazz.simpleName$) buchung);
-    }
-
-    @Override
-    @Query("select bew from org.nill.abrechnung.entities.Buchung buch JOIN buch.bewegungen bew where buch.abrechnung = :abr  ")
-    public List<KontoBewegung> getBewegungen(@Param("abr") IAbrechnung abr);
-*/
 
 }
 >>

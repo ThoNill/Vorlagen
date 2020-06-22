@@ -13,16 +13,6 @@ package $mypfad()$;
 import java.util.List;
 
 public interface I$model.clazz.simpleName$Repository {
-/*
-
-    public List<I$model.clazz.simpleName$> get$model.clazz.simpleName; format="cap"$(long n);
-
-    I$model.clazz.simpleName$ save(I$model.clazz.simpleName$ buchung);
-   
-
-    public Integer getLetzteAbgerechneteAbrechnung(IMandant mand,
-            AbrechnungsStatus status, MonatJahr mj);
-*/
   
 }
 >>

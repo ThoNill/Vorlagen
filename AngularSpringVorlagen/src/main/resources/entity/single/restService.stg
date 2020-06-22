@@ -1,40 +1,195 @@
 group restservice ;
 
 overwrite(model) ::= "true"
-create(model) ::= "$model.clazzValue.service$"
+create(model) ::= "true"
 
-mypfad() ::= "service"
+mypfad() ::= "services"
 
-dateiName(model) ::= "$mypfad()$/$model.clazz.simpleName$RestService.java"
+dateiName(model) ::= "$mypfad()$/$model.clazz.simpleName$EntityService.java"
+
 
 dateiInhalt(model) ::= <<
 
 package $mypfad()$;
 
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import entities.$model.clazz.simpleName$;
+import repositories.$model.clazz.simpleName$Repository;
+$model.fieldSichten:importDefinition()$
+
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class $model.clazz.simpleName$RestService extends $model.clazz.simpleName$RestBasis {
+@Service
+public class $model.clazz.simpleName$EntityService  {
 
-    $model.methodSichten:methoden()$
+    $methoden(model,model.clazz.simpleName)$
+    
 }
 >>
 
-methoden(v) ::= <<
 
-    @RequestMapping("/$v.name$")
-    public $v.return.typeDefinition$ $v.name$($v.parameter:p(v); separator=", "$) {
-        return $v.name$_intern(
-            $v.parameter:{p | $p.name$}; separator=", "$,
-        );
+importDefinition(v) ::= << 
+$if(!v.clazz.PrimitiveType)$
+$if(!v.clazz.array)$
+$if(!v.clazz.objectModell)$
+import $v.clazz.canonicalName$;
+$endif$
+$endif$
+$endif$
+>>
+
+methoden(model,classname) ::= <<
+
+	@Autowired
+	$classname$Repository repo;
+	
+	$model.fieldSichten:defineRepo()$
+
+	public $classname$EntityService() {
+		super();
+	}
+
+	public Optional<$classname$> get(long id) {
+		return repo.findById(id);
+	}
+
+	public $classname$ create($model.fieldSichten:NamenUndType(); separator=", "$) {
+		$classname$ d = new $classname$();
+		felderSetzen(d, $model.fieldSichten:nurNamen(); separator=", "$);
+		return repo.save(d);
+	}
+
+	public void update(long id, $model.fieldSichten:NamenUndType(); separator=", "$) {
+		$classname$ d = repo.getOne(id);
+		felderSetzen(d, $model.fieldSichten:nurNamen(); separator=", "$);
+		repo.save(d);
+	}
+
+	public void delete(long id) {
+		repo.deleteById(id);
+	}
+
+	private void felderSetzen($classname$ d, 
+	$model.fieldSichten:NamenUndType(); separator=", "$
+	) {
+	$model.fieldSichten:setterDefinition()$	
+	}
+
+>>
+
+
+setterDefinition(v) ::= <<
+$(setterKind(v))(v)$
+>> 
+
+setterKind(v) ::= "setter_$v.kind$"
+
+setter_enumeration(v) ::= <<
+d.set$v.name; format="cap"$($v.name$);
+
+>>
+
+
+setter_value(v) ::= <<
+d.set$v.name; format="cap"$($v.name$);
+
+>>
+
+
+setter_fromone2many(v) ::= <<
+
+if ($v.targetName; format="lower"$ > 0) {
+    Optional<entities.$v.target.simpleName$> $v.targetName; format="lower"$Entity =  $v.target.simpleName; format="lower"$Repo.findById($v.targetName; format="lower"$);
+    if ($v.targetName; format="lower"$Entity.isPresent()) {
+       d.add$v.targetName; format="cap"$($v.targetName; format="lower"$Entity.get());
     }
 }
 >>
 
-p(p,classname) ::= <<
-@RequestParam(value="$p.name$") $p.type$ $p.name$
+setter_toone2many(v) ::= <<
+
+if ($v.sourceName; format="lower"$ > 0) {
+   Optional<entities.$v.source.simpleName$> $v.sourceName; format="lower"$Entity =  $v.source.simpleName; format="lower"$Repo.findById($v.sourceName; format="lower"$);
+   if ($v.sourceName; format="lower"$Entity.isPresent()) {
+   	  d.set$v.sourceName; format="cap"$($v.sourceName; format="lower"$Entity.get());
+   }
+}  
 >>
+
+defineRepo(v) ::= <<
+$(defineKind(v))(v)$
+>> 
+
+defineKind(v) ::= "define_$v.kind$"
+
+
+define_enumeration(v) ::= ""
+
+define_value(v) ::= ""
+
+define_fromone2many(v) ::= <<
+@Autowired
+repositories.$v.target.simpleName$Repository $v.target.simpleName; format="lower"$Repo;
+
+>>
+
+define_toone2many(v) ::= <<
+@Autowired
+repositories.$v.source.simpleName$Repository $v.source.simpleName; format="lower"$Repo;
+
+>>
+
+define_LocalDate(v) ::= ""
+
+nurNamen(v) ::= <<
+$(nameKind(v))(v)$
+>> 
+
+nameKind(v) ::= "name_$v.kind$"
+
+name_enumeration(v) ::= "$v.name$"
+
+name_value(v) ::= "$v.name$"
+
+name_fromone2many(v) ::= <<
+$v.targetName; format="lower"$
+
+>>
+
+name_toone2many(v) ::= <<
+$v.sourceName; format="lower"$
+
+>>
+
+name_LocalDate(v) ::= "$v.name$"
+
+NamenUndType(v) ::= <<
+$(ntKind(v))(v)$
+>> 
+
+ntKind(v) ::= "nt_$v.kind$"
+
+
+nt_enumeration(v) ::= "$v.clazz.typeDefinition$  $v.name$"
+
+nt_value(v) ::= "$v.clazz.typeDefinition$  $v.name$"
+
+nt_fromone2many(v) ::= <<
+long $v.targetName; format="lower"$ 
+
+>>
+
+nt_toone2many(v) ::= <<
+long $v.sourceName; format="lower"$ 
+
+>>
+
+nt_LocalDate(v) ::= "$v.clazz.typeDefinition$  $v.name$"
