@@ -55,7 +55,6 @@ import lombok.ToString;
     $x.fieldSichten:importDefinition()$
     $x.fieldSichten:entitiesImportDefinition()$
     
-import interfaces.I$classname; format="cap"$;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -63,7 +62,7 @@ import interfaces.I$classname; format="cap"$;
 @Entity
 @Table(name = "$classname; format="upper"$")
 @SequenceGenerator(name = "$classname; format="upper"$_SEQ", sequenceName = "$classname; format="upper"$_SEQ")
-public class $classname$ implements I$classname; format="cap"$ {
+public class $classname$  {
 
     @EqualsAndHashCode.Include
     @ToString.Include
@@ -92,13 +91,13 @@ $endif$
 entitiesImportDefinition(v) ::= <<
 $if(v.source)$
 $if(v.source.objectModell)$
-import interfaces.I$v.source.simpleName$;
+import entities.$v.source.simpleName$;
 $endif$
 $endif$
 
 $if(v.target)$
 $if(v.target.objectModell)$
-import interfaces.I$v.target.simpleName$;
+import entities.$v.target.simpleName$;
 $endif$
 $endif$
 >>
@@ -212,17 +211,17 @@ valueCollection(v,classname) ::= <<
 
     private $v.clazz.typeDefinition$ $v.name$;
 
-    @Override
+    
     public $v.clazz.collectionTypeDefinition$ get$v.name; format="cap"$() {
         return this.$v.name$;
     }
 
-    @Override
+    
     public void add$v.name; format="cap"$($v.clazz.collectionTypeDefinition$ x) {
         this.$v.name$.add(x);
     }
 
-    @Override
+    
     public void remove$v.name; format="cap"$($v.clazz.collectionTypeDefinition$ x) {
         this.$v.name$.remove(x);
     }
@@ -244,12 +243,12 @@ valueArray(v,classname) ::= <<
     }
 
 
-    @Override
+    
     public void add$v.name; format="cap"$($v.clazz.arrayTypeDefinition$ x) {
         this.$v.name$.add(x);
     }
 
-    @Override
+    
     public void remove$v.name; format="cap"$($v.clazz.arrayTypeDefinition$ x) {
         this.$v.name$.remove(x);
     }
@@ -266,14 +265,14 @@ fromone2many(v,classname) ::= <<
     private Set<$v.target.simpleName$> $v.targetName$ = new HashSet<>();
 
 
-    @Override
-    public void add$v.targetName; format="cap"$(I$v.target.simpleName$ x) {
+    
+    public void add$v.targetName; format="cap"$($v.target.simpleName$ x) {
         this.$v.targetName$.add(($v.target.simpleName$)x);
         x.set$v.sourceName; format="cap"$(this);
     }
 
-    @Override
-    public void remove$v.targetName; format="cap"$(I$v.target.simpleName$ x) {
+    
+    public void remove$v.targetName; format="cap"$($v.target.simpleName$ x) {
         this.$v.targetName$.remove(($v.target.simpleName$)x);
         x.set$v.sourceName; format="cap"$(null);
     }
@@ -287,8 +286,8 @@ toone2many(v,classname) ::= <<
     @JoinColumn(name = "$v.source.simpleName$_Id")
 	private $v.source.simpleName$ $v.sourceName$;
 
-    @Override
-    public void set$v.sourceName; format="cap"$(I$v.source.simpleName$ value) {
+    
+    public void set$v.sourceName; format="cap"$($v.source.simpleName$ value) {
  	   $v.sourceName$ = ($v.source.simpleName$) value;
     }
 
@@ -304,13 +303,13 @@ frommany2many(v,classname) ::= <<
     inverseJoinColumns = { @JoinColumn(name = "$v.target.simpleName$Id") })
     private Set<$v.target.simpleName$> $v.targetName$ = new HashSet<>();
 
-    @Override
-    public void add$v.targetName; format="cap"$(I$v.target.simpleName$ x) {
+    
+    public void add$v.targetName; format="cap"$($v.target.simpleName$ x) {
         this.$v.targetName$.add(($v.target.simpleName$)x);
     }
     
-    @Override 
-    public void remove$v.targetName; format="cap"$(I$v.target.simpleName$ x) {
+     
+    public void remove$v.targetName; format="cap"$($v.target.simpleName$ x) {
         this.$v.targetName$.remove(($v.target.simpleName$)x);
  	}
 >>
@@ -319,13 +318,13 @@ tomany2many(v,classname) ::= <<
     @ManyToMany(mappedBy = "$v.targetName$")
     private Set<$v.source.simpleName$> $v.sourceName$ = new HashSet<>();
 
-    @Override
-    public void add$v.sourceName; format="cap"$(I$v.source.simpleName$ x) {
+    
+    public void add$v.sourceName; format="cap"$($v.source.simpleName$ x) {
         this.$v.sourceName$.add(($v.source.simpleName$)x);
     }
      
-    @Override
-    public void remove$v.sourceName; format="cap"$(I$v.source.simpleName$ x) {
+    
+    public void remove$v.sourceName; format="cap"$($v.source.simpleName$ x) {
         this.$v.sourceName$.remove(($v.source.simpleName$)x);
     }
 
@@ -338,8 +337,8 @@ fromone2one(v,classname) ::= <<
                 referencedColumnName = "$v.source.simpleName$_Id")
     private $v.target.simpleName$ $v.targetName$;
 
-    @Override
-    public void set$v.targetName; format="cap"$(I$v.target.simpleName$ $v.name$) {
+    
+    public void set$v.targetName; format="cap"$($v.target.simpleName$ $v.name$) {
  	   this.$v.targetName$ = ($v.target.simpleName$) $v.name$;
     }
 
@@ -350,8 +349,8 @@ toone2one(v,classname) ::= <<
     private $v.source.simpleName$ $v.sourceName$;
 
 
- 	@Override
-    public void set$v.sourceName; format="cap"$(I$v.source.simpleName$ $v.name$) {
+ 	
+    public void set$v.sourceName; format="cap"$($v.source.simpleName$ $v.name$) {
  	   this.$v.sourceName$ = ($v.source.simpleName$) $v.name$;
     }
 
@@ -387,12 +386,12 @@ fromone2manyEmbedabble(v,classname) ::= <<
     private Set<$v.target.simpleName$> $v.targetName$ = new HashSet<>();
 
 
-    @Override
+    
     public void add$v.targetName; format="cap"$($v.target.simpleName$ x) {
         this.$v.targetName$.add(x);
     }
 
-    @Override
+    
     public void remove$v.targetName; format="cap"$($v.target.simpleName$ x) {
         this.$v.targetName$.remove(x);
     }
@@ -401,185 +400,3 @@ fromone2manyEmbedabble(v,classname) ::= <<
 
 
 converter(v) ::= << $if(v.withConverter)$@Convert(converter = $v.converterClass.canonicalName$.class)$endif$>>
-
-entity() ::= <<
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-import org.nill.abrechnung.interfaces.IAbrechnung;
-import org.nill.abrechnung.interfaces.IBuchung;
-import org.nill.abrechnung.values.KontoBewegung;
-import org.nill.allgemein.values.TypeReference;
-
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(onlyExplicitlyIncluded = true)
-@Entity
-@Table(name = "BUCHUNG")
-@SequenceGenerator(name = "BUCHUNG_SEQ", sequenceName = "BUCHUNG_SEQ")
-public class Buchung implements IBuchung {
-
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Basic
-    @Column(name = "BUCHUNGID")
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BUCHUNG_SEQ")
-    private java.lang.Long buchungId;
-
-    @Basic
-    @Column(name = "BUCHUNGSDATUM")
-    private Date buchungsDatum;
-
-    @ToString.Include
-    @Basic
-    @Column(name = "TEXT")
-    private String text;
-
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    @Basic
-    @Column(name = "ART")
-    private int art;
-
-    @ElementCollection
-    @CollectionTable(name = "Buchung_KontoBewegung", joinColumns = @JoinColumn(name = "BUCHUNGID"))
-    private Set<KontoBewegung> bewegungen = new HashSet<>();
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "AbrechnungId")
-    private Abrechnung abrechnung;
-
-    @ElementCollection
-    @CollectionTable(name = "Buchung_TypeReference", joinColumns = @JoinColumn(name = "BUCHUNGID"))
-    private Set<TypeReference> bez�ge = new HashSet<>();
-
-    @Override
-    public void addBewegungen(KontoBewegung bewegungen) {
-        this.bewegungen.add(bewegungen);
-    }
-
-    @Override
-    public void removeBewegungen(KontoBewegung bewegungen) {
-        this.bewegungen.remove(bewegungen);
-    }
-
-    @Override
-    public void addBezug(TypeReference bezug) {
-        this.bez�ge.add(bezug);
-    }
-
-    @Override
-    public void removeBezug(TypeReference bezug) {
-        this.bez�ge.remove(bezug);
-    }
-
-    @Override
-    public void setIAbrechnung(IAbrechnung abrechnung2) {
-        setAbrechnung((Abrechnung) abrechnung2);
-    }
->>
-
-interface() ::= <<
-
-package org.nill.abrechnung.interfaces;
-
-import java.util.Date;
-import java.util.Set;
-
-import org.nill.abrechnung.values.KontoBewegung;
-import org.nill.allgemein.values.TypeReference;
-
-public interface IBuchung {
-
-    public void addBewegungen(KontoBewegung bewegungen);
-
-    public void removeBewegungen(KontoBewegung bewegungen);
-
-    public void addBezug(TypeReference bezug);
-
-    public void removeBezug(TypeReference bezug);
-
-    public void setIAbrechnung(IAbrechnung abrechnung2);
-
-    public java.lang.Long getBuchungId();
-
-    public void setBuchungId(java.lang.Long buchungId);
-
-    public Date getBuchungsDatum();
-
-    public void setBuchungsDatum(Date buchungsDatum);
-
-    public String getText();
-
-    public void setText(String text);
-
-    public int getArt();
-
-    public void setArt(int art);
-
-    public Set<KontoBewegung> getBewegungen();
-
-    public void setBewegungen(Set<KontoBewegung> bewegungen);
-
-    public Set<TypeReference> getBez�ge();
-
-    public void setBez�ge(Set<TypeReference> bez�ge);
-
-    public IAbrechnung getAbrechnung();
-
-}
->>
-
-valueobject() ::= <<
-
-package org.nill.abrechnung.values;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Embeddable;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-@Data
-@EqualsAndHashCode
-@ToString
-@Embeddable
-public class KontoBewegung {
-
-    @Basic
-    @Column(name = "ART")
-    private int art;
-
-    @Basic
-    @Column(name = "KONTONR")
-    private int kontoNr;
-
-    @Basic
-    @Column(name = "BETRAG")
-    @Convert(converter = org.nill.basiskomponenten.betrag.GeldKonverter.class)
-    private javax.money.MonetaryAmount betrag;
-}
->>

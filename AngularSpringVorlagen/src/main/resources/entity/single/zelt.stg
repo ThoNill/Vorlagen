@@ -113,7 +113,6 @@ $if(!v.clazz.objectModell)$
 import $v.clazz.canonicalName$;
 
    
-import interfaces.I$classname; format="cap"$;
 import entities.$classname; format="cap"$;
 import repositories.$classname; format="cap"$Repository;
 $endif$
@@ -125,14 +124,14 @@ $endif$
 entitiesImportDefinition(v) ::= <<
 $if(v.source)$
 $if(v.source.objectModell)$
-import interfaces.I$v.source.simpleName$;
+import entities.$v.source.simpleName$;
 import repositories.$v.source.simpleName$Repository;
 $endif$
 $endif$
 
 $if(v.target)$
 $if(v.target.objectModell)$
-import interfaces.I$v.target.simpleName$;
+import entities.$v.target.simpleName$;
 import zelte.$v.target.simpleName$Zelt;
 $endif$
 $endif$
@@ -378,7 +377,7 @@ fromone2manyEmbedabble(v,classname) ::= <<
     }
 
  
-    public void remove$connection(v)$(I$v.target.simpleName$ x) {
+    public void remove$connection(v)$($v.target.simpleName$ x) {
         entity.remove$v.targetName; format="cap"$(x);
     }
     

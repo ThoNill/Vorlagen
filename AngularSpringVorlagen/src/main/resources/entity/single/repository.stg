@@ -1,6 +1,6 @@
 group repository ;
 
-overwrite(model) ::= "true"
+overwrite(model) ::= "false"
 create(model) ::= "$model.clazzValue.aggregate$"
 
 mypfad() ::= "repositories"
@@ -15,14 +15,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
-import interfaces.I$model.clazz.simpleName$Repository;
-import interfaces.I$model.clazz.simpleName$;
 import entities.$model.clazz.simpleName$;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface $model.clazz.simpleName$Repository extends JpaRepository<$model.clazz.simpleName$, Long>,
-        I$model.clazz.simpleName$Repository {
+public interface $model.clazz.simpleName$Repository extends JpaRepository<$model.clazz.simpleName$, Long> {
 
 
 }
