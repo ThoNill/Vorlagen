@@ -52,7 +52,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import tho.nill.grundgestein.zelt.DefaultZelt;
 import org.springframework.beans.factory.annotation.Autowired;
 import entities.*;
 
@@ -66,8 +65,13 @@ public class $classname$Zelt extends StandardZelt {
 
 	private $classname$ entity;
 	
-	@Autowired
 	private $classname$Repository repo;
+	
+	public $classname$Zelt($classname$Repository repo) {
+		super();
+		this.repo = repo;
+	}
+
 	
 	public void save() {
 		if (entity != null ) {
@@ -91,7 +95,7 @@ public class $classname$Zelt extends StandardZelt {
 	}
 	
 	
-	$classname$ getEntity() {
+	public $classname$ getEntity() {
 		return entity;
 	}
 		
@@ -180,7 +184,7 @@ enumeration(v,classname) ::= <<
     $delegateSet(v)$
   
    public $v.clazz.typeDefinition$ convertTo$v.clazz.typeDefinition$(String value) {
-				return $v.clazz.typeDefinition$.valueOf(value);
+				return $v.clazz.typeDefinition$.search(value);
 			}  
 >>
 
@@ -270,20 +274,31 @@ fromone2many(v,classname) ::= <<
 
     
     public void connect$connection(v)$($v.target.simpleName$Zelt x) {
-        $v.target.simpleName$ target = x.getEntity();
         
-        saveIfNeeded();
-        x.saveIfNeeded();
+        if (entity!=null) {
+        	saveIfNeeded();
+        	x.saveIfNeeded();
         
-        entity.add$v.targetName; format="cap"$(target);
-        target.set$v.sourceName; format="cap"$(entity);
+        	$v.target.simpleName$ target = x.getEntity();
+        	entity.add$v.targetName; format="cap"$(target);
+        	target.set$v.sourceName; format="cap"$(entity);
+        
+        	saveIfNeeded();
+        	x.saveIfNeeded();
+        };
+ 
     }
 
  
     public void disconnect$connection(v)$($v.target.simpleName$Zelt x) {
+      if (entity!=null) {
         $v.target.simpleName$ target = x.getEntity();
         entity.remove$v.targetName; format="cap"$(target);
         target.set$v.sourceName; format="cap"$(null);
+        
+        saveIfNeeded();
+        x.saveIfNeeded();
+      };
     }
 
 
@@ -299,13 +314,17 @@ frommany2many(v,classname) ::= <<
 
 
    public void connect$connection(v)$($v.target.simpleName$Zelt x) {
-        $v.target.simpleName$ target = x.getEntity();
 
         saveIfNeeded();
-        target.saveIfNeeded();
+        x.saveIfNeeded();
 
+        $v.target.simpleName$ target = x.getEntity();
         entity.add$v.targetName; format="cap"$(target);
         target.add$v.sourceName; format="cap"$(entity);
+        
+        saveIfNeeded();
+        x.saveIfNeeded();
+        
     }
 
  
@@ -313,6 +332,10 @@ frommany2many(v,classname) ::= <<
         $v.target.simpleName$ target = x.getEntity();
         entity.remove$v.targetName; format="cap"$(target);
         target.remove$v.sourceName; format="cap"$(null);
+
+        saveIfNeeded();
+        x.saveIfNeeded();
+ 
     }
 
 >>
@@ -328,10 +351,15 @@ fromone2one(v,classname) ::= <<
         $v.target.simpleName$ target = x.getEntity();
         
         saveIfNeeded();
-        target.saveIfNeeded();
+        x.saveIfNeeded();
         
         entity.set$v.targetName; format="cap"$(target);
         target.set$v.sourceName; format="cap"$(entity);
+        
+                
+        saveIfNeeded();
+        x.saveIfNeeded();
+        
     }
 
  
@@ -339,6 +367,11 @@ fromone2one(v,classname) ::= <<
         $v.target.simpleName$ target = x.getEntity();
         entity.set$v.targetName; format="cap"$(null);
         target.set$v.sourceName; format="cap"$(null);
+        
+                
+        saveIfNeeded();
+        x.saveIfNeeded();
+        
     }
     
 
