@@ -149,6 +149,8 @@ repositories.$v.source.simpleName$Repository $v.source.simpleName; format="lower
 
 define_LocalDate(v) ::= ""
 
+define_CharBLOB(v) ::= ""
+
 nurNamen(v) ::= <<
 $(nameKind(v))(v)$
 >> 
@@ -170,6 +172,9 @@ $v.sourceName; format="lower"$
 >>
 
 name_LocalDate(v) ::= "$v.name$"
+
+name_CharBLOB(v) ::= "$v.name$"
+
 
 NamenUndType(v) ::= <<
 $(ntKind(v))(v)$
@@ -193,3 +198,6 @@ long $v.sourceName; format="lower"$
 >>
 
 nt_LocalDate(v) ::= "$v.clazz.typeDefinition$  $v.name$"
+
+nt_CharBLOB(v) ::= "String  $v.name$"
+

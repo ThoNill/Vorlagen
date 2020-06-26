@@ -163,7 +163,7 @@ public $type$ get$v.name; format="cap"$() {
 }
 >>
 
-delegateSetWithType(v,type,convertType) ::= <<
+delegateSetWithType(v, type, convertType) ::= <<
 
 public void set$v.name; format="cap"$WithString(String value) {
     	entity.set$v.name; format="cap"$(convertTo$convertType; format="cap"$( value));
@@ -219,7 +219,7 @@ ByteBLOB(v,classname) ::= <<
 >>	
 
 CharBLOB(v,classname) ::= <<
-    $delegateSetWithType(v,"String")$
+     $delegateSetWithType(v,"String","String")$
 >>	
 	
 	

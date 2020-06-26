@@ -172,6 +172,7 @@ OffsetDateTime(v,classname) ::= <<
 >>
 
 ByteBLOB(v,classname) ::= <<
+
 	@Lob
     @Column(name = "$v.name; format="upper"$")
     $converter(v.clazz)$
@@ -180,7 +181,7 @@ ByteBLOB(v,classname) ::= <<
 
 CharBLOB(v,classname) ::= <<
 	@Lob
-    @Column(name = "$v.name; format="upper"$")
+    @Column(name = "$v.name; format="upper"$", columnDefinition="clob")
     $converter(v.clazz)$
     private String $v.name$;
 >>	

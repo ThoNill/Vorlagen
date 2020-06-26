@@ -27,6 +27,8 @@ $v.sourceName; format="lower"$
 
 name_LocalDate(v) ::= "$v.name$"
 
+name_CharBLOB(v) ::= "$v.name$"
+
 requestParam(v) ::= <<
 $(requestKind(v))(v)$ // $v.kind$
 
@@ -58,6 +60,13 @@ req_LocalDate(v) ::= <<
 @RequestParam(name = "$v.name$") $v.clazz.typeDefinition$ $v.name$
 
 >> 
+
+req_CharBLOB(v) ::= <<
+@RequestParam(name = "$v.name$") String $v.name$
+
+>> 
+
+
 
 
 progname(model) ::= <<$model.clazz.simpleName; format="lower"$>>
