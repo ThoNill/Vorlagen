@@ -86,11 +86,12 @@ public class $classname$Zelt extends StandardZelt {
 		}
 	}
 	
-	
+	public void load(Long id) {
+         entity = repo.getOne(id);
+	}	
 		
 	
 	public void create() {
-		save();
 		entity = new $classname$();
 	}
 	
@@ -98,6 +99,11 @@ public class $classname$Zelt extends StandardZelt {
 	public $classname$ getEntity() {
 		return entity;
 	}
+
+	public void setEntity($classname$ entity) {
+         this.entity = entity;
+	}	
+
 		
     public java.lang.Long get$classname ; format="cap"$Id() {
 			return entity.get$classname ; format="cap"$Id();    
